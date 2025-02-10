@@ -1,0 +1,149 @@
+
+LIBRARY winutil2
+
+EXETYPE WINDOWS
+
+PROTMODE
+
+DESCRIPTION 'Routinen ohne statische Daten'
+
+CODE    PRELOAD MOVEABLE DISCARDABLE
+DATA    NONE
+
+HEAPSIZE  0
+
+EXPORTS
+        WEP                         @1    RESIDENTNAME NODATA PRIVATE
+        IMPORTFIRST                 @2    NODATA
+        IMPORTNEXT                  @3    NODATA
+        IMPORTCLOSE                 @4    NODATA
+        EXPORTFIRST                 @5    NODATA
+        EXPORTNEXT                  @6    NODATA
+        EXPORTCLOSE                 @7    NODATA
+        GETNRESNAMES                @8    NODATA
+        GETPROCEDURENAMEEX          @9    NODATA
+        GETSYMBOLICNAMEEX           @10   NODATA
+        GETPROCEDURENAME            @11   NODATA
+        GETSEGMENTHANDLE            @12   NODATA
+        GETSEGMENTID                @13   NODATA
+        GETPROCNAME                 @14   NODATA
+        GETIMPORTEDNAME             @15   NODATA
+        GETMODULENAMEEX             @20   NODATA
+        GETMODULEDGROUP             @21   NODATA
+        RESOURCEFIRST               @22   NODATA
+        RESOURCENEXT                @23   NODATA
+        RESOURCEFINDID              @24   NODATA
+        GETRESOURCENAME             @25   NODATA
+        REFMODULEFIRST              @26   NODATA
+        REFMODULENEXT               @27   NODATA
+
+        GETFIRSTENTRY               @30   NODATA
+        GETNEXTENTRY                @31   NODATA
+        GETENTRYADDRESS             @32   NODATA
+        GETENTRYID                  @33   NODATA
+        GETNEXTENTRYADDRESS         @34   NODATA
+
+        GETDPMIDESCRIPTORFIRST      @40   NODATA
+        GETDPMIDESCRIPTORNEXT       @41   NODATA
+;        ALLOCDESCRIPTOR             @42   NODATA
+        ADJUSTDESCRIPTORATTR        @43   NODATA
+        GETLIMITOFSELECTOR          @44   NODATA
+        GETDESCRIPTORTYPE           @45   NODATA
+        GETDESCRIPTOR               @46   NODATA
+        SETDESCRIPTOR               @47   NODATA
+        GETBASEOFSELECTOR           @48   NODATA
+        GETATTROFSELECTOR           @49   NODATA
+        IDTFIRST                    @50   NODATA
+        IDTNEXT                     @51   NODATA
+        ISMEMORYDESCRIPTOR          @52   NODATA
+        GDTFIRST                    @53   NODATA
+        GDTNEXT                     @54   NODATA
+;        FREEDESCRIPTOR              @55   NODATA
+        IOBMFIRST                   @56   NODATA
+        IOBMNEXT                    @57   NODATA
+        IOBMCLOSE                   @58   NODATA
+
+        DPMIALLOCDESCRIPTOR         @60   NODATA
+        DPMIFREEDESCRIPTOR          @61   NODATA
+        DPMIGETINCVALUE             @62   NODATA
+        DPMISEGTODESCRIPTOR         @63   NODATA
+        DPMISELECTORLOCK            @64   NODATA
+        DPMISELECTORUNLOCK          @65   NODATA
+        DPMIGETSEGMENTBASE          @66   NODATA
+        DPMIGETDESCRIPTOR           @67   NODATA
+        DPMISETACCESSRIGHTS         @68   NODATA
+
+        DPMIGETPMINTVECTOR          @70   NODATA
+        DPMISETPMINTVECTOR          @71   NODATA
+        DPMIGETRMINTVECTOR          @72   NODATA
+        DPMISETRMINTVECTOR          @73   NODATA
+        DPMIGETEXCVECTOR            @74   NODATA
+        DPMISETEXCVECTOR            @75   NODATA
+        DPMILOCKREGION              @78   NODATA
+        DPMIUNLOCKREGION            @79   NODATA
+
+        DPMISIMRMINTERRUPT          @80   NODATA
+        DPMICALLRMFARPROC           @81   NODATA
+        DPMIMAPPHYSTOLINEAR         @89   NODATA
+
+        DPMIGETVERSION              @90   NODATA
+        DPMIGETVERSIONEX            @91   NODATA
+        DPMIGETPAGESIZE             @92   NODATA
+        DPMIGETMEMORYINFO           @93   NODATA
+        DPMIALLOCMEMORY             @94   NODATA
+        DPMIFREEMEMORY              @95   NODATA
+        DPMIALLOCDOSMEMORY          @96   NODATA
+        DPMIFREEDOSMEMORY           @97   NODATA
+        DPMIINTCALL                 @98   NODATA
+        DPMIVXDCALL                 @99   NODATA
+
+        MCBFIRST                    @100  NODATA
+        MCBNEXT                     @101  NODATA
+        MCBSUBFIRST                 @102  NODATA
+        MCBSUBNEXT                  @103  NODATA
+        MCBCLOSE                    @113  NODATA
+        DEVICEFIRST                 @104  NODATA
+        DEVICENEXT                  @105  NODATA
+        SFTFIRST                    @106  NODATA
+        SFTNEXT                     @107  NODATA
+        SFTCLOSE                    @114  NODATA
+        CDSFIRST                    @108  NODATA
+        CDSNEXT                     @109  NODATA
+        DPBFIRST                    @110  NODATA
+        DPBNEXT                     @111  NODATA
+        GETSDAADDR                  @112  NODATA
+
+        PAGEFIRST                   @124  NODATA
+        PAGENEXT                    @125  NODATA
+        SETDESCRIPTORDIRECT         @126  NODATA
+        GETLDTADDRESS               @127  NODATA
+        CALLRING0PROC               @129  NODATA
+        GETGDTADDRESS               @130  NODATA
+        GETGDTLIMIT                 @131  NODATA
+        GETIDTADDRESS               @132  NODATA
+        GETIDTLIMIT                 @133  NODATA
+        GETLDTR                     @134  NODATA
+        GETTR                       @135  NODATA
+        GETIOPL                     @136  NODATA
+        GETCPL                      @137  NODATA
+        LDTFIRST                    @138  NODATA
+        LDTNEXT                     @139  NODATA
+        LDTCLOSE                    @140  NODATA
+        GETTSS                      @141  NODATA
+        LDTFIND                     @142  NODATA
+        GETLDTSELECTOR              @143  NODATA
+
+        _EMS_CHECK                  @160  NODATA
+        _EMS_GETVERSION             @161  NODATA
+        _EMS_GETPAGEFRAME           @162  NODATA
+        _EMS_GETFREEPAGES           @163  NODATA
+        _EMS_GETPAGES               @164  NODATA
+        _EMS_GETHANDLEPAGES         @165  NODATA
+        _EMS_GETHANDLENAME          @166  NODATA
+        _EMS_GETHANDLEDIRECTORY     @167  NODATA
+        _EMS_GETTOTALHANDLES        @168  NODATA
+        _EMS_MAPPAGES               @169  NODATA
+
+        ALLOCBIGDESCRIPTOR          @171  NODATA
+        FREEBIGDESCRIPTOR           @172  NODATA
+

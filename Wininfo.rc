@@ -1,0 +1,1476 @@
+//Microsoft App Studio generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#define APSTUDIO_HIDDEN_SYMBOLS
+#include "windows.h"
+#undef APSTUDIO_HIDDEN_SYMBOLS
+#include "userw.h"
+#include "wininfox.h"
+#include "xlistbox.h"
+#include "stattext.h"
+#include "hexdump.h"
+#include "ver.h"
+
+/////////////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+
+//////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+ICON1                   ICON    DISCARDABLE     "RES\\WININFO.ICO"
+
+//////////////////////////////////////////////////////////////////////////////
+//
+// 256
+//
+
+IDU_TABPOS 256 DISCARDABLE "RES\\WITABPOS.BIN"
+IDU_ABOUT3 256 DISCARDABLE "RES\\WIABOUT.TXT"
+IDU_ABOUT1 256 DISCARDABLE "RES\\WIABOUT1.RES"
+
+//////////////////////////////////////////////////////////////////////////////
+//
+// Accelerator
+//
+
+ACCELTAB ACCELERATORS MOVEABLE PURE 
+BEGIN
+    VK_F1,          ID_HELP,                VIRTKEY 
+END
+
+
+//////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+FILEVERSION 1,8,0,0
+PRODUCTVERSION 1,8,0,0
+FILEFLAGSMASK 0x3fL
+FILEFLAGS 0x0L
+FILEOS 0x10001L
+FILETYPE 0x1L
+FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904E4"
+        BEGIN
+            VALUE "CompanyName", "japheth\0"
+            VALUE "FileDescription", "Windows Information\0"
+            VALUE "FileVersion", "1.8\0"
+            VALUE "InternalName", "WinInfo\0"
+            VALUE "LegalCopyright", "Copyright \251 japheth 1991-1999\0","\0"
+            VALUE "OriginalFilename", "WININFO.EXE\0"
+            VALUE "ProductName", "WinInfo\0"
+            VALUE "ProductVersion", "1.8\0"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1252 
+    END
+END
+
+
+//////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_MENU DIALOG DISCARDABLE  0, 0, 45, 176
+STYLE WS_MINIMIZEBOX | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Menü"
+CLASS "WIDlg"
+FONT 8, "Helv"
+BEGIN
+    PUSHBUTTON      "&Tasks",ID_TASK,0,0,45,16
+    PUSHBUTTON      "&Module",ID_MODUL,0,16,45,16
+    PUSHBUTTON      "H&eap",ID_GLOBAL,0,32,45,16
+    PUSHBUTTON      "&USER",ID_USER,0,48,45,16
+    PUSHBUTTON      "&GDI",ID_GDI,0,64,45,16
+    PUSHBUTTON      "&DOS",ID_DOS,0,80,45,16
+    PUSHBUTTON      "D&PMI",ID_DPMI,0,96,45,16
+    PUSHBUTTON      "&System",ID_SYSTEM,0,112,45,16
+    PUSHBUTTON      "&Hilfe",ID_HELP,0,128,45,16
+    PUSHBUTTON      "&\334ber",ID_ABOUT,0,144,45,16
+    PUSHBUTTON      "&Beenden",ID_EXIT,0,160,45,16
+END
+
+IDD_TASK DIALOG DISCARDABLE  20, 20, 258, 202
+STYLE WS_MINIMIZEBOX | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Tasks"
+CLASS "WIDlg"
+FONT 8, "Helv"
+BEGIN
+    CONTROL         "Handle\tName\tInst\tPSP\tModul",ID_LISTBOX1,"xlistbox",
+                    WS_DLGFRAME | WS_VSCROLL | WS_GROUP | WS_TABSTOP | 
+                    0x3080,4,2,156,104
+    LTEXT           "Windows",-1,4,108,40,9,NOT WS_GROUP
+    CONTROL         "Hndle\tOwner\tStyle\tClass\tText",ID_LISTWINDOWS,
+                    "xlistbox",WS_DLGFRAME | WS_VSCROLL | WS_GROUP | 
+                    WS_TABSTOP | 0x3080,4,118,250,70
+    PUSHBUTTON      "Schlie\337en",IDOK,162,4,46,14,WS_GROUP
+    PUSHBUTTON      "&Refresh",ID_REFRESH,162,20,46,14,NOT WS_TABSTOP
+    PUSHBUTTON      "&Detail",ID_DETAILTASK,162,36,46,14,NOT WS_TABSTOP
+    PUSHBUTTON      "&Global Heap",ID_GLOBALTASK,162,52,46,14,NOT WS_TABSTOP
+    PUSHBUTTON      "&Local Heap",ID_LOCALTASK,162,68,46,14,NOT WS_TABSTOP
+    PUSHBUTTON      "Sta&ck",ID_STACKTASK,162,84,46,14,NOT WS_TABSTOP
+    PUSHBUTTON      "&PSP",ID_PSPTASK,162,100,46,14,NOT WS_TABSTOP
+    DEFPUSHBUTTON   "&Anzeigen",ID_VIEWTASK,210,4,46,14,NOT WS_TABSTOP
+    PUSHBUTTON      "&Switch to",ID_SWTTASK,210,20,46,14,NOT WS_TABSTOP
+    PUSHBUTTON      "A&uto",ID_AUTOTASK,210,36,46,14,NOT WS_TABSTOP
+    PUSHBUTTON      "Task&Queue",ID_QUEUTASK,210,52,46,14,NOT WS_TABSTOP
+    PUSHBUTTON      "&Terminate",ID_TRMTASK,210,68,46,14,NOT WS_TABSTOP
+    PUSHBUTTON      "&Kill",ID_KILLTASK,210,84,46,14,NOT WS_TABSTOP
+    PUSHBUTTON      "&Modul",ID_MODULTASK,210,100,46,14,NOT WS_TABSTOP
+    CONTROL         "",ID_STATTASK,"statustext",WS_DISABLED | 0x1,0,190,258,
+                    12
+END
+
+IDD_WINDOW DIALOG DISCARDABLE  20, 20, 220, 164
+STYLE WS_MINIMIZEBOX | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Window"
+CLASS "WIDlg"
+FONT 8, "Helv"
+BEGIN
+    CONTROL         "Child\tID\tStyle\tClass\tText",ID_WNDCHILD,"xlistbox",
+                    WS_DLGFRAME | WS_VSCROLL | WS_GROUP | WS_TABSTOP | 
+                    0x3000,2,2,216,82
+    LTEXT           "Style",-1,2,86,52,9,NOT WS_GROUP
+    COMBOBOX        ID_WNDSTYLE,2,96,106,54,CBS_DROPDOWNLIST | WS_VSCROLL | 
+                    WS_TABSTOP
+    LTEXT           "Properties",-1,2,110,52,9,NOT WS_GROUP
+    COMBOBOX        ID_WNDPROP,2,120,106,54,CBS_DROPDOWNLIST | WS_VSCROLL | 
+                    WS_TABSTOP
+    PUSHBUTTON      "Schlie\337en",IDCANCEL,116,96,50,14
+    PUSHBUTTON      "&Disassembler",ID_WNDUNASS,116,112,50,14
+    PUSHBUTTON      "&Anzeigen",ID_WNDVIEW,168,96,50,14,WS_DISABLED
+    PUSHBUTTON      "&Change Style",ID_WNDCHGST,168,112,50,14
+    CONTROL         "",ID_WNDPARENT,"statustext",0x5,0,140,220,12
+    CONTROL         "",ID_WNDSTAT1,"statustext",0x5,0,152,220,12
+END
+
+IDD_MODUL DIALOG DISCARDABLE  20, 20, 274, 213
+STYLE WS_MINIMIZEBOX | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Module"
+CLASS "WIDlg"
+FONT 8, "Helv"
+BEGIN
+    CONTROL         "Hndle\tName\tTyp\tFileName",ID_LISTBOX1,"xlistbox",
+                    WS_DLGFRAME | WS_VSCROLL | WS_GROUP | WS_TABSTOP | 
+                    0x3080,4,2,266,92
+    LTEXT           "Segmente",-1,4,95,40,9,NOT WS_GROUP
+    CONTROL         "Nr\tHndle\tFlags\tGr\366\337e\t(File)",ID_LISTSEGM,
+                    "xlistbox",WS_DLGFRAME | WS_VSCROLL | WS_GROUP | 
+                    WS_TABSTOP | 0x3080,4,104,124,72
+    PUSHBUTTON      "Schlie\337en",IDOK,130,104,46,14,WS_GROUP
+    PUSHBUTTON      "&Refresh",ID_REFRESH,130,120,46,14,NOT WS_TABSTOP
+    PUSHBUTTON      "&Importe",ID_IMPORTS,130,136,46,14,NOT WS_TABSTOP
+    PUSHBUTTON      "E&xporte",ID_EXPORTS,130,152,46,14,NOT WS_TABSTOP
+    PUSHBUTTON      "&Global Heap",ID_GLOBALMODUL,178,104,46,14,NOT 
+                    WS_TABSTOP
+    PUSHBUTTON      "Lo&cal Heap",ID_LOCALMODUL,178,120,46,14,WS_DISABLED | 
+                    NOT WS_TABSTOP
+    PUSHBUTTON      "Re&sourcen",ID_RESMODUL,178,136,46,14,WS_DISABLED | NOT 
+                    WS_TABSTOP
+    DEFPUSHBUTTON   "&Detail",ID_XVIEWMODUL,178,152,46,14,NOT WS_TABSTOP
+    PUSHBUTTON      "&Laden...",ID_LOADMODUL,226,104,46,14,NOT WS_TABSTOP
+    PUSHBUTTON      "&Entladen",ID_FREEMODUL,226,120,46,14,NOT WS_TABSTOP
+    PUSHBUTTON      "&Umsortieren",ID_SORTMODUL,226,136,46,14,NOT WS_TABSTOP
+    PUSHBUTTON      "Sna&pshot",ID_SNAPSHOT,226,152,46,14,NOT WS_TABSTOP
+    CONTROL         "",ID_STATALL,"statustext",WS_DISABLED | 0x5,0,177,274,
+                    12
+    CONTROL         "",ID_STATMODUL,"statustext",WS_DISABLED | 0x5,0,189,274,
+                    12
+    CONTROL         "",ID_STATSEGM,"statustext",WS_DISABLED | 0x5,0,201,274,
+                    12
+END
+
+IDD_RESOURCE DIALOG DISCARDABLE  20, 20, 300, 164
+STYLE WS_MINIMIZEBOX | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Resourcen"
+CLASS "WIDlg"
+FONT 8, "Helv"
+BEGIN
+    CONTROL         "Typ\tID\tHandle\tUse\tFlags\tL\344nge\tOffset",
+                    ID_LISTBOX1,"xlistbox",WS_DLGFRAME | WS_VSCROLL | 
+                    WS_GROUP | WS_TABSTOP | 0x3080,2,2,296,105
+    PUSHBUTTON      "Schlie\337en",IDCANCEL,5,108,50,14,WS_GROUP
+    PUSHBUTTON      "&Refresh",ID_REFRESH,65,108,50,14,NOT WS_TABSTOP
+    DEFPUSHBUTTON   "&Anzeigen",ID_SUBDLG1,125,108,50,14,NOT WS_TABSTOP
+    PUSHBUTTON      "&Interpret",ID_SUBDLG2,185,108,50,14,NOT WS_TABSTOP
+    PUSHBUTTON      "&Detail",ID_SUBDLG3,245,108,50,14,NOT WS_TABSTOP
+    PUSHBUTTON      "&Entladen",ID_SUBDLG4,5,124,50,14,NOT WS_TABSTOP
+    PUSHBUTTON      "Sna&pshot",ID_SNAPSHOT,65,124,50,14,NOT WS_TABSTOP
+    CONTROL         "",ID_STATUS2,"statustext",WS_DISABLED | 0x5,0,140,300,
+                    12
+    CONTROL         "",ID_STATUS1,"statustext",WS_DISABLED | 0x5,0,152,300,
+                    12
+END
+
+IDD_LOCAL DIALOG DISCARDABLE  20, 20, 280, 120
+STYLE WS_MINIMIZEBOX | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CLASS "WIDlg"
+FONT 8, "Helv"
+BEGIN
+    CONTROL         "Handle\tAdresse\tSize\t\tFlags\tLocks\tTyp",ID_LISTBOX1,
+                    "xlistbox",WS_DLGFRAME | WS_VSCROLL | WS_GROUP | 
+                    WS_TABSTOP | 0x3002,4,2,222,104
+    PUSHBUTTON      "Schlie\337en",IDOK,230,2,45,14
+    PUSHBUTTON      "&Refresh",ID_REFRESH,230,17,45,14
+    DEFPUSHBUTTON   "&Anzeigen",ID_VIEWLOCAL,230,32,45,14
+    PUSHBUTTON      "&Compact",ID_COMPLOCAL,230,47,45,14
+    PUSHBUTTON      "&Umsortieren",ID_SORTLOCAL,230,62,45,14
+    PUSHBUTTON      "At&ome",ID_ATOMLOCAL,230,77,45,14
+    PUSHBUTTON      "Sna&pshot",ID_SNAPSHOT,230,92,45,14
+    CONTROL         "",ID_STATLOCAL,"statustext",WS_DISABLED | 0x5,0,108,280,
+                    12
+END
+
+IDD_ATOMBOX DIALOG DISCARDABLE  20, 20, 280, 116
+STYLE WS_MINIMIZEBOX | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CLASS "WIDlg"
+FONT 8, "Helv"
+BEGIN
+    CONTROL         "Entry\tHandle\tAdresse\tUsage\tString",ID_LISTBOX1,
+                    "xlistbox",WS_DLGFRAME | WS_VSCROLL | WS_GROUP | 
+                    WS_TABSTOP | 0x3000,4,2,222,100
+    PUSHBUTTON      "Schlie\337en",IDOK,230,10,45,14
+    PUSHBUTTON      "&Refresh",ID_REFRESH,230,26,45,14
+    CONTROL         "",ID_STATUS1,"statustext",WS_DISABLED | 0x5,0,104,280,
+                    12
+END
+
+IDD_VIEW DIALOG DISCARDABLE  20, 20, 316, 154
+STYLE WS_MINIMIZEBOX | WS_POPUP | WS_CAPTION | WS_SYSMENU
+FONT 8, "Helv"
+BEGIN
+    CONTROL         "",ID_LISTBOX1,"hexdump",WS_BORDER | WS_GROUP | 
+                    WS_TABSTOP | 0x10,4,4,308,128
+    CONTROL         "",ID_STATUS1,"statustext",0x5,0,142,316,12
+    PUSHBUTTON      "Schlie\337en",IDOK,5,128,50,12
+    DEFPUSHBUTTON   "&Optionen",ID_SUBDLG1,60,128,50,12
+    PUSHBUTTON      "&Edit",ID_SUBDLG3,115,128,50,12
+    LTEXT           "Selektor",ID_SELINVIEW,176,130,30,10,NOT WS_GROUP
+    EDITTEXT        ID_SUBDLG4,208,128,30,12
+    LTEXT           "Offset",ID_ADDRINVIEW,246,130,26,10,NOT WS_GROUP
+    EDITTEXT        ID_SUBDLG5,274,128,38,12
+END
+
+IDD_CLASS DIALOG DISCARDABLE  20, 20, 250, 120
+STYLE WS_MINIMIZEBOX | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "registrierte Klassen"
+CLASS "WIDlg"
+FONT 8, "Helv"
+BEGIN
+    CONTROL         "Owner\t\tStyle\tWndProc\tName",ID_LISTCLASS,"xlistbox",
+                    WS_DLGFRAME | WS_VSCROLL | WS_GROUP | WS_TABSTOP | 
+                    0x3080,4,2,242,100
+    PUSHBUTTON      "Schlie\337en",IDOK,5,104,45,14
+    PUSHBUTTON      "&Refresh",ID_NEWCLASS,55,104,45,14
+    DEFPUSHBUTTON   "&Detail",ID_VIEWCLASS,105,104,45,14
+    PUSHBUTTON      "D&isassembler",ID_UNASSCLASS,155,104,50,14
+END
+
+IDD_DPMIINT DIALOG DISCARDABLE  20, 20, 300, 136
+STYLE WS_MINIMIZEBOX | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Interrupts & Exceptions"
+CLASS "WIDlg"
+FONT 8, "Helv"
+BEGIN
+    LTEXT           "ProtMode",-1,2,2,40,9,NOT WS_GROUP
+    CONTROL         "Nr\tAdresse\tModul",ID_LISTBOX1,"xlistbox",WS_DLGFRAME | 
+                    WS_VSCROLL | WS_GROUP | WS_TABSTOP | 0x3000,2,12,116,90
+    LTEXT           "RealMode",-1,120,2,40,9,NOT WS_GROUP
+    CONTROL         "Nr\tAdresse",ID_LISTRMINT,"xlistbox",WS_DLGFRAME | 
+                    WS_VSCROLL | WS_GROUP | WS_TABSTOP | 0x3000,120,12,68,90
+    LTEXT           "Exception",-1,190,2,40,9,NOT WS_GROUP
+    CONTROL         "Nr\tAdresse\tModul",ID_LISTEXC,"xlistbox",WS_DLGFRAME | 
+                    WS_VSCROLL | WS_GROUP | WS_TABSTOP | 0x3000,190,12,106,
+                    90
+    CONTROL         "Exception 01",ID_GETEXC01,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,230,104,50,10
+    DEFPUSHBUTTON   "Schlie\337en",IDCANCEL,10,104,50,14
+    PUSHBUTTON      "&Refresh",ID_REFRESH,65,104,50,14
+    PUSHBUTTON      "&Disassembler",ID_UNASSINTR,120,104,50,14
+    PUSHBUTTON      "Sna&pshot",ID_SNAPSHOT,175,104,50,14
+    CONTROL         "",ID_STATINTR,"statustext",WS_DISABLED | 0x5,0,124,300,
+                    12
+END
+
+IDD_SYSIDT DIALOG DISCARDABLE  20, 20, 170, 136
+STYLE WS_MINIMIZEBOX | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Interrupt Descriptor Table"
+CLASS "WIDlg"
+FONT 8, "Helv"
+BEGIN
+    CONTROL         "Nr\tIDT-Entry\tAttribute",ID_LISTBOX1,"xlistbox",
+                    WS_DLGFRAME | WS_VSCROLL | WS_GROUP | WS_TABSTOP | 
+                    0x3000,2,2,166,104
+    PUSHBUTTON      "Schlie\337en",IDCANCEL,5,108,50,14
+    PUSHBUTTON      "&Refresh",ID_REFRESH,60,108,50,14
+    PUSHBUTTON      "&Disassembler",ID_SUBDLG1,115,108,50,14
+    CONTROL         "",ID_STATUS1,"statustext",WS_DISABLED | 0x5,0,124,170,
+                    12
+END
+
+IDD_PMIV DIALOG DISCARDABLE  20, 20, 170, 136
+STYLE WS_MINIMIZEBOX | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Protected Mode Int Vecs"
+CLASS "WIDlg"
+FONT 8, "Helv"
+BEGIN
+    CONTROL         "Interrupt\tVector",ID_LISTBOX1,"xlistbox",WS_DLGFRAME | 
+                    WS_VSCROLL | WS_GROUP | WS_TABSTOP | 0x3000,2,2,166,104
+    PUSHBUTTON      "Schlie\337en",IDCANCEL,5,108,50,14
+    PUSHBUTTON      "&Refresh",ID_REFRESH,60,108,50,14
+    CONTROL         "",ID_STATUS1,"statustext",WS_DISABLED | 0x5,0,124,170,
+                    12
+END
+
+IDD_LDT DIALOG DISCARDABLE  20, 20, 220, 136
+STYLE WS_MINIMIZEBOX | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Local Descriptor Table"
+CLASS "WIDlg"
+FONT 8, "Helv"
+BEGIN
+    CONTROL         "Sel.\tBase\tLimit\tAttr",ID_LISTBOX1,"xlistbox",
+                    WS_DLGFRAME | WS_VSCROLL | WS_GROUP | WS_TABSTOP | 
+                    0x3080,2,2,216,104
+    PUSHBUTTON      "Schlie\337en",IDCANCEL,5,108,50,14
+    PUSHBUTTON      "&Refresh",ID_REFRESH,60,108,50,14
+    PUSHBUTTON      "&Anzeigen",ID_SUBDLG1,115,108,50,14
+    CONTROL         "",ID_STATUS1,"statustext",WS_DISABLED | 0x5,0,124,220,
+                    12
+END
+
+IDD_GLOBAL DIALOG DISCARDABLE  20, 20, 320, 214
+STYLE WS_MINIMIZEBOX | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Global Heap"
+CLASS "WIDlg"
+FONT 8, "Helv"
+BEGIN
+    CONTROL         "Handle\tAdresse\tL\344nge\t\tOwner\tName\tLocks\tF\tAttribute",
+                    ID_LISTBOX1,"xlistbox",WS_DLGFRAME | WS_VSCROLL | 
+                    WS_GROUP | WS_TABSTOP | 0x3082,2,2,260,186
+    PUSHBUTTON      "Schlie\337en",IDCANCEL,266,2,50,13,WS_GROUP
+    PUSHBUTTON      "&Refresh",ID_REFRESH,266,16,50,13,NOT WS_TABSTOP
+    DEFPUSHBUTTON   "&Anzeigen",ID_SUBDLG1,266,30,50,13,NOT WS_TABSTOP
+    PUSHBUTTON      "Local &Heap",ID_SUBDLG2,266,44,50,13,NOT WS_TABSTOP
+    PUSHBUTTON      "&Lock",ID_LOCKMEM,266,58,50,13,NOT WS_TABSTOP
+    PUSHBUTTON      "&Unlock",ID_UNLKMEM,266,72,50,13,NOT WS_TABSTOP
+    PUSHBUTTON      "&PageLock",ID_PLCKMEM,266,86,50,13,NOT WS_TABSTOP
+    PUSHBUTTON      "PageUnloc&k",ID_PULKMEM,266,100,50,13,NOT WS_TABSTOP
+    PUSHBUTTON      "&Fix",ID_FIXMEM,266,114,50,13,NOT WS_TABSTOP
+    PUSHBUTTON      "UnF&ix",ID_UNFIXMEM,266,128,50,13,NOT WS_TABSTOP
+    PUSHBUTTON      "&Discard",ID_DISCMEM,266,142,50,13,NOT WS_TABSTOP
+    PUSHBUTTON      "Dis&cardable",ID_SETRESETDISCARDABLEMEM,266,156,50,13,
+                    NOT WS_TABSTOP
+    PUSHBUTTON      "&Optionen",ID_FILTMEM,266,170,50,13,NOT WS_TABSTOP
+    CONTROL         "",ID_STATUS1,"statustext",0x5,0,190,320,12
+    CONTROL         "",ID_STATUS2,"statustext",0x5,0,202,320,12
+    PUSHBUTTON      "&Y",ID_POPUPMENU,0,0,0,0,NOT WS_VISIBLE | NOT 
+                    WS_TABSTOP
+END
+
+IDD_EXPORT DIALOG DISCARDABLE  20, 20, 280, 116
+STYLE WS_MINIMIZEBOX | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Exporte"
+CLASS "WIDlg"
+FONT 8, "Helv"
+BEGIN
+    CONTROL         "Nr\tAdresse\t\tName",ID_LISTBOX1,"xlistbox",WS_DLGFRAME | 
+                    WS_VSCROLL | WS_GROUP | WS_TABSTOP | 0x3082,2,2,224,100
+    CONTROL         "",ID_STATUS1,"statustext",0x5,0,104,280,12
+    PUSHBUTTON      "Schlie\337en",IDOK,228,4,50,14
+    PUSHBUTTON      "&Refresh",ID_REFRESH,228,20,50,14
+    PUSHBUTTON      "&Umsortieren",ID_SUBDLG3,228,36,50,14
+    DEFPUSHBUTTON   "&Disassembler",ID_SUBDLG1,228,52,50,14
+    PUSHBUTTON      "&Importiert von",ID_SUBDLG2,228,68,50,14
+    PUSHBUTTON      "&Alle Entries",ID_SUBDLG4,228,84,50,14
+END
+
+IDD_IMPORT DIALOG DISCARDABLE  20, 20, 280, 116
+STYLE WS_MINIMIZEBOX | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Importe"
+CLASS "WIDlg"
+FONT 8, "Helv"
+BEGIN
+    CONTROL         "Adresse\tRT\tAT\tName",ID_LISTBOX1,"xlistbox",
+                    WS_DLGFRAME | WS_VSCROLL | WS_GROUP | WS_TABSTOP | 
+                    0x3002,2,2,224,100
+    PUSHBUTTON      "Schlie\337en",IDCANCEL,228,4,50,14
+    PUSHBUTTON      "&Refresh",ID_REFRESH,228,20,50,14
+    PUSHBUTTON      "&Umsortieren",ID_SUBDLG2,228,36,50,14
+    DEFPUSHBUTTON   "&Disassembler",ID_SUBDLG1,228,52,50,14
+    PUSHBUTTON      "Sna&pshot",ID_SNAPSHOT,228,68,50,14
+    CONTROL         "",ID_STATUS1,"statustext",0x5,0,104,280,12
+END
+
+IDD_SEGMENT DIALOG DISCARDABLE  20, 20, 280, 156
+STYLE WS_MINIMIZEBOX | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Segmente"
+CLASS "WIDlg"
+FONT 8, "Helv"
+BEGIN
+    CONTROL         "Nr\tHndle\tFlags\tGr\366\337e\t(File)",ID_LISTSEGM,
+                    "xlistbox",WS_DLGFRAME | WS_VSCROLL | WS_GROUP | 
+                    WS_TABSTOP | 0x3080,4,4,272,108
+    PUSHBUTTON      "Schlie\337en",IDCANCEL,10,116,50,14
+    PUSHBUTTON      "&Anzeigen",ID_SUBDLG1,70,116,50,14
+    PUSHBUTTON      "Ae&ndern",ID_SUBDLG2,130,116,50,14
+    CONTROL         "",ID_STATMODUL,"statustext",0x5,0,132,280,12
+    CONTROL         "",ID_STATSEGM,"statustext",0x5,0,144,280,12
+END
+
+IDD_SEGMFLAGS DIALOG DISCARDABLE  9, 22, 100, 90
+STYLE DS_LOCALEDIT | WS_MINIMIZEBOX | WS_POPUP | WS_CAPTION
+CAPTION "Edit Segment Flags"
+FONT 8, "Helv"
+BEGIN
+    CONTROL         "moveable",ID_SEGFLG1,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,12,10,60,10
+    CONTROL         "shared",ID_SEGFLG2,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,12,20,60,10
+    CONTROL         "readonly",ID_SEGFLG3,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,12,30,60,10
+    CONTROL         "conforming",ID_SEGFLG4,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,12,40,60,10
+    CONTROL         "discardable",ID_SEGFLG5,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,12,50,60,10
+    PUSHBUTTON      "Schlie\337en",IDCANCEL,12,70,50,14
+END
+
+IDD_DOS DIALOG DISCARDABLE  20, 20, 274, 144
+STYLE WS_MINIMIZEBOX | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "DOS Status"
+CLASS "WIDlg"
+FONT 8, "Helv"
+BEGIN
+    LTEXT           "ge\366ffnete Files",-1,2,2,50,9,NOT WS_GROUP
+    CONTROL         "Index\tPSP\tTask\tName\tCnt\tHdl\tMode",ID_LISTBOX1,
+                    "xlistbox",WS_DLGFRAME | WS_VSCROLL | WS_GROUP | 
+                    WS_TABSTOP | 0x3000,2,12,212,114
+    PUSHBUTTON      "Schlie\337en",IDCANCEL,220,4,50,14
+    PUSHBUTTON      "&Refresh",ID_REFRESH,220,20,50,14
+    DEFPUSHBUTTON   "&Memory",ID_MCBDOS,220,36,50,14
+    PUSHBUTTON      "&Devices",ID_DEVDOS,220,52,50,14
+    PUSHBUTTON      "&CDS",ID_CDSDOS,220,68,50,14
+    PUSHBUTTON      "D&PB",ID_DPBDOS,220,84,50,14
+    PUSHBUTTON      "&EMS",ID_EMSDOS,220,100,50,14
+    PUSHBUTTON      "&XMS",ID_XMSDOS,220,116,50,14
+    CONTROL         "",ID_STATUS1,"statustext",WS_DISABLED | 0x5,0,132,274,
+                    12
+END
+
+IDD_TEST DIALOG DISCARDABLE  20, 20, 274, 110
+STYLE WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Test"
+CLASS "WIDlg"
+FONT 8, "Helv"
+BEGIN
+    LISTBOX         ID_TESTLB,4,10,212,96,LBS_USETABSTOPS | WS_VSCROLL | 
+                    WS_TABSTOP
+END
+
+IDD_SELECTOR DIALOG DISCARDABLE  9, 22, 114, 42
+STYLE WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Selektor eingeben"
+FONT 8, "Helv"
+BEGIN
+    LTEXT           "Selektor/Handle",-1,10,10,62,9,NOT WS_GROUP
+    EDITTEXT        ID_EDITSEL,74,8,30,12
+    DEFPUSHBUTTON   "OK",IDOK,10,24,45,14,WS_GROUP
+    PUSHBUTTON      "Abbrechen",IDCANCEL,60,24,45,14
+END
+
+IDD_ADDRESS DIALOG DISCARDABLE  9, 22, 130, 42
+STYLE WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "lineare Adresse eingeben"
+FONT 8, "Helv"
+BEGIN
+    LTEXT           "Adresse",-1,10,10,52,9,NOT WS_GROUP
+    EDITTEXT        ID_EDITADDR,64,8,50,12
+    DEFPUSHBUTTON   "OK",IDOK,10,24,50,14,WS_GROUP
+    PUSHBUTTON      "Abbrechen",IDCANCEL,70,24,50,14
+END
+
+IDD_MEMOPT DIALOG DISCARDABLE  9, 22, 210, 132
+STYLE DS_LOCALEDIT | WS_MINIMIZEBOX | WS_POPUP | WS_CAPTION
+CAPTION "Heapwalk Optionen"
+FONT 8, "Helv"
+BEGIN
+    GROUPBOX        " Filter ",-1,2,2,140,108
+    CONTROL         "frei/discarded",ID_MEMFIL1,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,12,14,60,9
+    CONTROL         "discardable",ID_MEMFIL2,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,12,23,60,9
+    CONTROL         "not discardable",ID_MEMFIL3,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,12,32,60,9
+    CONTROL         "pagelocked",ID_MEMFIL9,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,12,45,60,9
+    CONTROL         "not pagelocked",ID_MEMFIL0,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,12,54,60,9
+    CONTROL         "Code",ID_MEMFIL4,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,
+                    12,67,60,9
+    CONTROL         "Data",ID_MEMFIL5,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,
+                    12,76,60,9
+    CONTROL         "Resource",ID_MEMFIL7,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,12,85,60,9
+    CONTROL         "Intern",ID_MEMFIL8,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,12,94,60,9
+    GROUPBOX        "",-1,80,12,55,88
+    LTEXT           "Name",-1,86,19,46,9,NOT WS_GROUP
+    EDITTEXT        ID_MEMFIL6,86,28,42,12,ES_UPPERCASE | ES_AUTOHSCROLL
+    LTEXT           "Adresse Start",-1,86,45,46,9,NOT WS_GROUP
+    EDITTEXT        ID_MEMVON,86,54,42,12
+    LTEXT           "Adresse Ende",-1,86,71,46,9,NOT WS_GROUP
+    EDITTEXT        ID_MEMBIS,86,80,42,12
+    GROUPBOX        " Sortierung ",-1,148,2,54,75
+    RADIOBUTTON     "keine",ID_RBTN1,150,13,50,10
+    RADIOBUTTON     "Handle",ID_RBTN2,150,23,50,10
+    RADIOBUTTON     "Adresse",ID_RBTN3,150,33,50,10
+    RADIOBUTTON     "L\344nge",ID_RBTN4,150,43,50,10
+    RADIOBUTTON     "Name",ID_RBTN5,150,53,50,10
+    CONTROL         "Absteigend",ID_SORTDIR,"Button",BS_AUTOCHECKBOX | 
+                    WS_TABSTOP,150,63,50,10
+    GROUPBOX        " Liste ",-1,148,78,54,32
+    RADIOBUTTON     "Heap",ID_RBTNA,150,86,50,10
+    RADIOBUTTON     "LRU",ID_RBTNB,150,98,50,10
+    PUSHBUTTON      "Schlie\337en",IDCANCEL,3,114,48,14
+    DEFPUSHBUTTON   "&Refresh",IDOK,55,114,48,14
+    PUSHBUTTON      "Sna&pshot",ID_SNAPSHOT,107,114,48,14
+    PUSHBUTTON      "&Compact",ID_SUBDLG1,159,114,48,14
+END
+
+IDD_MCB DIALOG DISCARDABLE  20, 20, 180, 136
+STYLE WS_MINIMIZEBOX | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "DOS Memory"
+CLASS "WIDlg"
+FONT 8, "Helv"
+BEGIN
+    LTEXT           "MCBs",-1,2,2,50,9,NOT WS_GROUP
+    CONTROL         "Nr\tAdresse\tL\344nge\tPSP\tOwner",ID_LISTBOX1,
+                    "xlistbox",WS_DLGFRAME | WS_VSCROLL | WS_GROUP | 
+                    WS_TABSTOP | 0x3000,4,12,172,96
+    PUSHBUTTON      "Schlie\337en",IDOK,10,110,50,12
+    DEFPUSHBUTTON   "&Anzeigen",ID_SUBDLG1,70,110,50,12,NOT WS_TABSTOP
+    CONTROL         "",ID_STATUS1,"statustext",WS_DISABLED | 0x5,0,124,180,
+                    12
+END
+
+IDD_PSP DIALOG DISCARDABLE  20, 20, 220, 136
+STYLE WS_MINIMIZEBOX | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "PSP "
+CLASS "WIDlg"
+FONT 8, "Helv"
+BEGIN
+    CONTROL         "",ID_LISTBOX1,"xlistbox",WS_DLGFRAME | WS_VSCROLL | 
+                    WS_GROUP | WS_TABSTOP | 0x3004,4,2,212,104
+    PUSHBUTTON      "Schlie\337en",IDOK,10,110,50,12
+    DEFPUSHBUTTON   "&Anzeigen",ID_SUBDLG1,70,110,50,12
+    DEFPUSHBUTTON   "&Environment",ID_SUBDLG2,130,110,50,12
+END
+
+IDD_ENVIRON DIALOG DISCARDABLE  20, 20, 280, 126
+STYLE WS_MINIMIZEBOX | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Environment "
+CLASS "WIDlg"
+FONT 8, "Helv"
+BEGIN
+    CONTROL         "",ID_LISTBOX1,"xlistbox",WS_DLGFRAME | WS_VSCROLL | 
+                    WS_GROUP | WS_TABSTOP | 0x3004,4,2,272,104
+    PUSHBUTTON      "Schlie\337en",IDOK,10,110,50,12
+END
+
+IDD_EMS DIALOG DISCARDABLE  20, 20, 170, 160
+STYLE WS_MINIMIZEBOX | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "EMS Status"
+CLASS "WIDlg"
+FONT 8, "Helv"
+BEGIN
+    CONTROL         "Handle\tSeiten(kB)",ID_LISTBOX1,"xlistbox",WS_DLGFRAME | 
+                    WS_VSCROLL | WS_GROUP | WS_TABSTOP | 0x3000,4,2,162,104
+    PUSHBUTTON      "Schlie\337en",IDOK,10,110,50,12
+    DEFPUSHBUTTON   "&Anzeigen",ID_SUBDLG1,70,110,50,12,NOT WS_TABSTOP
+    CONTROL         "",ID_STATUS1,"statustext",WS_DISABLED | 0x5,0,124,170,
+                    12
+    CONTROL         "",ID_STATUS2,"statustext",WS_DISABLED | 0x5,0,136,170,
+                    12
+    CONTROL         "",ID_STATUS3,"statustext",WS_DISABLED | 0x5,0,148,170,
+                    12
+END
+
+IDD_XMS DIALOG DISCARDABLE  20, 20, 200, 122
+STYLE WS_MINIMIZEBOX | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "XMS Status"
+CLASS "WIDlg"
+FONT 8, "Helv"
+BEGIN
+    CONTROL         "Handle\tAdresse\tL\344nge(kB)\tLocks\tFlags",
+                    ID_LISTBOX1,"xlistbox",WS_DLGFRAME | WS_VSCROLL | 
+                    WS_GROUP | WS_TABSTOP | 0x3000,4,2,192,80
+    PUSHBUTTON      "Schlie\337en",IDCANCEL,10,82,50,14
+    DEFPUSHBUTTON   "&Anzeigen",ID_SUBDLG1,70,82,50,14,NOT WS_TABSTOP
+    CONTROL         "",ID_STATUS1,"statustext",WS_DISABLED | 0x5,0,98,200,12
+    CONTROL         "",ID_STATUS2,"statustext",WS_DISABLED | 0x5,0,110,200,
+                    12
+END
+
+IDD_DOSDEV DIALOG DISCARDABLE  20, 20, 170, 124
+STYLE WS_MINIMIZEBOX | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "DOS Devices"
+CLASS "WIDlg"
+FONT 8, "Helv"
+BEGIN
+    CONTROL         "Nr\tName\tAdresse\tAttr",ID_LISTBOX1,"xlistbox",
+                    WS_DLGFRAME | WS_VSCROLL | WS_GROUP | WS_TABSTOP | 
+                    0x3004,4,2,162,104
+    DEFPUSHBUTTON   "Schlie\337en",IDOK,10,110,50,12
+END
+
+IDD_CDS DIALOG DISCARDABLE  20, 20, 280, 136
+STYLE WS_MINIMIZEBOX | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Current Directory Structures (CDS)"
+CLASS "WIDlg"
+FONT 8, "Helv"
+BEGIN
+    CONTROL         "Drive\tAdresse\tFlags\tDPB\tPfad",ID_LISTBOX1,
+                    "xlistbox",WS_DLGFRAME | WS_VSCROLL | WS_GROUP | 
+                    WS_TABSTOP | 0x3080,2,2,276,104
+    DEFPUSHBUTTON   "Schlie\337en",IDOK,10,110,50,12
+    PUSHBUTTON      "&Refresh",ID_REFRESH,70,110,50,12
+    CONTROL         "",ID_STATUS1,"statustext",WS_DISABLED | 0x5,0,124,280,
+                    12
+END
+
+IDD_DPB DIALOG DISCARDABLE  20, 20, 320, 136
+STYLE WS_MINIMIZEBOX | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Drive Parameter Blocks (DPB)"
+CLASS "WIDlg"
+FONT 8, "Helv"
+BEGIN
+    CONTROL         "Drive\tAdresse\tDevDrv\tSecSize\tClSize\tFATs\tCluster\tKap(kB)\tFrei",
+                    ID_LISTBOX1,"xlistbox",WS_DLGFRAME | WS_VSCROLL | 
+                    WS_GROUP | WS_TABSTOP | 0x3080,2,2,316,104
+    DEFPUSHBUTTON   "Schlie\337en",IDOK,10,110,50,12
+    PUSHBUTTON      "&Refresh",ID_REFRESH,70,110,50,12
+    CONTROL         "",ID_STATUS1,"statustext",WS_DISABLED | 0x5,0,124,320,
+                    12
+END
+
+IDD_USER DIALOG DISCARDABLE  20, 20, 222, 124
+STYLE WS_MINIMIZEBOX | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "User Status"
+CLASS "WIDlg"
+FONT 8, "Helv"
+BEGIN
+    LTEXT           "System Metrics",-1,4,2,80,10,NOT WS_GROUP
+    CONTROL         "",ID_SYSPARMLB,"xlistbox",WS_DLGFRAME | WS_VSCROLL | 
+                    WS_GROUP | WS_TABSTOP | 0x3004,4,12,162,104
+    PUSHBUTTON      "Schlie\337en",IDCANCEL,170,10,48,14
+    PUSHBUTTON      "&Windows",ID_WINDOWS,170,26,48,14
+    PUSHBUTTON      "&Klassen",ID_CLASS,170,42,48,14
+    PUSHBUTTON      "&Local Heap",ID_USERLOCAL,170,58,48,14
+    PUSHBUTTON      "&Global Heap",ID_USERGLOBAL,170,74,48,14
+    PUSHBUTTON      "&Status",ID_WINMON,170,90,48,14
+END
+
+IDD_WINSTATUS DIALOG DISCARDABLE  20, 20, 112, 132
+STYLE WS_MINIMIZEBOX | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Windows Status"
+CLASS "WIDlg"
+FONT 8, "Helv"
+BEGIN
+    CONTROL         "",ID_STATS,"statustext",0x0,0,0,112,12
+    CONTROL         "",ID_STATS1,"statustext",0x0,0,12,112,12
+    CONTROL         "",ID_STATS2,"statustext",0x0,0,24,112,12
+    CONTROL         "",ID_STATS3,"statustext",0x0,0,36,112,12
+    CONTROL         "",ID_STATS4,"statustext",0x0,0,48,112,12
+    CONTROL         "",ID_STATS5,"statustext",0x0,0,60,112,12
+    CONTROL         "",ID_STATS6,"statustext",0x0,0,72,112,12
+    CONTROL         "",ID_STATS7,"statustext",0x0,0,84,112,12
+    CONTROL         "",ID_STATS8,"statustext",0x0,0,96,112,12
+    CONTROL         "",ID_STATS9,"statustext",0x0,0,108,112,12
+    CONTROL         "",ID_STATS10,"statustext",0x0,0,120,112,12
+END
+
+IDD_ALLWIN DIALOG DISCARDABLE  20, 20, 280, 140
+STYLE WS_MINIMIZEBOX | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Windows"
+CLASS "WIDlg"
+FONT 8, "Helv"
+BEGIN
+    CONTROL         "Hndle\tOwner\tTask\t\tStyle\tClass\tText",ID_LISTBOX1,
+                    "xlistbox",WS_DLGFRAME | WS_VSCROLL | WS_GROUP | 
+                    WS_TABSTOP | 0x3080,2,2,276,104
+    PUSHBUTTON      "Schlie\337en",IDCANCEL,5,110,50,14
+    PUSHBUTTON      "&Refresh",ID_REFRESH,60,110,50,14
+    PUSHBUTTON      "&Detail",ID_SUBDLG3,115,110,50,14,WS_DISABLED
+    PUSHBUTTON      "&Klasse",ID_SUBDLG2,170,110,50,14,WS_DISABLED
+    PUSHBUTTON      "&Close",ID_SUBDLG1,225,110,50,14,WS_DISABLED
+    CONTROL         "",ID_STATUS1,"statustext",WS_DISABLED | 0x5,0,128,280,
+                    12
+END
+
+IDD_GDI DIALOG DISCARDABLE  20, 20, 280, 124
+STYLE WS_MINIMIZEBOX | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "GDI Status"
+CLASS "WIDlg"
+FONT 8, "Helv"
+BEGIN
+    CONTROL         "Device\tDriver\tOutput",ID_LISTBOX1,"xlistbox",
+                    WS_DLGFRAME | WS_VSCROLL | WS_GROUP | WS_TABSTOP | 
+                    0x3000,4,4,272,90
+    PUSHBUTTON      "Schlie\337en",IDCANCEL,10,100,46,14
+    PUSHBUTTON      "&Dev Caps",ID_GDIDEV,60,100,46,14,WS_DISABLED
+    PUSHBUTTON      "&Local Heap",ID_GDILOCAL,110,100,46,14
+    PUSHBUTTON      "&Global Heap",ID_GDIGLOBAL,160,100,46,14
+END
+
+IDD_DEVCAP DIALOG DISCARDABLE  20, 20, 200, 124
+STYLE WS_MINIMIZEBOX | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Device"
+CLASS "WIDlg"
+FONT 8, "Helv"
+BEGIN
+    CONTROL         "",ID_LISTBOX1,"xlistbox",WS_DLGFRAME | WS_VSCROLL | 
+                    WS_GROUP | WS_TABSTOP | 0x3000,4,4,192,90
+    PUSHBUTTON      "Schlie\337en",IDCANCEL,10,100,45,14
+    PUSHBUTTON      "&ExtDeviceMode",ID_SUBDLG1,60,100,75,14
+    PUSHBUTTON      "&Objects",ID_SUBDLG2,140,100,45,14
+END
+
+IDD_OBJECTS DIALOG DISCARDABLE  20, 20, 280, 140
+STYLE WS_MINIMIZEBOX | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Objects"
+CLASS "WIDlg"
+FONT 8, "Helv"
+BEGIN
+    LTEXT           "Brushes",-1,4,2,80,10,NOT WS_GROUP
+    LTEXT           "Pens",-1,144,2,80,10,NOT WS_GROUP
+    CONTROL         "Style\tColor\tHatch",ID_LISTBOX1,"xlistbox",WS_DLGFRAME | 
+                    WS_VSCROLL | WS_GROUP | WS_TABSTOP | 0x3000,4,12,132,90
+    CONTROL         "Style\tColor\tWidth",ID_SUBDLG1,"xlistbox",WS_DLGFRAME | 
+                    WS_VSCROLL | WS_GROUP | WS_TABSTOP | 0x3000,144,12,132,
+                    90
+    PUSHBUTTON      "Schlie\337en",IDCANCEL,10,110,45,14
+    CONTROL         "",ID_STATUS1,"statustext",WS_DISABLED | 0x5,0,128,280,
+                    12
+END
+
+IDD_XMODULE DIALOG DISCARDABLE  20, 20, 252, 140
+STYLE WS_MINIMIZEBOX | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Modul: %s"
+CLASS "WIDlg"
+FONT 8, "Helv"
+BEGIN
+    CONTROL         "Feld\tWert",ID_LISTBOX1,"xlistbox",WS_DLGFRAME | 
+                    WS_VSCROLL | WS_GROUP | WS_TABSTOP | 0x3004,4,2,172,104
+    CONTROL         "ref. Modul",ID_SUBDLG4,"xlistbox",WS_DLGFRAME | 
+                    WS_VSCROLL | WS_GROUP | WS_TABSTOP | 0x3000,180,2,68,104
+    PUSHBUTTON      "Schlie\337en",IDOK,2,108,48,14
+    DEFPUSHBUTTON   "Ini&tial Code",ID_SUBDLG1,52,108,48,14
+    PUSHBUTTON      "&Exporte",ID_SUBDLG3,102,108,48,14
+    PUSHBUTTON      "&Segmente",ID_SUBDLG7,152,108,48,14
+    PUSHBUTTON      "&Anzeigen",ID_SUBDLG9,202,108,48,14
+    PUSHBUTTON      "&Importe",ID_SUBDLG2,2,124,48,14
+    PUSHBUTTON      "&Resourcen",ID_SUBDLG5,52,124,48,14
+    PUSHBUTTON      "I&mportiert von",ID_SUBDLG6,102,124,48,14
+    PUSHBUTTON      "&Local Heap",ID_SUBDLG8,152,124,48,14
+    PUSHBUTTON      "&Global Heap",ID_SUBDLG10,202,124,48,14
+END
+
+IDD_XTASK DIALOG DISCARDABLE  20, 20, 190, 124
+STYLE WS_MINIMIZEBOX | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Task: %s"
+CLASS "WIDlg"
+FONT 8, "Helv"
+BEGIN
+    CONTROL         "",ID_LISTBOX1,"xlistbox",WS_DLGFRAME | WS_VSCROLL | 
+                    WS_GROUP | WS_TABSTOP | 0x3004,4,2,182,104
+    PUSHBUTTON      "Schlie\337en",IDOK,10,108,50,14
+END
+
+IDD_STACKTRACE DIALOG DISCARDABLE  20, 20, 260, 124
+STYLE WS_MINIMIZEBOX | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Stacktrace: %s"
+CLASS "WIDlg"
+FONT 8, "Helv"
+BEGIN
+    CONTROL         "SS:BP\tCS:IP\tModul\tProcedure",ID_LISTBOX1,"xlistbox",
+                    WS_DLGFRAME | WS_VSCROLL | WS_GROUP | WS_TABSTOP | 
+                    0x3000,4,2,252,104
+    PUSHBUTTON      "Schlie\337en",IDOK,10,108,50,14
+    PUSHBUTTON      "&Refresh",ID_REFRESH,65,108,50,14
+    DEFPUSHBUTTON   "&Disassembler",ID_SUBDLG1,120,108,50,14
+END
+
+IDD_DLGTMP DIALOG DISCARDABLE  20, 20, 190, 124
+STYLE WS_MINIMIZEBOX | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CLASS "WIDlg"
+FONT 8, "Helv"
+BEGIN
+    CONTROL         " ",ID_DLGINFO,"xlistbox",WS_DLGFRAME | WS_VSCROLL | 
+                    WS_GROUP | WS_TABSTOP | 0x3000,4,2,182,104
+    CONTROL         "",ID_DLGSTAT1,"statustext",WS_DISABLED | 0x5,0,112,190,
+                    12
+    CONTROL         "",ID_DLGSTAT2,"statustext",WS_DISABLED | 0x5,0,124,190,
+                    12
+    DEFPUSHBUTTON   "Schlie\337en",IDOK,136,112,50,12
+END
+
+IDD_VIEWCLS DIALOG DISCARDABLE  20, 20, 170, 124
+STYLE WS_POPUP | WS_CAPTION | WS_SYSMENU
+CLASS "WIDlg"
+FONT 8, "Helv"
+BEGIN
+    CONTROL         "",ID_VIEWCLSLB,"xlistbox",WS_DLGFRAME | WS_VSCROLL | 
+                    WS_GROUP | WS_TABSTOP | 0x3000,4,2,162,104
+    DEFPUSHBUTTON   "Schlie\337en",IDOK,10,110,50,12
+END
+
+IDD_UNASSEM DIALOG DISCARDABLE  20, 20, 254, 136
+STYLE WS_MINIMIZEBOX | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "DisAss: %s"
+CLASS "WIDlg"
+FONT 8, "Helv"
+BEGIN
+    CONTROL         "",ID_LISTBOX1,"xlistbox",WS_DLGFRAME | WS_VSCROLL | 
+                    WS_GROUP | WS_TABSTOP | 0x3080,2,2,250,104
+    PUSHBUTTON      "Schlie\337en",IDCANCEL,4,110,46,12
+    PUSHBUTTON      "&Optionen",ID_SUBDLG1,54,110,46,12
+    DEFPUSHBUTTON   "&Disassembler",ID_SUBDLG2,104,110,46,12
+    PUSHBUTTON      "Sna&pshot",ID_SNAPSHOT,154,110,46,12
+    PUSHBUTTON      "&Hexdump",ID_SUBDLG3,204,110,46,12
+    CONTROL         "",ID_STATUS1,"statustext",WS_DISABLED | 0x5,0,124,254,
+                    12
+END
+
+IDD_UNASSEM32 DIALOG DISCARDABLE  20, 20, 270, 136
+STYLE WS_MINIMIZEBOX | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "DisAssembler: %s"
+CLASS "WIDlg"
+FONT 8, "Helv"
+BEGIN
+    CONTROL         "",ID_LISTBOX1,"xlistbox",WS_DLGFRAME | WS_VSCROLL | 
+                    WS_GROUP | WS_TABSTOP | 0x3080,2,2,266,104
+    PUSHBUTTON      "Schlie\337en",IDCANCEL,4,110,50,12
+    PUSHBUTTON      "&Optionen",ID_SUBDLG1,58,110,50,12
+    DEFPUSHBUTTON   "&Disassembler",ID_SUBDLG2,112,110,50,12
+    PUSHBUTTON      "Sna&pshot",ID_SNAPSHOT,166,110,50,12
+    CONTROL         "",ID_STATUS1,"statustext",WS_DISABLED | 0x5,0,124,270,
+                    12
+END
+
+IDD_UNASSPARMS DIALOG DISCARDABLE  20, 20, 172, 89
+STYLE WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Optionen"
+FONT 8, "Helv"
+BEGIN
+    LTEXT           "Zeilen",-1,2,11,38,9,NOT WS_GROUP
+    EDITTEXT        ID_EDITUNASSLINES,48,7,24,12
+    LTEXT           "Adresse",-1,2,29,38,9,NOT WS_GROUP
+    EDITTEXT        ID_EDITUNASSADDR,48,26,52,12
+    LTEXT           "Hexdump",-1,2,70,38,9,NOT WS_GROUP
+    CONTROL         "",ID_EDITUNASSBTN1,"Button",BS_AUTOCHECKBOX,48,70,7,8
+    LTEXT           "Suchstring",-1,2,49,54,9,NOT WS_GROUP
+    EDITTEXT        ID_EDITUNASSSTR,48,48,54,12,ES_AUTOHSCROLL
+    DEFPUSHBUTTON   "&Refresh",IDOK,110,10,50,14
+    PUSHBUTTON      "Schlie\337en",IDCANCEL,110,30,50,14
+    PUSHBUTTON      "&Suchen",ID_EDITUNASSFIND,110,50,50,14
+    PUSHBUTTON      "&WeiterSuchen",ID_EDITUNASSREFIND,110,70,50,14
+END
+
+IDD_ENTRY DIALOG DISCARDABLE  20, 20, 280, 124
+STYLE WS_MINIMIZEBOX | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Entries Modul %s"
+CLASS "WIDlg"
+FONT 8, "Helv"
+BEGIN
+    CONTROL         "Offset\tNr\tAdresse\tTyp\tName",ID_LISTBOX1,"xlistbox",
+                    WS_DLGFRAME | WS_VSCROLL | WS_GROUP | WS_TABSTOP | 
+                    0x3080,4,2,272,104
+    PUSHBUTTON      "Schlie\337en",IDCANCEL,10,110,50,12
+    DEFPUSHBUTTON   "&Disassembler",ID_SUBDLG1,70,110,50,12
+    PUSHBUTTON      "Sna&pshot",ID_SNAPSHOT,130,110,50,12
+END
+
+IDD_DPMI DIALOG DISCARDABLE  20, 20, 272, 142
+STYLE WS_MINIMIZEBOX | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "DPMI"
+CLASS "WIDlg"
+FONT 8, "Helv"
+BEGIN
+    LTEXT           "Local Descriptor Table",-1,2,2,80,9,NOT WS_GROUP
+    CONTROL         "Sel.\tBase\tLimit\tAttr",ID_LISTBOX1,"xlistbox",
+                    WS_DLGFRAME | WS_VSCROLL | WS_GROUP | WS_TABSTOP | 
+                    0x3080,2,12,216,104
+    PUSHBUTTON      "Schlie\337en",IDCANCEL,220,4,50,14
+    PUSHBUTTON      "&Refresh",ID_REFRESH,220,20,50,14
+    DEFPUSHBUTTON   "&Anzeigen",ID_DPMIANZ,220,36,50,14
+    PUSHBUTTON      "&Status",ID_DPMIMON,220,52,50,14
+    PUSHBUTTON      "&Interrupts",ID_DPMIINT,220,68,50,14
+    PUSHBUTTON      "&VMs",ID_DPMIVM,220,84,50,14
+    PUSHBUTTON      "V&xD",ID_DPMIVXD,220,100,50,14
+    CONTROL         "",ID_STATUS1,"statustext",WS_DISABLED | 0x5,0,118,272,
+                    12
+    CONTROL         "",ID_STATUS2,"statustext",WS_DISABLED | 0x5,0,130,272,
+                    12
+END
+
+IDD_DPMIMON DIALOG DISCARDABLE  20, 20, 130, 132
+STYLE WS_MINIMIZEBOX | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "DPMI Status"
+CLASS "WIDlg"
+FONT 8, "Helv"
+BEGIN
+    CONTROL         "",ID_DPMIUEB1,"statustext",0x2,0,0,130,12
+    CONTROL         "",54,"statustext",0x1,0,12,130,12
+    CONTROL         "",51,"statustext",0x0,0,24,130,12
+    CONTROL         "",52,"statustext",0x0,0,36,130,12
+    CONTROL         "",53,"statustext",0x0,0,48,130,12
+    CONTROL         "",55,"statustext",0x0,0,60,130,12
+    CONTROL         "",58,"statustext",0x0,0,72,130,12
+    CONTROL         "",57,"statustext",0x0,0,84,130,12
+    CONTROL         "",56,"statustext",0x0,0,96,130,12
+    CONTROL         "",59,"statustext",0x0,0,108,130,12
+    CONTROL         "",60,"statustext",0x0,0,120,130,12
+END
+
+IDD_DPMIVXD DIALOG DISCARDABLE  20, 20, 200, 124
+STYLE WS_MINIMIZEBOX | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "VxDs"
+CLASS "WIDlg"
+FONT 8, "Helv"
+BEGIN
+    CONTROL         "ID\tName\tEntry PM",ID_LISTBOX1,"xlistbox",WS_DLGFRAME | 
+                    WS_VSCROLL | WS_GROUP | WS_TABSTOP | 0x3000,4,2,192,104
+    PUSHBUTTON      "Schlie\337en",IDCANCEL,10,110,50,12
+END
+
+IDD_DPMIVM DIALOG DISCARDABLE  20, 20, 336, 182
+STYLE WS_MINIMIZEBOX | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "VMs"
+CLASS "WIDlg"
+FONT 8, "Helv"
+BEGIN
+    CONTROL         "Handle\tID\tFlags\tV86(high)\tClient\tIDT\tPM-IV",
+                    ID_LISTBOX1,"xlistbox",WS_DLGFRAME | WS_VSCROLL | 
+                    WS_GROUP | WS_TABSTOP | 0x3080,4,2,276,138
+    PUSHBUTTON      "Schlie\337en",IDCANCEL,285,5,44,14
+    PUSHBUTTON      "&Refresh",ID_REFRESH,285,20,44,14
+    PUSHBUTTON      "&Anzeigen",ID_SUBDLG2,285,35,44,14
+    DEFPUSHBUTTON   "&Page Table",ID_SUBDLG1,285,50,44,14
+    PUSHBUTTON      "&IDT",IDC_IDT,285,65,44,14
+    PUSHBUTTON      "&V86 High",ID_SUBDLG3,285,80,44,14
+    PUSHBUTTON      "PM-IV",IDC_PMIV,285,95,44,14
+    PUSHBUTTON      "&Switch",ID_VMSWITCH,285,110,44,14
+    PUSHBUTTON      "&Destroy",ID_VMDESTROY,285,125,44,14
+    CONTROL         "",ID_STATUS1,"statustext",WS_DISABLED | 0x5,0,150,336,
+                    12
+    CONTROL         "",ID_STATUS2,"statustext",WS_DISABLED | 0x5,0,160,336,
+                    12
+    CONTROL         "",ID_STATUS3,"statustext",WS_DISABLED | 0x5,0,170,336,
+                    10
+END
+
+IDD_SYSPAGE DIALOG DISCARDABLE  20, 20, 240, 138
+STYLE WS_MINIMIZEBOX | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Page Directory"
+CLASS "WIDlg"
+FONT 8, "Helv"
+BEGIN
+    CONTROL         "Adressbereich\tEntry\tlinAddr\tFlags",ID_LISTBOX1,
+                    "xlistbox",WS_DLGFRAME | WS_VSCROLL | WS_GROUP | 
+                    WS_TABSTOP | 0x3000,4,2,232,104
+    PUSHBUTTON      "Schlie\337en",IDCANCEL,10,110,50,14
+    DEFPUSHBUTTON   "&Page Table",ID_SUBDLG1,65,110,50,14
+    PUSHBUTTON      "&Anzeigen",ID_SUBDLG2,120,110,50,14
+    CONTROL         "",ID_STATUS1,"statustext",WS_DISABLED | 0x5,0,126,240,
+                    12
+END
+
+IDD_PAGETAB DIALOG DISCARDABLE  20, 20, 200, 136
+STYLE WS_MINIMIZEBOX | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CLASS "WIDlg"
+FONT 8, "Helv"
+BEGIN
+    CONTROL         "lin. Adresse\tEntry\tFlags",ID_LISTBOX1,"xlistbox",
+                    WS_DLGFRAME | WS_VSCROLL | WS_GROUP | WS_TABSTOP | 
+                    0x3000,4,2,192,104
+    PUSHBUTTON      "Schlie\337en",IDCANCEL,10,110,50,12
+    PUSHBUTTON      "&Refresh",ID_REFRESH,65,110,50,12
+    PUSHBUTTON      "&Anzeigen",ID_SUBDLG1,120,110,50,12
+END
+
+IDD_SYSTEM DIALOG DISCARDABLE  20, 20, 272, 138
+STYLE WS_MINIMIZEBOX | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "System"
+CLASS "WIDlg"
+FONT 8, "Helv"
+BEGIN
+    LTEXT           "Global Descriptor Table (GDT)",-1,2,2,80,9,NOT WS_GROUP
+    CONTROL         "Sel.\tBase\tLimit\tAttr",ID_LISTBOX1,"xlistbox",
+                    WS_DLGFRAME | WS_VSCROLL | WS_GROUP | WS_TABSTOP | 
+                    0x3080,2,12,216,112
+    PUSHBUTTON      "Schlie\337en",IDCANCEL,220,5,50,14
+    PUSHBUTTON      "&Refresh",ID_REFRESH,220,20,50,14
+    DEFPUSHBUTTON   "&Anzeigen",ID_SYSVIEW,220,35,50,14
+    PUSHBUTTON      "&TSS",ID_SYSTSS,220,50,50,14
+    PUSHBUTTON      "&LDT",ID_SYSLDT,220,65,50,14
+    PUSHBUTTON      "&IDT",ID_SYSIDT,220,80,50,14
+    PUSHBUTTON      "&Paging",ID_SYSPAGE,220,95,50,14
+    PUSHBUTTON      "&Snapshot",ID_SNAPSHOT,220,110,50,14
+    CONTROL         "",ID_STATUS1,"statustext",WS_DISABLED | 0x5,0,126,280,
+                    12
+END
+
+IDD_TSS DIALOG DISCARDABLE  20, 20, 180, 148
+STYLE WS_MINIMIZEBOX | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Task State Segment"
+CLASS "WIDlg"
+FONT 8, "Helv"
+BEGIN
+    CONTROL         "\374berwachte Ports wenn CPL > IOPL (IO-Bitmap)",
+                    ID_LISTBOX1,"xlistbox",WS_DLGFRAME | WS_VSCROLL | 
+                    WS_GROUP | WS_TABSTOP | 0x3004,2,2,176,104
+    DEFPUSHBUTTON   "Schlie\337en",IDCANCEL,10,110,50,12
+    PUSHBUTTON      "&Refresh",ID_REFRESH,70,110,50,12
+    CONTROL         "",ID_STATUS1,"statustext",WS_DISABLED | 0x5,0,124,180,
+                    12
+    CONTROL         "",ID_STATUS2,"statustext",WS_DISABLED | 0x5,0,136,180,
+                    12
+END
+
+IDD_IMPORTEDFROM DIALOG DISCARDABLE  20, 20, 170, 124
+STYLE WS_MINIMIZEBOX | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CLASS "WIDlg"
+FONT 8, "Helv"
+BEGIN
+    CONTROL         "Modul\tAdresse",ID_LISTBOX1,"xlistbox",WS_DLGFRAME | 
+                    WS_VSCROLL | WS_GROUP | WS_TABSTOP | 0x3000,4,2,162,104
+    PUSHBUTTON      "Schlie\337en",IDCANCEL,10,110,50,12
+    DEFPUSHBUTTON   "&Disassembler",ID_SUBDLG1,65,110,50,12
+END
+
+IDD_REGISTER DIALOG DISCARDABLE  9, 22, 184, 40
+STYLE WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Registrierung"
+CLASS "WIDlg"
+FONT 8, "Helv"
+BEGIN
+    LTEXT           "RegisterNr",-1,10,10,62,9,NOT WS_GROUP
+    EDITTEXT        ID_CONTROL2,74,8,100,12
+    DEFPUSHBUTTON   "OK",IDOK,10,22,45,14,WS_GROUP
+    PUSHBUTTON      "Abbrechen",IDCANCEL,60,22,45,14
+END
+
+IDD_HEXPARMS DIALOG DISCARDABLE  9, 22, 180, 123
+STYLE WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Optionen"
+FONT 8, "Helv"
+BEGIN
+    GROUPBOX        "Aufbereitung",IDC_STATIC,2,2,116,63
+    RADIOBUTTON     "Bytes",ID_RBTN1,6,12,50,10
+    RADIOBUTTON     "Words",ID_RBTN2,6,22,50,10
+    RADIOBUTTON     "DWords",ID_RBTN3,6,32,50,10
+    RADIOBUTTON     "Text",ID_RBTN4,6,42,50,10
+    RADIOBUTTON     "Disassembler",ID_RBTN5,6,52,50,10
+    GROUPBOX        "Suchen",IDC_STATIC,2,66,116,50
+    LTEXT           "String",IDC_STATIC,7,82,19,8,NOT WS_GROUP
+    EDITTEXT        ID_SUBDLG1,29,81,54,12,ES_AUTOHSCROLL
+    PUSHBUTTON      "&Suchen",ID_SUBDLG2,7,97,50,14
+    PUSHBUTTON      "&Weitersuchen",ID_SUBDLG3,62,97,50,14
+    PUSHBUTTON      "Schlie\337en",IDCANCEL,124,12,50,14
+    PUSHBUTTON      "S&peichern",ID_SUBDLG4,124,30,50,14
+END
+
+IDD_SHOWRES DIALOG DISCARDABLE  20, 20, 180, 148
+STYLE WS_POPUP | WS_CAPTION | WS_SYSMENU
+CLASS "WIDlg"
+BEGIN
+END
+
+#ifdef APSTUDIO_INVOKED
+//////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#define APSTUDIO_HIDDEN_SYMBOLS\r\n"
+    "#include ""windows.h""\r\n"
+    "#undef APSTUDIO_HIDDEN_SYMBOLS\r\n"
+    "#include ""userw.h""\r\n"
+    "#include ""wininfox.h""\r\n"
+    "#include ""xlistbox.h""\r\n"
+    "#include ""stattext.h""\r\n"
+    "#include ""hexdump.h""\r\n"
+    "#include ""ver.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "\r\n"
+    "\0"
+END
+
+/////////////////////////////////////////////////////////////////////////////////////
+#endif    // APSTUDIO_INVOKED
+
+
+//////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+/* 48-63 */
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_VIEW                "Anzeigen"
+    IDS_TITLE               "WinInfo"
+    IDS_STATMEM1            "L\344nge ges.:\t %lX\tbelegt:\t %lX\tdiscrdbl:\t %lX\tfrei/disc:\t %lX\t"
+    IDS_INFOSTR             "\334ber WinInfo"
+    IDS_DWORDS              "DWord Aufb."
+    IDS_TEXT                "Text Aufb."
+    IDS_RESOURCE            "Resource Aufb."
+    IDS_DISASM              "Disassembler"
+    IDS_LOCSTR1             "RC von LocalCompact(-1): %u"
+    IDS_DISASSSTR           "DisAss"
+    IDS_IMPFROM             " - importiert von:"
+    IDS_LDT                 "Local Descriptor Table"
+    IDS_TSS                 "Task State Segment"
+    IDS_BYTES               "Byte Aufb."
+    IDS_WORDS               "Word Aufb."
+END
+
+/* 64-79 */
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_ERRMOD1             "Modul ist nicht mehr geladen!"
+    IDS_ERRTSK1             "Task ist inzwischen beendet!"
+    IDS_ERRMOD2             "Das Entladen eines Moduls\nkann einen Systemabsturz verursachen"
+    IDS_ERRMOD3             "Falsche Windows Version"
+    IDS_ERRMOD4             ".EXE Format ungueltig"
+    IDS_ERRMOD5             "Datei ist ein OS/2 Modul"
+    IDS_ERRMOD6             "Datei ist kein Windows Modul"
+    IDS_ERRMOD7             "Modul %s\n nicht gefunden"
+    IDS_ERRMOD8             "RC: %u von LoadLibrary()"
+    IDS_ERRMOD9             "RC: %u von WinExec()"
+    IDS_ERRMOD10            "Segment ung\374ltig - Neu einlesen!"
+    IDS_ERRVIE1             "Objekt kann nicht gesperrt werden"
+    IDS_ERRVIE2             "Adresse ist ung\374ltig"
+    IDS_ERRVIE3             "Lineare Adresse ist ung\374ltig"
+    IDS_ERRVIE4             "Page Fault beim Leseversuch"
+    IDS_ERRVIE5             "Protection Exception beim Leseversuch"
+END
+
+/* 80-95 */
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_ERRVIE6             "Ein Leseversuch w\374rde zu einer\nNot Present Exception f\374hren!"
+    IDS_ERRMEM1             "Dieses Objekt kann anschliessend nicht mehr restauriert werden!"
+    IDS_ERRMEM2             "Objekt nicht gefunden"
+    IDS_ERRMEM3             "Objekt ist discarded und kann nicht automatisch restauriert werden"
+    IDS_ERRXMS2             "XMM gibt seine Handle-Tabelle nicht zu erkennen"
+    IDS_ERRMEM5             "Kein Speicherplatz f\374r Heapwalk"
+    IDS_ERRRES1             "Das Entladen einer Resource\nkann einen Systemabsturz verursachen"
+    IDS_ERRRES2             "Resource kann nicht geladen werden!"
+    IDS_ERRRES3             "Resource nicht gefunden!"
+    IDS_ERRRES4             "bei Erzeugung des Fensters\n fuer die Resourcendarstellung"
+    IDS_ERRCLS1             "Klasse existiert nicht mehr!"
+    IDS_ERRSHW1             "Controls mit Attribut 'Ownerdraw' vorhanden"
+    IDS_ERRSHW2             "Resourcetyp nicht unterstuetzt"
+    IDS_ERRSHW3             "Fehler bei LockResource()"
+    IDS_ERRSHW4             "Fehler bei FindResource()"
+    IDS_ERRSHW5             "Fehler bei CreateDialog()"
+END
+
+/* 96-111 */
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_ERRSHW6             "Fehler bei LoadBitmap()"
+    IDS_ERRDLG1             "Stringresource ung\374ltig"
+    IDS_ERRDLG2             "veraltete Resourcen Version\n- kann nicht verarbeitet werden"
+    IDS_ERRDLG3             "Resource kann nicht gesperrt werden!"
+    IDS_ERRTSK2             "Task wird mit\n'Nichtbehebbarer Fehler ...'\nbeendet!"
+    IDS_ERRIMP1             "Modul kann nicht ge\366ffnet werden"
+    IDS_ERRIMP2             "Kein Speicherplatz verf\374gbar"
+    IDS_ERRIMP3             "Fehler beim Lesen des Moduls"
+    IDS_ERRIMP4             "Die ListBox kann nicht\nalle Strings aufnehmen"
+    IDS_ERRIMP5             "Relokierungs-Informationen\nsind wahrscheinlich gepackt"
+    IDS_ERRMNU1             "Fehler bei AppendMenu - evtl. Speicher knapp"
+    IDS_ERREXP1             "Modul kann nicht ge\366ffnet werden"
+    IDS_ERREXP2             "Kein Speicherplatz verf\374gbar"
+    IDS_ERREXP3             "Modul kann nicht gelesen werden"
+    IDS_ERRLOC1             "Heap inzwischen zerst\366rt!"
+    IDS_ERRTSK3             "Task nimmt keine Messages an\n'Kill' verwenden!"
+END
+
+/* 112-127 */
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_ERREMS1             "Kein Expanded Memory Manager\nvorhanden"
+    IDS_ERREXP4             "Diese(s) Modul/Funktion wird \nzur Zeit nicht statisch importiert"
+    IDS_ERRVIE7             "Page Fault"
+    IDS_ERRVIE8             "Protection Exception"
+    IDS_ERRVIE9             "Es kann kein Selektor allokiert werden"
+    IDS_ERRSHW7             "UAE beim Interpretationsversuch!"
+    IDS_ERRXMS1             "Kein Extended Memory Manager\nvorhanden"
+    IDS_ERRUNA1             "Maximal 32767 Zeilen m\366glich"
+    IDS_ERRVIEA             "Das Objekt kann nicht\nkorrekt gespeichert werden"
+    IDS_ERRVIEB             "'%s'\nnicht gefunden"
+    IDS_ERRTSK4             "Window nicht mehr gefunden"
+    IDS_ERRWND1             "Window nicht mehr gefunden"
+    IDS_ERRMEM6             "Sie wissen hoffentlich, was Sie tun?"
+    IDS_ERRMEM7             "Dieses Segment sollte nicht auf\nDISCARDABLE gesetzt werden"
+    IDS_ERREMS2             "EMS ist vorhanden, wird im\n Protected Mode aber nicht unterst\374tzt"
+    IDS_ERREMS3             "Keine Anzeige m\366glich.\nEMM wurde mit NOFRAME eingerichtet."
+END
+
+/* 160-175 */
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_XMODUL00            "Flags"
+    IDS_XMODUL01            "Modultyp"
+    IDS_XMODUL02            "Applikationstyp"
+    IDS_XMODUL03            "Datensegment"
+    IDS_XMODUL04            "Startwert CS:IP"
+    IDS_XMODUL05            "Startwert SS:SP"
+    IDS_XMODUL06            "Anfangswert lokaler Heap"
+    IDS_XMODUL07            "Stackgr\366\337e"
+    IDS_XMODUL08            "Segmente"
+    IDS_XMODUL09            "Automatisches Datensegment"
+    IDS_XMODUL10            "Offset Segmenttabelle"
+    IDS_XMODUL11            "Offset Resourcen"
+    IDS_XMODUL12            "Offset residente Namen"
+    IDS_XMODUL13            "Offset Modulreferenzen"
+    IDS_XMODUL14            "Offset importierte Namen"
+    IDS_XMODUL15            "Offset Entries"
+END
+
+/* 176-183 */
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_XMODUL16            "Offset FileInfo"
+    IDS_XMODUL17            "Swap Area (Paragraphen)"
+    IDS_XMODUL18            "Betriebssystem"
+    IDS_XMODUL19            "min. Version"
+    IDS_XMODUL20            "n\344chstes Modul"
+    IDS_XMODUL21            "bewegliche Entries"
+    IDS_XMODUL22            "Selbstladend?"
+    IDS_XMODUL23            "FileInfo"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_XVER1               "\tVersion %u.%u, DPMI f\374r 80%c86, Interrupts im %s Mode, %s virtueller Speicher"
+    IDS_XVER2               "bel. Selektoren\t%d(%d)\tCPU\t80%c86\tPagel\344nge\t%u Bytes\t"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_XCLASS00            "Style"
+    IDS_XCLASS01            "WndFunc"
+    IDS_XCLASS02            "ClsExtra"
+    IDS_XCLASS03            "WndExtra"
+    IDS_XCLASS04            "hInstance"
+    IDS_XCLASS05            "Modul"
+    IDS_XCLASS06            "hIcon"
+    IDS_XCLASS07            "hCursor"
+    IDS_XCLASS08            "hBrushBkGnd"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_XDPMI00             "linear,frei,ungesperrt\t%lu\t"
+    IDS_XDPMI01             "linear,frei\t%lu\t"
+    IDS_XDPMI02             "max. Block,allokierbar\t%lu\t"
+    IDS_XDPMI03             "linearer Adressraum\t%lu\t"
+    IDS_XDPMI04             "max. Block,sperrbar\t%lu\t"
+    IDS_XDPMI05             "physikalisch,ungesperrt\t%lu\t"
+    IDS_XDPMI06             "physikalisch,frei\t%lu\t"
+    IDS_XDPMI07             "physikalisch,gesamt\t%lu\t"
+    IDS_XDPMI08             "Swap Datei\t%lu\t"
+    IDS_XDPMI09             "max. DOS,frei\t%u\t"
+    IDS_XDPMI0A             "linearer Adressraum, frei\t%lu\t"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_XWIN00              "USER Handle"
+    IDS_XWIN01              "USER total"
+    IDS_XWIN02              "USER frei"
+    IDS_XWIN03              "GDI Handle"
+    IDS_XWIN04              "GDI total"
+    IDS_XWIN05              "GDI frei"
+    IDS_XWIN06              "Global frei"
+    IDS_XWIN07              "Tasks"
+    IDS_XWIN08              "akt. Task"
+    IDS_XWIN09              "akt. Instanz"
+    IDS_XWIN10              "akt. Window"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_SPSTR1              "SM_CXSCREEN"
+    IDS_SPSTR2              "SM_CYSCREEN"
+    IDS_SPSTR3              "SM_CXFRAME"
+    IDS_SPSTR4              "SM_CYFRAME"
+    IDS_SPSTR5              "SM_CXVSCROLL"
+    IDS_SPSTR6              "SM_CYVSCROLL"
+    IDS_SPSTR7              "SM_CXHSCROLL"
+    IDS_SPSTR8              "SM_CYHSCROLL"
+    IDS_SPSTR9              "SM_CYCAPTION"
+    IDS_SPSTR10             "SM_CXBORDER"
+    IDS_SPSTR11             "SM_CYBORDER"
+    IDS_SPSTR12             "SM_CXDLGFRAME"
+    IDS_SPSTR13             "SM_CYDLGFRAME"
+    IDS_SPSTR14             "SM_CXHTHUMB"
+    IDS_SPSTR15             "SM_CYVTHUMB"
+    IDS_SPSTR16             "SM_CXICON"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_SPSTR17             "SM_CYICON"
+    IDS_SPSTR18             "SM_CXCURSOR"
+    IDS_SPSTR19             "SM_CYCURSOR"
+    IDS_SPSTR20             "SM_CYMENU"
+    IDS_SPSTR21             "SM_CXFULLSCREEN"
+    IDS_SPSTR22             "SM_CYFULLSCREEN"
+    IDS_SPSTR23             "SM_CYKANJIWINDOW"
+    IDS_SPSTR24             "SM_CXMINTRACK"
+    IDS_SPSTR25             "SM_CYMINTRACK"
+    IDS_SPSTR26             "SM_CXMIN"
+    IDS_SPSTR27             "SM_CYMIN"
+    IDS_SPSTR28             "SM_CXSIZE"
+    IDS_SPSTR29             "SM_CYSIZE"
+    IDS_SPSTR30             "SM_MOUSEPRESENT"
+    IDS_SPSTR31             "SM_DEBUG"
+    IDS_SPSTR32             "SM_SWAPBUTTON"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_MODLDS1             "Modul laden"
+    IDS_MODLDS2             "Modulname:"
+    IDS_RESVIEW1            "ID\tStyle\tClass\tX\tY\tlX\tlY\tText"
+    IDS_RESVIEW2            "ID\tText"
+    IDS_RESVIEW3            "Option\tID\tText"
+    IDS_RESVIEW4            "Typ\tID\tText"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_DRIVERVERSION       "DRIVERVERSION"
+    IDS_TECHNOLOGY          "TECHNOLOGY"
+    IDS_HORZSIZE            "HORZSIZE (mm)"
+    IDS_VERTSIZE            "VERTSIZE (mm)"
+    IDS_HORZRES             "HORZRES (pixel)"
+    IDS_VERTRES             "VERTRES (pixel)"
+    IDS_BITSPIXEL           "BITSPIXEL"
+    IDS_PLANES              "PLANES"
+    IDS_NUMBRUSHES          "NUMBRUSHES"
+    IDS_NUMPENS             "NUMPENS"
+    IDS_NUMMARKERS          "NUMMARKERS"
+    IDS_NUMFONTS            "NUMFONTS"
+    IDS_NUMCOLORS           "NUMCOLORS"
+    IDS_PDEVICESIZE         "PDEVICESIZE (bytes)"
+    IDS_CURVECAPS           "CURVECAPS"
+    IDS_LINECAPS            "LINECAPS"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_POLYGONALCAPS       "POLYGONALCAPS"
+    IDS_TEXTCAPS            "TEXTCAPS"
+    IDS_CLIPCAPS            "CLIPCAPS"
+    IDS_RASTERCAPS          "RASTERCAPS"
+    IDS_ASPECTX             "ASPECTX"
+    IDS_ASPECTY             "ASPECTY"
+    IDS_ASPECTXY            "ASPECTXY"
+    IDS_LOGPIXELSX          "LOGPIXELSX (pixel/inch)"
+    IDS_LOGPIXELSY          "LOGPIXELSY (pixel/inch)"
+    IDS_SIZEPALETTE         "SIZEPALETTE"
+    IDS_NUMRESERVED         "NUMRESERVED"
+    IDS_COLORRES            "COLORRES"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_XMS2                "Version\t%u.%u(%X)\tEntry\t%X:%X\t"
+    IDS_XMS3                "frei\t%lu kB\tgr\366\337ter fr. Block\t%lu kB\t"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_PAGELST1            "Page Table %lX"
+    IDS_XTASK00             "Prioritaet"
+    IDS_XTASK01             "Vektor 0"
+    IDS_XTASK02             "Vektor 2"
+    IDS_XTASK03             "Vektor 4"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_XTASK04             "Vektor 6"
+    IDS_XTASK05             "Vektor 7"
+    IDS_XTASK06             "Vektor 0x3E"
+    IDS_XTASK07             "Vektor 0x75"
+    IDS_XTASK08             "PSP"
+    IDS_XTASK09             "TDB Code Alias"
+    IDS_XTASK0A             "Instance"
+    IDS_XTASK0B             "Modul"
+    IDS_XTASK0C             "Parent"
+    IDS_XTASK0D             "Thunk Selektor"
+    IDS_XTASK0E             "SS:SP"
+    IDS_XTASK0F             "Task Flags"
+    IDS_XTASK10             "DTA"
+    IDS_XTASK11             "Task Queue"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_XPSP00              "Int-Vektor 22"
+    IDS_XPSP01              "Int-Vektor 23"
+    IDS_XPSP02              "Int-Vektor 24"
+    IDS_XPSP03              "Parent PSP"
+    IDS_XPSP04              "Environment"
+    IDS_XPSP05              "Stack"
+    IDS_XPSP06              "FileHdlTab Groesse"
+    IDS_XPSP07              "FileHdlTab Adresse"
+    IDS_XPSP08              "Commandline"
+    IDS_XTASK12             "Events"
+END
+
+
+#ifndef APSTUDIO_INVOKED
+////////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+
+
+/////////////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

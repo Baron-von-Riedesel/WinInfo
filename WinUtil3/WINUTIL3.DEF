@@ -1,0 +1,32 @@
+
+LIBRARY winutil3
+
+EXETYPE WINDOWS
+
+PROTMODE
+
+DESCRIPTION 'prozessorspezifische Utilities'
+
+CODE    LOADONCALL MOVEABLE DISCARDABLE
+DATA    NONE
+
+HEAPSIZE  0
+
+EXPORTS
+        WEP                 @1 RESIDENTNAME NODATA PRIVATE
+        UNASSEMBLE          @2 NODATA
+        CALLRING0PROC       @3 NODATA
+        GETFLATADDRBYTES   @14 NODATA
+
+        VMFIRST         @20   NODATA
+        VMNEXT          @21   NODATA
+        VMCLOSE         @22   NODATA
+        VMFINDHANDLE    @23   NODATA
+
+        GETVMPGCOUNT    @30   NODATA
+        SETVMFOCUS      @31   NODATA
+        DESTROYVM       @32   NODATA
+
+        GETCR3          @40   NODATA
+        GETCR0          @41   NODATA
+

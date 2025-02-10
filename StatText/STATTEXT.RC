@@ -1,0 +1,11 @@
+
+#include "windows.h"
+#include "stat.h"
+
+STRINGTABLE
+BEGIN
+    IDS_CLASSNAME,     "StatusText"
+END
+
+#include "stattext.ver"
+

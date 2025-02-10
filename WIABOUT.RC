@@ -1,0 +1,23 @@
+
+#include "windows.h"
+#include "userw.h"
+#include "wininfox.h"
+
+#define PBSTYLE BS_PUSHBUTTON
+#define DBFONT "Helv"
+#define DBFHGT 8
+#define STS_KOMPAT STS_NOFRAMES | STS_WINDOWBK | STS_CAPTIONBORDER
+#define UEBHI 9
+
+1       DIALOG LOADONCALL MOVEABLE DISCARDABLE 20, 20, 200, 156
+STYLE WS_POPUP | WS_CAPTION | WS_SYSMENU | 0x0180L
+FONT DBFHGT,DBFONT
+BEGIN
+   CONTROL "", ID_ABOUTTEXT, "static", SS_CENTER | WS_CHILD, 8, 8, 190,110
+   ICON     ICON1               -1,  14,  10,  0, 0
+   ICON     ICON1               -1,  170, 10,  0, 0
+   CONTROL "Registrierformular ausfüllen", IDOK, "button", BS_PUSHBUTTON | WS_GROUP | WS_TABSTOP | WS_CHILD, 20, 120, 100, 14
+   CONTROL "Weiter", IDCANCEL, "button", BS_PUSHBUTTON | WS_GROUP | WS_TABSTOP | WS_CHILD,130, 120, 50, 14
+   CONTROL "Registrieren", ID_REGISTER, "button", BS_PUSHBUTTON | WS_GROUP | WS_TABSTOP | WS_CHILD, 20, 136, 50, 14
+END
+

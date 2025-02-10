@@ -1,0 +1,14 @@
+
+IDR_MENUHEXDUMP MENU LOADONCALL DISCARDABLE 
+BEGIN
+    POPUP "x"
+    BEGIN
+        MENUITEM "&Byte Format",                 IDM_BYTEFORMAT
+        MENUITEM "&Word Format",                 IDM_WORDFORMAT
+        MENUITEM "&DWord Format",                IDM_DWORDFORMAT
+        MENUITEM "&Ansi Text Format",            IDM_TEXTFORMAT
+        MENUITEM SEPARATOR
+        MENUITEM "&Speichern unter ...",         IDM_SAVEHEXDUMP
+    END
+END
+

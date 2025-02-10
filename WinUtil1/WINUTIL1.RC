@@ -1,0 +1,44 @@
+
+#include "windows.h"
+#include "userw.h"
+#include "winutil1.h"
+#include "opendlg.h"
+#include "xlistbox.h"
+
+IDI_OPENICON ICON "opendlg.ico"
+
+STRINGTABLE
+BEGIN
+    IDS_OK,      "OK"
+    IDS_CANCEL,  "Abbrechen"
+    IDS_ERROR,   "Fehler"
+    IDS_WARNING, "Warnung"
+    IDS_HINT,    "Hinweis"
+    IDS_YES,     "Ja"
+    IDS_NO,      "Nein"
+    IDS_ERRNR+0, "RC: %u\n beim Zugriff auf %s"
+    IDS_ERRNR+1, "Ungültige Funktionsnummer"
+    IDS_ERRNR+2, "%s\nnicht gefunden"
+    IDS_ERRNR+3, "Verzeichnis nicht gefunden"
+    IDS_ERRNR+4, "Zu viele Dateien geöffnet"
+    IDS_ERRNR+5, "Zugriff verweigert"
+    IDS_ERRNR+6, "Ungültiges Handle"
+    IDS_ERRNR+32,"Zugriffskonflikt\n%s wird bereits bearbeitet"
+END
+
+IDD_OPENFILE DIALOG LOADONCALL MOVEABLE DISCARDABLE 20, 20, 174,146
+STYLE WS_BORDER | WS_POPUP | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX
+CAPTION "Datei öffnen"
+FONT 8,"Helv"
+BEGIN
+    CONTROL "Dateiname:",ID_FNCAP, "static" ,WS_CHILD | SS_LEFT, 4, 4, 40, 8
+    EDITTEXT  ID_FILENAME,         04, 14, 166, 12, WS_GROUP
+    CONTROL "",ID_PATH,"static" ,WS_CHILD | SS_LEFT, 4, 28, 160, 8
+    CONTROL "",ID_LISTFIL,"xlistbox",XLBS_STANDARD | LBS_SORT,04, 40,  80, 82
+    CONTROL "",ID_LISTDIR,"xlistbox",XLBS_STANDARD | LBS_SORT,90, 40,  80, 82
+    DEFPUSHBUTTON "OK"          IDOK,       10,126,  50, 14, WS_GROUP
+    PUSHBUTTON "Abbrechen"      IDCANCEL,   70,126,  50, 14
+END
+
+#include "winutil1.ver"
+

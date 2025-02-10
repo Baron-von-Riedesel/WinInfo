@@ -1,0 +1,201 @@
+ษอออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออป
+บ                                 WinInfo                                     บ
+ศอออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออผ
+
+  1) Ueberblick
+
+    WinInfo zeigt Informationen ueber Windows an:
+
+    - Liste der aktuellen Tasks samt zugehoeriger Windows
+    - Liste der geladenen Module
+      (incl. Segmente, Resourcen, Exporte, Importe, lokale Heaps, Atome)
+    - globaler Heap (Heapwalk)
+    - USER Status (Systemparameter, Windows, Windows-Klassen, Heap)
+    - GDI Status (Display Caps, Heap)
+    - DOS Status (offene Files, MCBs, Devices, CDS, DPBs, EMS, XMS)
+    - DPMI Status (LDT, Interrupt- und Exceptionvektoren, Speicherbelegung)
+    - System Status (GDT, IDT, IO-Permission-Bitmap)
+    - mit Disassembler (incl. Anzeige von 32-Bit-Code und Symbolen)
+    - SnapShot-Moeglichkeit der wichtigsten internen Listen
+    - Speicherobjekte koennen in Datei geschrieben werden
+      die registrierte Version bietet zusaetzlich:
+    - disassemblierte Listen koennen in Datei geschrieben werden
+    - detaillierte Anzeige der Paging Tabellen im erweiterten Modus
+    - Anzeige von VM-Informationen und VxD-PM-APIs im erweiterten Modus
+
+    WinInfo luft nur auf Rechnern mit 80386 CPU oder hoeher.
+    Unter OS/2 und Windows/NT sind einige Bereiche von WinInfo
+    (z.B. DOS-Status) nicht bzw. nur eingeschraenkt lauffaehig!
+
+  -------------------------------------------------------------------------
+
+  2) Installation
+
+      Die Dateien in ein (moeglichst eigenes) Verzeichnis der Festplatte
+      kopieren, anschliessend im Programmanager ueber Datei/Neu einrichten.
+
+  -------------------------------------------------------------------------
+
+  3) Anwendungsgebiete von WinInfo
+
+      WinInfo kann u.a. bei folgenden Fragestellungen herangezogen werden:
+
+      - Welche Funktionen werden von einer DLL bereitgestellt?
+      - Welche Resourcen sind in einem Modul vorhanden
+      - Kann eine bestimmte Resource geladen/verwendet werden?
+      - Welche Resourcen werden in einem Modul verwendet?
+      - Welche Funktionen werden von einer Anwendung "importiert"
+      - Von welchen Modulen wird eine bestimmte Funktion aufgerufen
+      - Gibt es undefinierte Importe in einem Modul?
+      - Sind die "Thunks" eines Moduls korrekt?
+      - Welche Tasks gibt es augenblicklich im System?
+      - Wieviel Speicher wird gerade belegt?
+      - Wieviel Speicher wird von einem bestimmten Modul belegt?
+      - Wie sehen alle lokale Heaps von USER/GDI aus?
+      - Wird ein bestimmtes Segment in den Real-Mode-Addressraum geladen?
+      - Ist der lokale Heap eines Moduls korrekt?
+      - Wird eine Atomtabelle angelegt?
+      - Welche Objekte sind auf dem lokalen Heap?
+      - Gibt es mehrere lokale Heaps eines Moduls?
+      - Welche Identifikationsnummer hat ein bestimmtes Control
+        in einer Dialogbox- oder Menueresource?
+      - Welche Interrupts sind von welcher Anwendung "umgebogen"?
+      - Wieviel Selektoren sind noch frei?
+      - Welche Module rufen eine bestimmte Funktion auf?
+      - Was macht eine (unbekannte) Funktion im einzelnen?
+      - Kann eine bestimmte DLL geladen bzw. entladen werden?
+      - Kann eine Task noch "normal" beendet werden oder muss
+        etwas "Gewalt" angewendet werden?
+      - Welche Windows werden von einer Task erzeugt?
+      - Wird irgendwo "Subclassing" eingesetzt?
+      - Welche Klassen werden von einer Anwendung registriert?
+      - Wie sehen die zugehoerigen Fensterfunktionen aus?
+      - Welche Dateien sind zur Zeit von wem geoeffnet?
+      - Wie sieht der DOS-Teil der Windows-VM aus?
+      - Welche TSRs sind noch aus WINSTART.BAT geladen worden?
+      - Ist die MCB-Kette noch korrekt?
+      - Wieviel Speicher kann im 1. Megabyte noch allokiert werden?
+      - Gibt es noch EMS- und XMS-Unterstuetzung in der Windows-VM?
+      - Wie sieht die GDT und IDT aus? Wieviele LDTs gibt es?
+      - Welche Ports werden in der Windows-VM "ueberwacht"?
+        zusaetzlich fuer die registrierte Version:
+      - Wieviele VMs sind aktiv?
+      - Welche VMs laufen im Hintergrund?
+      - Gibt es "unsichtbare" DOS-Boxen?
+      - In welchen DOS-Boxen laeuft eine Protected Mode Applikation?
+      - Welcher lineare Adressraum ist belegt?
+
+  -------------------------------------------------------------------------
+
+  4) Historie
+
+    WinInfo Version 1.8 (2025)
+
+    - XMS v3.x supported
+
+    WinInfo Version 1.7 (2004)
+
+    - copyright changed to japheth
+    - fixed GPF on exit
+
+    WinInfo Version 1.6 (1999)
+
+    - WinInfo ist FreeWare
+    - integrierter Disassembler mit Pentium Unterstuetzung
+    - Fehlerbereinigung
+
+    WinInfo Version 1.5 (1993)
+
+    - Kontextmenues mit rechter Maustaste
+    - Belegung des globalen Heaps fuer Tasks/Module
+    - erweiterter GDI Dialog
+    - DPMI Monitor zeigt Speicherauslastung als Symbol
+    - Anzeige der referenzierten Module in Detailanzeige Module
+    - Erweiterte Moeglichkeiten im Dialog "Heap"
+    - Modulliste kann nach verschiedenen Kriterien sortiert werden
+    - Segmentattribute koennen zur Laufzeit geaendert werden
+    - PSP wird detailliert angezeigt
+    - Inhalt des allokierten EMS- und XMS-Speicher kann angezeigt werden
+    - DOS Memory Control Blocks mit Sub-Blocks
+
+    Neue Features in WinInfo Version 1.4
+
+    - Dialog "Tasks": Tasks beendbar (mit Message oder UAE)
+    - Dialog "Tasks": Anzeige lokaler Atomtabellen
+    - Dialog "Module": Anzeige von Referenzen auf einen Export
+    - Dialog "Module": strukturierte Ausgabe der Module Database
+    - Dialog "Module": Anzeige lokaler Atomtabellen
+    - Dialog "Module/Resourcen": verbesserte Interpretation der Daten
+    - Dialog "Local Heap" GDI+USER: Objekttyp wird angegeben
+    - Dialog "Local Heap": Sortierung einstellbar
+    - Dialog "Local Heap": Anzeige von Atomtabellen
+    - Dialog "Heap": zusaetzliche Filter + Sortiermoeglichkeiten
+    - Dialog "Heap": Anzeige lokaler Heaps sofern vorhanden
+    - Dialog "USER": Anzeige Systemparameter (System Metrics)
+    - Dialog "USER/Klassen": detaillierte Infos
+    - Dialog "GDI": Anzeige Display Capabilities
+    - Dialog "DOS": Anzeige von CDS, DPB, EMS und XMS
+    - Dialog "DPMI": Anzeige der Descriptoren (LDT) und Interruptvektoren
+    - Dialog "System": Anzeige von GDT, IDT, LDTs, TSS und Paging Tabellen
+    - Dialoge "Anzeige": Hexdump verarbeitet Objekte bis zu 4 GB!
+    - integrierter Disassembler mit folgenden Features
+      - 32 Bit-Code Verarbeitung!
+      - Anzeige symbolischer Namen!
+      - einfache Navigation durch den Code
+    - alle Dialoge: neue .INI-Option "Hintergrundfarbe" (s. Help)
+    - alle Dialoge: eigene Listbox-Klasse mit 3D-Effekt; USER-Heap wird
+      entlastet, die Strings der Listbox koennen 64K uebersteigen
+    - Anzeige der Adressen exportierter Fensterfunktionen
+    - erweiterte Hilfe
+    - erweiterte Statuszeilen
+    - Snapshots
+
+    Neue Features in WinInfo Version 1.3
+
+    - erweiterte Anzeige der Windows einer Task, bspw. genauer Window-Style
+    - Statuszeilen in diversen Dialogen mit zusaetzlichen Infos
+    - die Positionen der Windows werden in WININFO.INI vermerkt
+    - Anzeige der importierten Namen eines Moduls im Moduldialog
+    - Tastaturunterstuetzung verbessert und erweitert
+    - direkter Zugriff auf lineares Memory im Memorydialog
+    - DOS Statusanzeige (offene Files, Memory Control Blocks, Devices)
+    - DPMI Statusanzeige, Liste der VxD-Protected-Mode-Entries
+    - FastSwitch ueber F6
+    - Memorydialog: Filter koennen angegeben werden
+    - Resourcendialog: Dialogboxtemplates koennen angezeigt werden
+
+    Neue Features in WinInfo Version 1.2
+
+    - Laden von Modulen (DLLs und Programme)
+    - Entladen von Modulen (DLLs)
+    - Tasks beenden (auch Tasks ohne Fenster)
+    - Task Switch
+    - Global Memory: Sortierung nach Ownern
+    - Help integriert
+    - offene Files: Kennzeichnung der Files des "SystemPSPs"
+    - Erweiterte Anzeige der Windows einer Task
+    - Durch Doppelclick auf Windows einer Task Auflistung der Child-Windows
+    - erste Version eines DOS-Interrupt Monitors
+
+  -------------------------------------------------------------------------
+
+  5) Copyright/sonstige Hinweise
+
+    Copyright (C) japheth, 1992-1999
+
+    WinInfo ist FreeWare,
+    Zu den Einzelheiten s. Online-Hilfe
+
+    WinInfo besteht aus:
+
+     - wininfo.doc
+     - wininfo.exe
+     - wininfo.hlp
+     - hexdump.dll
+     - stattext.dll
+     - xlistbox.dll
+     - winutil1.dll
+     - winutil2.dll
+     - winutil3.dll
+
+  -------------------------------------------------------------------------
