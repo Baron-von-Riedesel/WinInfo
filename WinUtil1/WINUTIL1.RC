@@ -1,7 +1,6 @@
 
 #include "windows.h"
 #include "userw.h"
-#include "winutil1.h"
 #include "opendlg.h"
 #include "xlistbox.h"
 

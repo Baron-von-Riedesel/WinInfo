@@ -1,5 +1,5 @@
 
-/* ems-funktionen */
+/* ems functions */
 
 #ifndef NO_EXT_KEYS
     #define pascal  pascal
@@ -13,7 +13,7 @@ extern "C" {
 
 // EMS 3.2 Prototypen
 
-int   FAR PASCAL  _EMS_Check(void);           /* ÅberprÅfen ob EMS vorhanden */
+int   FAR PASCAL  _EMS_Check(void);           /* check if EMS exists */
 WORD  FAR PASCAL  _EMS_GetVersion(void);
 DWORD FAR PASCAL  _EMS_GetPageFrame(void);    /* (HIWORD=Error) */
 DWORD FAR PASCAL  _EMS_GetFreePages(void);    /* freie seiten (HIWORD=Error) */

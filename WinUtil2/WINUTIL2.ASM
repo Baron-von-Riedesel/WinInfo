@@ -5,7 +5,7 @@
 
 _TRACE_ = 0
 
-extrn   __aFchkstk:FAR
+;extrn   __aFchkstk:FAR
 
 OutputdebugString proto far pascal pString:dword
 
@@ -34,7 +34,7 @@ if _TRACE_
         call  OutputDebugString
 endif
         mov     ax,1
-        retf
+        ret
 LibEntry endp
 
 ;旼컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴커

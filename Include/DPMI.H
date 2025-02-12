@@ -8,8 +8,14 @@ typedef unsigned short SELECTOR;
 
 typedef struct _tagRMCSTRUCT              /* DPMI real mode call structure */
   {
+    union {
     DWORD       rEDI;
+    WORD        rDI;
+    };
+    union {
     DWORD       rESI;
+    WORD        rSI;
+    };
     DWORD       rEBP;
     DWORD       rRsvd;
     union {

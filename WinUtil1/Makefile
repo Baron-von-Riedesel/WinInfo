@@ -1,5 +1,5 @@
 
-name = winutil1
+name = WinUtil1
 model= S
 MSVC = \msvc
 CC   = $(MSVC)\bin\cl
@@ -10,7 +10,7 @@ LIBPATH = \msvc\lib;\lib\win;\lib\omf;
 LIBS = libw toolhelp $(model)dllcew $(model)userw userw $(model)user user
 
 COPTS = -c -A$(model)w -G3Ds -Oxz -W3 -nologo -I$(MSVC)\include -I..\include
-LOPTS=/NOD/A:16/NON/NOE/MAP:FULL/FAR/ONE:NOE
+LOPTS=/NOLOGO/NOD/A:16/NON/NOE/MAP:FULL/FAR/ONE:NOE
 
 mod1 = creatmsg
 mod2 = opendlg
@@ -29,21 +29,21 @@ $* + $(OBJS) + $(ODIR)\$(mod1) + $(ODIR)\$(mod2),
 $*.dll,
 $*.map,
 $(LIBS),
-$(name).def
+$(name).def;
 <<
 	@$(RC) -t -31 $*.res $*.dll
 	@$(MSVC)\bin\implib /NOLOGO /nowep $*.lib $(name).def
 
-$(ODIR)\$(name).obj: $(name).c $(name).h
+$(ODIR)\$(name).obj: $(name).c
 	@$(CC) $(COPTS) -Fa$* -Fo$* $(name).c
 
-$(ODIR)\$(mod1).obj: $(mod1).c $(mod1).h
+$(ODIR)\$(mod1).obj: $(mod1).c
 	@$(CC) $(COPTS) -Fo$* $(mod1).c
 
 $(ODIR)\$(mod2).obj: $(mod2).c $(mod2).h
 	@$(CC) $(COPTS) -Fo$* $(mod2).c
 
-$(ODIR)\$(name).res: $(name).rc $(mod1).h $(name).h $(name).ver $(mod2).ico
+$(ODIR)\$(name).res: $(name).rc $(name).ver $(mod2).ico
 	@$(RC) -r -i$(MSVC)\include -i..\include -fo$*.res $(name).rc
 
 clean:

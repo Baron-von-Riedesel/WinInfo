@@ -3,8 +3,6 @@
 #include "windows.h"
 #include "user.h"
 #include "userw.h"
-//#include "winfunk3.h"
-#include "winutil1.h"
 #include "dlgtempl.h"
 
 #define ID_CMSGTEXT 51
@@ -17,41 +15,36 @@
 extern HINSTANCE hInst;
 
 struct {
-        DLGTEMPLATE dt;
-        BYTE dtClassName;
-        BYTE dtCaptionText;
-        WORD PointSize;
-        char szTypeFace[5];
-        DLGITEMTEMPLATE dlgitmp2;
-        char dtil2Text1[1];
-        char dtil2Info;
-        DLGITEMTEMPLATE dlgitmp1;
-        BYTE dtil1Text1;
-        WORD dtil1Text2;
-        char dtil1Info;
-        DLGITEMTEMPLATE dlgitmp3;
-        char dtil3Text[1];
-        char dtil3Info;
-        DLGITEMTEMPLATE dlgitmp4;
-        BYTE dtil4Text[1];
-        char dtil4Info;
-       } dlgtemp = {
-                     0x80C801C0,4,20,20,0xA0,0x32,0,0,0,
-                     8,"Helv",
-/* fehlertext */     0x8,6,0x90,0x18,ID_CMSGTEXT,0x50000001,0x82,
-                     "",
-                     0,
-/* ICON */           4,8,0,0,-1,0x50000003,0x82,
-                     0xFF,
-                     0x7F03,
-                     0,
-/* OK */             0x00,0x1F,0x00,0x0e,IDOK,0x50010000,0x80,
-                     "",
-                     0,
-/* Cancel */         0x5a,0x1F,0x32,0x0e,IDCANCEL,0x50010000,0x80,
-                     "",
-                     0
-                   };
+    DLGTEMPLATE dt;
+    BYTE dtClassName;
+    BYTE dtCaptionText;
+    WORD PointSize;
+    char szTypeFace[5];
+    DLGITEMTEMPLATE dlgitmp2;
+    char dtil2Text1[1];
+    char dtil2Info;
+    DLGITEMTEMPLATE dlgitmp1;
+    BYTE dtil1Text1;
+    WORD dtil1Text2;
+    char dtil1Info;
+    DLGITEMTEMPLATE dlgitmp3;
+    char dtil3Text[1];
+    char dtil3Info;
+    DLGITEMTEMPLATE dlgitmp4;
+    BYTE dtil4Text[1];
+    char dtil4Info;
+} dlgtemp = {
+    {0x80C801C0,4,20,20,0xA0,0x32,0},
+    0,0,8,"Helv",
+    {0x8,6,0x90,0x18,ID_CMSGTEXT,0x50000001,0x82}, /* fehlertext */
+    "", 0,
+    {4,8,0,0,-1,0x50000003,0x82}, /* ICON */
+    0xFF, 0x7F03, 0,
+    {0x00,0x1F,0x00,0x0e,IDOK,0x50010000,0x80}, /* OK */
+    "", 0,
+    {0x5a,0x1F,0x32,0x0e,IDCANCEL,0x50010000,0x80}, /* Cancel */
+    "", 0
+};
 
 /*
 ษอออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออป

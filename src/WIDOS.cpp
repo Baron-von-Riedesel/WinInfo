@@ -30,6 +30,8 @@ BOOL FAR PASCAL DPBDlg (HWND, UINT, WPARAM, LPARAM);
 BOOL FAR PASCAL EMSDlg (HWND, UINT, WPARAM, LPARAM);
 BOOL FAR PASCAL XMSDlg (HWND, UINT, WPARAM, LPARAM);
 
+extern BOOL EMSCheck(void);
+
 int xDOSpos  = 100;
 int yDOSpos  = 100;
 HWND hWndDOS = 0;
@@ -104,7 +106,7 @@ BOOL EXPORTED CALLBACK DosDlg(HWND hDlg,UINT message,WPARAM wParam,LPARAM lParam
 */
          case ID_REFRESH:
               SetCursor(hCursorWait);
-              EnableDlgItem(hDlg,ID_EMSDOS,_EMS_Check());
+              EnableDlgItem(hDlg,ID_EMSDOS,EMSCheck());
               SendDlgItemMessage(hDlg,ID_LISTBOX1,LB_RESETCONTENT,0,0);
 
               sel = AllocSelector(GlobalHandleToSel(hInst));

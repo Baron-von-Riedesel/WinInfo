@@ -27,7 +27,7 @@
 #include "dragdrop.h"
 #include "user.h"
 #include "userw.h"
-#include "xlist.h"
+#include "resource.h"
 #include "xlistbox.h"
                                 /* WS_BORDER umdefinieren (WS_BORDER für Childs ist kritisch) */
 #define WS_BORDER WS_DLGFRAME

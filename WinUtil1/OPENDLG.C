@@ -14,7 +14,6 @@
 #include "string.h"
 #include "direct.h"
 #include "dos.h"
-#include "winutil1.h"
 #include "opendlg.h"
 // #include "chkdebug.h"
 

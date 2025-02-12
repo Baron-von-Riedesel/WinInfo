@@ -1,5 +1,5 @@
 
-name  = stattext
+name  = StatText
 MODEL = S
 LOPTS = /NOLOGO/NOD/A:16/NON/NOE/FAR/MAP:FULL
 LIBS  = libw $(MODEL)dllcew
@@ -31,10 +31,10 @@ $(name).def
 	@$(RC) -t -31 $*.res $*.dll
 	@$(MSVC)\bin\implib /NOLOGO /nowep $*.lib $(name).def
 
-$(ODIR)\$(name).obj: $(name).cpp stat.h
+$(ODIR)\$(name).obj: $(name).cpp Resource.h
 	@$(CC) $(COPT) $(COPTD) -Fa$* -Fo$* $(name).cpp
 
-$(ODIR)\$(name).res: $(name).rc stat.h $(name).ver
+$(ODIR)\$(name).res: $(name).rc Resource.h $(name).ver
 	@$(RC) -r -i$(MSVC)\include -fo$*.res $(name).rc
 
 clean:

@@ -2,8 +2,6 @@
 #include "windows.h"
 #include "user.h"
 #include "userw.h"
-//#include "winfunk3.h"
-#include "winutil1.h"
 #include "string.h"
 
 HANDLE hInst = 0;

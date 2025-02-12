@@ -5,7 +5,7 @@ EXETYPE WINDOWS
 
 PROTMODE
 
-DESCRIPTION 'Routinen ohne statische Daten'
+DESCRIPTION 'Functions without static data'
 
 CODE    PRELOAD MOVEABLE DISCARDABLE
 DATA    NONE
@@ -132,17 +132,6 @@ EXPORTS
         GETTSS                      @141  NODATA
         LDTFIND                     @142  NODATA
         GETLDTSELECTOR              @143  NODATA
-
-        _EMS_CHECK                  @160  NODATA
-        _EMS_GETVERSION             @161  NODATA
-        _EMS_GETPAGEFRAME           @162  NODATA
-        _EMS_GETFREEPAGES           @163  NODATA
-        _EMS_GETPAGES               @164  NODATA
-        _EMS_GETHANDLEPAGES         @165  NODATA
-        _EMS_GETHANDLENAME          @166  NODATA
-        _EMS_GETHANDLEDIRECTORY     @167  NODATA
-        _EMS_GETTOTALHANDLES        @168  NODATA
-        _EMS_MAPPAGES               @169  NODATA
 
         ALLOCBIGDESCRIPTOR          @171  NODATA
         FREEBIGDESCRIPTOR           @172  NODATA

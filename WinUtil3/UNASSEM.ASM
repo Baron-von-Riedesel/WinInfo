@@ -1,4 +1,6 @@
 
+;--- interface to 32-bit disassembler
+
 	.286
 	.model small
 	.386

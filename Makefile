@@ -10,7 +10,7 @@
 DEBUG=0
 !endif
 
-NAME=wininfo
+NAME=WinInfo
 MSVC=\msvc
 
 !if $(DEBUG)
@@ -26,7 +26,7 @@ OUTDIR=RELEASE
 !endif
 
 SRCMODS = \
-!include modules.inc
+!include Modules.inc
 
 OBJNAMES = $(SRCMODS:.cpp=.obj)
 !if $(DEBUG)
@@ -35,60 +35,61 @@ OBJMODS = $(OBJNAMES:.\=DEBUG\)
 OBJMODS = $(OBJNAMES:.\=RELEASE\)
 !endif
 
-ASM=jwasm.exe -c -nologo -Sg -Cp -Fl$* -Fo$* $(AOPTD)
-CC=$(MSVC)\bin\cl.exe -c -nologo -Gs -GA -G3 -Zp1 -W3 -I$(MSVC)\include -IInclude -AM -D "STRICT" -Fo$* $(COPTD)
-
-LOPTS=/NOLOGO/MAP:FULL/ONE:NOE/NOD/A:16/NOE/ST:8192
-LIBS=$(OUTDIR)\wininfo.lib libw.lib toolhelp hexdump stattext winutil1 winutil2 winutil3 xlistbox mlibcew user386 userw user oldnames
+ASM =jwasm.exe
+CC  =$(MSVC)\bin\cl.exe
 LINK=$(MSVC)\bin\link.exe
-LIB=$(MSVC)\bin\lib.exe
-RC=$(MSVC)\bin\rc.exe
-HC=$(MSVC)\bin\hc31.exe
-LIBPATH=$(MSVC)\lib;Lib;
+LIB =$(MSVC)\bin\lib.exe
+RC  =$(MSVC)\bin\rc.exe
+HC  =$(MSVC)\bin\hc31.exe
+
+AOPT = -c -nologo -Sg -Cp $(AOPTD)
+COPT = -c -nologo -Gs -GA -G3 -Zp1 -W3 -I$(MSVC)\include -IInclude -AM -D "STRICT" $(COPTD)
+LOPTS= /NOLOGO/MAP:FULL/ONE:NOE/NOD/A:16/NOE/ST:8192
+LIBS = $(OUTDIR)\WinInfo.lib libw.lib toolhelp hexdump stattext winutil1 winutil2 winutil3 xlistbox mlibcew user386 userw user oldnames
+LIBPATH= $(MSVC)\lib;Lib;
 
 .SUFFIXES: .asm .obj .cpp
 
 .asm{$(OUTDIR)}.obj:
-	@$(ASM) $<
+	@$(ASM) $(AOPT) -Fl$* -Fo$* $<
 
-.cpp{$(OUTDIR)}.obj:
-	@$(CC) $<
-
+{src}.cpp{$(OUTDIR)}.obj:
+	@$(CC) $(COPT) -Fo$* $<
 
 ALL: $(OUTDIR) $(OUTDIR)\$(NAME).exe $(OUTDIR)\$(NAME).hlp
 
 $(OUTDIR):
 	@mkdir $(OUTDIR)
     
-$(OUTDIR)\$(NAME).exe: $(OUTDIR)\$(NAME).lib $(OUTDIR)\$(NAME).res makefile
-	set LIB=$(LIBPATH)
+$(OUTDIR)\$(NAME).exe: $*.lib $*.res Makefile
+	@set LIB=$(LIBPATH)
 	@$(LINK) @<<
-$(OUTDIR)\$(NAME) $(LOPTS) $(LOPTD),
-$*,
-$*,
+$*.obj $(LOPTS) $(LOPTD),
+$*.exe,
+$*.map,
 $(LIBS),
 $(NAME).def
 <<
 	@$(RC) /nologo /31 $*.res $*.exe 
  
-$(OUTDIR)\$(NAME).lib: $(OBJMODS) makefile
+$(OUTDIR)\$(NAME).lib: $(OBJMODS) Makefile
 	@cd $(OUTDIR)
 	@erase $(NAME).lib
-	@$(LIB) $(NAME).lib $(OBJNAMES:.\=+);
-    @cd ..
+	@$(LIB) /nologo $(NAME).lib $(OBJNAMES:.\=+);
+	@cd ..
 
 $(OUTDIR)\$(NAME).res: $(NAME).rc Res\Witabpos.bin Res\Wiabout1.res
 	@$(RC) -r -iinclude;$(MSVC)\include -fo $*.res $(NAME).rc
 
-Res\wiabout1.res: wiabout1.rc
-	@$(RC) -r -iinclude;$(MSVC)\include -fo $*.res wiabout1.rc
+Res\WIabout1.res: WIabout1.rc
+	@$(RC) -r -iinclude;$(MSVC)\include -fo $*.res WIabout1.rc
 
-Res\Witabpos.bin: Witabpos.asm
-	@jwasm -bin -Fo$*.bin Witabpos.asm
+Res\WItabpos.bin: WItabpos.asm
+	@$(ASM) $(AOPT) -bin -Fl$* -Fo$*.bin WItabpos.asm
 
-$(OBJMODS): wininfo.h resource.h wininfox.h
+$(OBJMODS): WinInfo.h Resource.h WinInfoX.h
 
-$(OUTDIR)\$(NAME).hlp: $(NAME).rtf
+$(OUTDIR)\$(NAME).hlp: $(NAME).rtf $(NAME).hpj
 	@cd $(OUTDIR)
 	@$(HC) ..\$(NAME).hpj
 	@cd ..
@@ -97,3 +98,5 @@ clean:
 	@del $(OUTDIR)\*.obj
 	@del $(OUTDIR)\*.exe
 	@del $(OUTDIR)\*.res
+	@del $(OUTDIR)\*.hlp
+	@del $(OUTDIR)\*.lib

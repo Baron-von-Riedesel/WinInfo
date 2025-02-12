@@ -10,7 +10,6 @@
 #include "wininfo.h"
 #include "wininfox.h"
 #include "dpmi.h"
-#include "xms.h"
 
 BOOL WINAPI CheckMessage(MSG *,WORD,HWND);
                      

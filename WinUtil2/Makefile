@@ -1,7 +1,7 @@
 
-name = winutil2
+name = WinUtil2
 #LIBS=libw toolhelp user386 cwinrt dpmi cuserw userw cuser user
-LOPTS=/NOE/NON/A:16/NOD/MAP:FULL/FAR/ONERROR:NOEXE
+LOPTS=/NOLOGO/NOE/NON/A:16/NOD/MAP:FULL/FAR/ONERROR:NOEXE
 LIBS=libw toolhelp dpmi user386 cwinrt userw cuser user
 mods = Lib\anlshl Lib\strcpy Lib\output
 
@@ -19,8 +19,8 @@ $(ODIR):
 
 $(ODIR)\$(name).dll: $(ODIR)\$(name).obj $(name).def $(ODIR)\$(name).res Makefile
 	@set lib=$(MSVC)\lib;..\lib;Lib;
-	@$(LINK) @<<
-$* $(mods) $(LOPTS),
+	@$(LINK) $(LOPTS) @<<
+$* $(mods),
 $*.dll,
 $*.map,
 $(LIBS),
@@ -36,6 +36,6 @@ $(ODIR)\$(name).obj: $(name).asm
 	@jwasm -c -nologo -Fl$(ODIR)\ -Fo$(ODIR)\ $(name).asm
 
 clean:
-	@del $(ODIR)\winutil2.obj
-	@del $(ODIR)\*.dll
-	@del $(ODIR)\*.res
+	@del $(ODIR)\$(name).obj
+	@del $(ODIR)\$(name).dll
+	@del $(ODIR)\$(name).res
