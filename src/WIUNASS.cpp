@@ -34,7 +34,6 @@ extern int  unassLines;
 extern int  fShowBytes;
 extern int  _lastException;
 extern BYTE fShow;
-extern WORD wRegistered;
 extern HFONT hFontAlt;
 
 typedef struct tagUAENTRY {
@@ -421,8 +420,6 @@ BOOL EXPORTED CALLBACK UnassembleDlg(HWND hDlg,UINT message,WPARAM wParam,LPARAM
  GLOBALENTRY globalentry;
  UAENTRY * pentry;
  HEXDUMPPARM hdp;
- HANDLE hHandler;
-// MODULEENTRY moduleentry;
 
  switch (message)
     {
@@ -440,7 +437,7 @@ BOOL EXPORTED CALLBACK UnassembleDlg(HWND hDlg,UINT message,WPARAM wParam,LPARAM
       ShowWindow(hDlg,SW_SHOWNORMAL);
       LoadTabs(IDUS_43,str);
       SendDlgItemMessage(hDlg,ID_STATUS1,ST_SETTABSTOPS,*(LPINT)str,(LONG)(LPINT)(str+2));
-      EnableDlgItem(hDlg,ID_SNAPSHOT,wRegistered == 1);
+      EnableDlgItem(hDlg,ID_SNAPSHOT,1);
       rc = TRUE;
       break;
     case WM_CLOSE:

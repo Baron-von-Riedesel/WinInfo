@@ -23,7 +23,6 @@ DWORD FAR PASCAL GetCR0(void);
 
 extern HCURSOR hCursor;
 extern HCURSOR hCursorWait;
-extern WORD wRegistered;
 extern HFONT hFontAlt;
 
 BOOL CALLBACK ViewDlg    (HWND, UINT, WPARAM, LPARAM);
@@ -91,7 +90,7 @@ BOOL CALLBACK SysDlg(HWND hDlg,UINT message,WPARAM wParam,LPARAM lParam)
                else {
                    dwCR0 = 0;
                    CallRing0Proc((FARPROC)GetCR0,&dwCR0);
-                   if ((dwCR0 >= 0x80000000) && (wRegistered > 0)) {
+                   if ( dwCR0 & 0x80000000 ) {
                        hWndSysPage = CreateDialog(hInst,
                                                   MAKEINTRESOURCE(IDD_SYSPAGE),
                                                   hDlg,

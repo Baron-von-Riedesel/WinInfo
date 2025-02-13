@@ -1,11 +1,13 @@
 
 // Hexdumpanzeige Dialog
 
-//#define _TRACE_
+#ifdef _DEBUG
+#define _TRACE_
+#endif
 
 #define SELINVIEW 1
 #define ADDRINVIEW 1
-#define DEB16FW 0 /* this doesn't exist anymore */
+#define DEB16FW 0 /* doesn't exist anymore */
 
 #include "stdlib.h"
 #include "stdio.h"
@@ -721,8 +723,10 @@ BOOL EXPORTED CALLBACK ViewDlg(HWND hDlg,UINT message,WPARAM wParam,LPARAM lPara
                           );
          break;
      case ID_LISTBOX1: /* this is the ID of the hexdump control! */
+#ifdef _TRACE_
          wsprintf(str,"ViewDlg.ID_ListBox1: lParam=%lX\r\n",lParam);
          OutputDebugString(str);
+#endif
          i = 0;
          switch (HIWORD(lParam))
          {
@@ -747,8 +751,7 @@ BOOL EXPORTED CALLBACK ViewDlg(HWND hDlg,UINT message,WPARAM wParam,LPARAM lPara
          case HEXN_ERROR8:
          case HEXN_ERROR6:
              sel = GetWindowWord(hDlg,DWL_USER);
-             if (sel)
-             {
+             if (sel) {
                  sel = GlobalHandleToSel((HGLOBAL)sel);
                  DPMIGetDescriptor(sel,&desc);
              }
@@ -757,8 +760,7 @@ BOOL EXPORTED CALLBACK ViewDlg(HWND hDlg,UINT message,WPARAM wParam,LPARAM lPara
              else
                  LoadString(hInst,IDS_ERRVIE7,szStr2,sizeof(szStr2));
 
-             if (HIWORD(lParam) == HEXN_ERROR6)
-             {
+             if (HIWORD(lParam) == HEXN_ERROR6) {
                  SendDlgItemMessage(hDlg,ID_STATUS1,
                                     ST_SETTEXTFIELD,
                                     9,

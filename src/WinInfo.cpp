@@ -59,7 +59,6 @@ int unassLines        = 0x100;   /* disassemblierte Zeilen bei unassemble */
 int fShowBytes        = 0;
 int fGetVMPSP         = 0;
 BOOL fLoadCtl3d       = 0;
-WORD wRegistered      = 0xFFFF;
 BYTE fNewReg = 0;
 BYTE fShow;                      /* globales Flag zur Kommunikation (allg. verwendbar) */
 RECT prect;                      /* ??? */

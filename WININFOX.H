@@ -6,17 +6,9 @@
 #define ICON1       1
                                       /* accelerators */
 #define ACCELTAB    10
-                                      /* unregistered about dialogtemplate */
-#define IDU_ABOUT   4
-                                      /* registered about dialogtemplate */
-#define IDU_ABOUT1  5
-                                      /* "unregistered" string */
-#define IDU_ABOUT2  6
-                                      /* "registered" string */
+                                      /* about string */
 #define IDU_ABOUT3  7
-                                      /* registrierformular */
-#define IDU_REGFRM  3
-                                      /* kleine Bytehaufen */
+                                      /* small byte sets */
 #define IDU_TABPOS  2
                                       /* beginnen mit 0 */
                                       /* wimem */
@@ -190,6 +182,7 @@
 #define IDD_SEGMENT   159
 #define IDD_SEGMFLAGS 160
 #define IDD_PMIV      161
+#define IDD_ABOUT     162
                                       /* dialoguebergreifende IDs */
 #define ID_WARNING1  41
 #define ID_TEST      42
@@ -410,7 +403,8 @@
 #define ID_WNDVIEW   55
 #define ID_WNDSTAT1  56
 #define ID_WNDUNASS  58
-#define ID_WNDCHGST  59
+#define ID_WNDCHGSTYLE  59
+#define ID_WNDEDITSTYLE 60
                                       /* IDs segment dialog */
 #define ID_SEGFLG1   81
 #define ID_SEGFLG2   82

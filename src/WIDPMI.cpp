@@ -12,7 +12,6 @@ extern "C" {
 void FAR _WINFLAGS();
 };
 
-extern WORD  wRegistered;
 extern HFONT hFontAlt;
 
 BOOL WINAPI  CheckMessage(MSG *,WORD,HWND);
@@ -79,7 +78,7 @@ BOOL EXPORTED CALLBACK DPMIDlg(HWND hDlg,UINT message,WPARAM wParam,LPARAM lPara
 //        SendMessage(hDlg,WM_COMMAND,ID_REFRESH,0);
         PostMessage(hDlg,WM_COMMAND,ID_REFRESH,0);
         SetWindowPos(hDlg,0,xDPMIpos,yDPMIpos,0,0,SWP_NOSIZE | SWP_NOZORDER);
-        if ((!(LOWORD(&_WINFLAGS) & WF_ENHANCED)) || (wRegistered == 0))
+        if ((!(LOWORD(&_WINFLAGS) & WF_ENHANCED)))
             {
              EnableDlgItem(hDlg,ID_DPMIVM,0);
              EnableDlgItem(hDlg,ID_DPMIVXD,0);

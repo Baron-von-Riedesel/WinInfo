@@ -34,70 +34,70 @@ extern CATCHBUF cb;
 */
 int CALLBACK EXPORTED XDlg(HWND hDlg,UINT message,WPARAM wParam,LPARAM lParam)
 {
- static fOwner = 1;
- RECT rect;
- LPMEASUREITEMSTRUCT lpmi;
- BOOL rc = FALSE;
+    static fOwner = 1;
+    RECT rect;
+    LPMEASUREITEMSTRUCT lpmi;
+    BOOL rc = FALSE;
 
-   switch(message)
-     {
-      case WM_COMMAND:
+    switch(message)
+    {
+    case WM_COMMAND:
         switch (wParam)
-           {
-           case IDOK:
-           case IDCANCEL:
-              PostMessage(hDlg,WM_CLOSE,0,0);
-              break;
-           }
-         rc = TRUE;
-         break;
-      case WM_MEASUREITEM:      /* falls ownerdrawn controls */
-         if (fOwner)
+        {
+        case IDOK:
+        case IDCANCEL:
+            PostMessage(hDlg,WM_CLOSE,0,0);
+            break;
+        }
+        rc = TRUE;
+        break;
+    case WM_MEASUREITEM:      /* falls ownerdrawn controls */
+        if (fOwner)
+        {
+            if (fOwnerDrawWarning)
             {
-             if (fOwnerDrawWarning)
-                {
-                 fOwner = 0;
-                 CreateMessage(hDlg,
-                               MAKEINTRESOURCE(IDS_ERRSHW1),
-                               MAKEINTRESOURCE(IDS_WARNING),
-                               MB_OK);
-                }
+                fOwner = 0;
+                CreateMessage(hDlg,
+                              MAKEINTRESOURCE(IDS_ERRSHW1),
+                              MAKEINTRESOURCE(IDS_WARNING),
+                              MB_OK);
             }
-         lpmi = (LPMEASUREITEMSTRUCT)lParam;
-         lpmi->itemWidth  = 20;
-         lpmi->itemHeight = 20;
-         rc = TRUE;
-         break;
-      case WM_DRAWITEM:      /* falls ownerdrawn controls */
-         rc = TRUE;
-         break;
-      case WM_DELETEITEM:    /* falls ownerdrawn controls */
-         rc = TRUE;
-         break;
-      case WM_INITDIALOG:
-         if (GetWindowLong(hDlg,GWL_STYLE) & WS_CHILD)
-            {
-             GetWindowRect(hDlg,&rect);
-             AdjustWindowRect(&rect,WS_OVERLAPPED | WS_CAPTION,0);
-             SetWindowPos(GetParent(hDlg),
-                          0,0,0,
-                          rect.right-rect.left,
-                          rect.bottom-rect.top,
-                          SWP_NOMOVE | SWP_NOZORDER);
-            }
-         if (fOwner)
-             ShowWindow(hDlg,SW_SHOWNORMAL);
-         else
-             ShowWindow(hDlg,SW_SHOWNOACTIVATE);
-         fOwner = 1;
-         rc = TRUE;
-         break;
-      case WM_CLOSE:
-         DestroyWindow(hDlg);
-         rc = TRUE;
-         break;
-     }
- return rc;
+        }
+        lpmi = (LPMEASUREITEMSTRUCT)lParam;
+        lpmi->itemWidth  = 20;
+        lpmi->itemHeight = 20;
+        rc = TRUE;
+        break;
+    case WM_DRAWITEM:      /* falls ownerdrawn controls */
+        rc = TRUE;
+        break;
+    case WM_DELETEITEM:    /* falls ownerdrawn controls */
+        rc = TRUE;
+        break;
+    case WM_INITDIALOG:
+        if (GetWindowLong(hDlg,GWL_STYLE) & WS_CHILD)
+        {
+            GetWindowRect(hDlg,&rect);
+            AdjustWindowRect(&rect,WS_OVERLAPPED | WS_CAPTION,0);
+            SetWindowPos(GetParent(hDlg),
+                         0,0,0,
+                         rect.right-rect.left,
+                         rect.bottom-rect.top,
+                         SWP_NOMOVE | SWP_NOZORDER);
+        }
+        if (fOwner)
+            ShowWindow(hDlg,SW_SHOWNORMAL);
+        else
+            ShowWindow(hDlg,SW_SHOWNOACTIVATE);
+        fOwner = 1;
+        rc = TRUE;
+        break;
+    case WM_CLOSE:
+        DestroyWindow(hDlg);
+        rc = TRUE;
+        break;
+    }
+    return rc;
 }
 /*
 浜様様様様様様様様様様様様様様様様様様様様様様様様様様融
@@ -113,7 +113,6 @@ BOOL CALLBACK EXPORTED ShowResDlg(HWND hDlg,UINT message,WPARAM wParam,LPARAM lP
   char str[60];
   BYTE volatile fOk;
   HMENU hMenu;
-  LPINT lpint;
   HDC hsDC;
   BITMAP bitmap;
   RECT   rect;
@@ -128,9 +127,9 @@ BOOL CALLBACK EXPORTED ShowResDlg(HWND hDlg,UINT message,WPARAM wParam,LPARAM lP
     case WM_INITDIALOG:
         fShow = TRUE;
         if (!(pres = (RESOBJECT *)LocalAlloc(LMEM_FIXED,sizeof(RESOBJECT)))) {
-			PostMessage(hDlg,WM_CLOSE,0,0);
+            PostMessage(hDlg,WM_CLOSE,0,0);
             break;
-		}            
+        }
         lpres = (RESENTRY FAR *)lParam;
         pres->handle  = lpres->handle;
         pres->id      = lpres->id;
@@ -141,28 +140,28 @@ BOOL CALLBACK EXPORTED ShowResDlg(HWND hDlg,UINT message,WPARAM wParam,LPARAM lP
         switch (pres->typ)
            {
             case GD_CURSOR:  
-				pres->handle = LoadCursor(pres->hModule,MAKEINTRESOURCE(pres->id));
-				SetWindowPos(hDlg,0,0,0,64,
+                pres->handle = LoadCursor(pres->hModule,MAKEINTRESOURCE(pres->id));
+                SetWindowPos(hDlg,0,0,0,64,
                            64 + GetSystemMetrics(SM_CYCAPTION),
                            SWP_NOMOVE | SWP_NOZORDER);
-				break;
+                break;
             case GD_ICON:
-				pres->handle = LoadIcon(pres->hModule,MAKEINTRESOURCE(pres->id));
-				SetWindowPos(hDlg,0,0,0,64,
+                pres->handle = LoadIcon(pres->hModule,MAKEINTRESOURCE(pres->id));
+                SetWindowPos(hDlg,0,0,0,64,
                            64 + GetSystemMetrics(SM_CYCAPTION),
                            SWP_NOMOVE | SWP_NOZORDER);
-				break;
+                break;
 #if COMPONENT
             case GD_ICONCOMPONENT:
-				SetWindowPos(hDlg,0,0,0,64,
+                SetWindowPos(hDlg,0,0,0,64,
                            64 + GetSystemMetrics(SM_CYCAPTION),
                            SWP_NOMOVE | SWP_NOZORDER);
-				break;
+                break;
             case GD_CURSORCOMPONENT:
-				SetWindowPos(hDlg,0,0,0,64,
+                SetWindowPos(hDlg,0,0,0,64,
                            64 + GetSystemMetrics(SM_CYCAPTION),
                            SWP_NOMOVE | SWP_NOZORDER);
-				break;
+                break;
 #endif
             case GD_BITMAP:                /* bitmap */
               if (pres->id < 0x8000)
@@ -226,7 +225,7 @@ BOOL CALLBACK EXPORTED ShowResDlg(HWND hDlg,UINT message,WPARAM wParam,LPARAM lP
            }
 
         if  (rc) {
-			LoadString(hInst,rc,str,sizeof(str));
+            LoadString(hInst,rc,str,sizeof(str));
             MessageBox(hDlg,str,0,MB_OK);
             pres->typ = 0;
         }
@@ -236,24 +235,24 @@ BOOL CALLBACK EXPORTED ShowResDlg(HWND hDlg,UINT message,WPARAM wParam,LPARAM lP
         break;
     case WM_CLOSE:
         if (pres) {
-	        switch (pres->typ) {
-	        case GD_BITMAP:
-    	        DeleteObject(pres->handle);
-    	        break;
-    	    case GD_CURSOR:
-    	    	DestroyCursor((HCURSOR)pres->handle);    
-			    break;
-    	    case GD_ICON:
-    	    	DestroyIcon((HICON)pres->handle);    
-			    break;
+            switch (pres->typ) {
+            case GD_BITMAP:
+                DeleteObject(pres->handle);
+                break;
+            case GD_CURSOR:
+                DestroyCursor((HCURSOR)pres->handle);
+                break;
+            case GD_ICON:
+                DestroyIcon((HICON)pres->handle);
+                break;
 #if COMPONENT
-    	    case GD_CURSORCOMPONENT:
-    	    case GD_ICONCOMPONENT:
-				break;
+            case GD_CURSORCOMPONENT:
+            case GD_ICONCOMPONENT:
+                break;
 #endif
-			}    
-        	LocalFree((HLOCAL)pres);
-		}	
+            }
+            LocalFree((HLOCAL)pres);
+        }
         DestroyWindow(hDlg);
         rc = TRUE;
         break;
@@ -280,8 +279,8 @@ BOOL CALLBACK EXPORTED ShowResDlg(HWND hDlg,UINT message,WPARAM wParam,LPARAM lP
           case GD_CURSOR:
           case GD_ICON:
             DrawIcon(ps.hdc,0,0,(HICON)pres->handle);
-          	break;
-			break;
+            break;
+            break;
           case GD_BITMAP:     /* bitmap */
             hsDC = CreateCompatibleDC(ps.hdc);
             SelectObject(hsDC,pres->handle);

@@ -9,7 +9,7 @@ OBJS = $(model)windll
 LIBPATH = \msvc\lib;\lib\win;\lib\omf;
 LIBS = libw toolhelp $(model)dllcew $(model)userw userw $(model)user user
 
-COPTS = -c -A$(model)w -G3Ds -Oxz -W3 -nologo -I$(MSVC)\include -I..\include
+COPTS = -c -A$(model)w -Zp1 -G3Ds -Oxz -W3 -nologo -I$(MSVC)\include -I..\include
 LOPTS=/NOLOGO/NOD/A:16/NON/NOE/MAP:FULL/FAR/ONE:NOE
 
 mod1 = creatmsg

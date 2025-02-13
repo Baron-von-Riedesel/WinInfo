@@ -38,14 +38,14 @@ BOOL EXPORTED CALLBACK PMIVDlg(HWND hDlg,UINT message,WPARAM wParam,LPARAM lPara
 // static int BtnTab[] = {ID_SUBDLG1,
 //                        0};
     char  str[80];
-    char  szStr1[40];
+    //char  szStr1[40];
     // LPSTR lpstr;
     DWORD dwVMHandle;
     DWORD dwPMIV[2];
-    int   i,y;
+    int   i;
     HWND  hWnd;
     VMENTRY vmentry;
-    FWORD faddr;
+    //FWORD faddr;
     BOOL rc = FALSE;
 
     switch (message) {
@@ -118,19 +118,21 @@ BOOL EXPORTED CALLBACK PMIVDlg(HWND hDlg,UINT message,WPARAM wParam,LPARAM lPara
             SetCursor(hCursor);
             break;
         case ID_LISTBOX1:
-              switch(HIWORD(lParam)) {
-//                  case LBN_SELCHANGE:
-//                  if (GetWindowLong(hDlg,DLGWINDOWEXTRA) == 0) // falls fremde IDT, kein Disasm
-//                       EnableDlgItem(hDlg,ID_SUBDLG1,1);
-//                     break;
-//                  case LBN_DBLCLK:
-//                     PostMessage(hDlg,WM_COMMAND,ID_SUBDLG1,0);
-//                     break;
-//                  case XLBN_RBUTTONDOWN:
-//                     TrackPopup(hDlg,BtnTab);
-//                     break;
-              }
-              break;
+#if 0
+            switch(HIWORD(lParam)) {
+            case LBN_SELCHANGE:
+                if (GetWindowLong(hDlg,DLGWINDOWEXTRA) == 0) // falls fremde IDT, kein Disasm
+                     EnableDlgItem(hDlg,ID_SUBDLG1,1);
+                break;
+            case LBN_DBLCLK:
+                PostMessage(hDlg,WM_COMMAND,ID_SUBDLG1,0);
+                break;
+            case XLBN_RBUTTONDOWN:
+                TrackPopup(hDlg,BtnTab);
+                break;
+            }
+#endif
+            break;
         }
         rc = TRUE;
         break;

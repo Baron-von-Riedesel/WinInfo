@@ -214,7 +214,6 @@ BOOL EXPORTED CALLBACK ObjectsDlg(HWND hDlg,UINT message,WPARAM wParam,LPARAM lP
 BOOL EXPORTED CALLBACK DevCapDlg(HWND hDlg,UINT message,WPARAM wParam,LPARAM lParam )
 {
  WORD i,j;
- char str[80];
  BOOL rc = FALSE;
  LPEXTDEVICEMODE lpExtDeviceMode;
  int iSize;
@@ -225,6 +224,8 @@ BOOL EXPORTED CALLBACK DevCapDlg(HWND hDlg,UINT message,WPARAM wParam,LPARAM lPa
  LPDEVMODE lpDevMode;
  HWND hWnd;
  HDC hdc;
+ char str[80];
+ char str2[128];
  int tabpos[2];
 
  switch (message)
@@ -251,17 +252,15 @@ BOOL EXPORTED CALLBACK DevCapDlg(HWND hDlg,UINT message,WPARAM wParam,LPARAM lPa
          case IDCANCEL:
               PostMessage(hDlg,WM_CLOSE,0,0);
               break;
-         case ID_SUBDLG1:
+         case ID_SUBDLG1: /* ExtDeviceMode */
               if (!(hDev = (HGLOBAL)GetWindowWord(hDlg,DLGWINDOWEXTRA)))
                   break;
               lpDev = (LPSTR)GlobalLock(hDev);
               lpDriver = lpDev + _fstrlen(lpDev) + 1;
               lpPort   = lpDriver + _fstrlen(lpDriver) + 1;
               wsprintf(str,"%s.DRV",(LPSTR)lpDriver);
-              if ((int)(hLib = LoadLibrary(str)) > 0x20)
-                 {
-                  if (lpExtDeviceMode = (LPEXTDEVICEMODE)GetProcAddress(hLib,"EXTDEVICEMODE"))
-                     {
+              if ((int)(hLib = LoadLibrary(str)) > 0x20) {
+                  if (lpExtDeviceMode = (LPEXTDEVICEMODE)GetProcAddress(hLib,"EXTDEVICEMODE")) {
                       iSize = lpExtDeviceMode((HWND)hDlg,
                                       (HANDLE)hLib,
                                       (LPDEVMODE)0,
@@ -270,8 +269,7 @@ BOOL EXPORTED CALLBACK DevCapDlg(HWND hDlg,UINT message,WPARAM wParam,LPARAM lPa
                                       (LPDEVMODE)0,
                                       (LPSTR)0,
                                       (WORD)0);
-                      if (hMem = GlobalAlloc(GMEM_FIXED | GMEM_ZEROINIT,iSize))
-                         {
+                      if (hMem = GlobalAlloc(GMEM_FIXED | GMEM_ZEROINIT,iSize)) {
                           lpDevMode = (LPDEVMODE)GlobalLock(hMem);
                           lpExtDeviceMode((HWND)hDlg,
                                           (HANDLE)hLib,
@@ -290,17 +288,18 @@ BOOL EXPORTED CALLBACK DevCapDlg(HWND hDlg,UINT message,WPARAM wParam,LPARAM lPa
                                           (LPSTR)0,
                                           (WORD)DM_IN_PROMPT);
                           GlobalFree(hMem);
-                         }
-                     }
-                  else
+                      }
+                  } else {
                       CreateMessage(hDlg,"EXTDEVICEMODE() nicht vorhanden",0,MB_OK);
+                  }
                   FreeLibrary(hLib);
-                 }
-              else
-                  CreateMessage(hDlg,"Error loading driver",0,MB_OK);
+              } else {
+                  wsprintf(str2,"Error loading driver %s", str );
+                  CreateMessage(hDlg,str2,0,MB_OK);
+              }
               GlobalUnlock(hDev);
               break;
-         case ID_SUBDLG2:
+         case ID_SUBDLG2: /* Objects */
               if (!(hDev = (HGLOBAL)GetWindowWord(hDlg,DLGWINDOWEXTRA)))
                   break;
               CreateDialogParam(hInst,

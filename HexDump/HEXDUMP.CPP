@@ -109,9 +109,7 @@ static WORD GetCS()
 return rc;
 }
 
-// mit __export sollte DS geladen werden, sofern DLL
-
-int __export WINAPI interruptcallback(void)
+int __export interruptcallback(void)
 {
     _asm {
         pusha
@@ -122,7 +120,7 @@ int __export WINAPI interruptcallback(void)
         cmp ax,14
         jnz myexit
     exc13:
-        push ss
+        push ds
         push offset cb
         push ax
         call Throw
@@ -422,7 +420,7 @@ BOOL HEXDUMP::PaintProc(HDC hdc,LPRECT prect)
 #if 0
    char szStr[80];
    wsprintf(szStr,"InterruptRegister returned %u\r\n",j);
-   OutputMonoString(szStr);
+   OutputDebugString(szStr);
 #endif
 
    if (!(iExc = Catch(cb))) {
@@ -517,8 +515,7 @@ BOOL HEXDUMP::PaintProc(HDC hdc,LPRECT prect)
    }    
 
    InterruptUnRegister(NULL);
-
-// OutputMonoString("InterruptUnRegister called\r\n");
+// OutputDebugString("InterruptUnRegister called\r\n");
 
    if (pos < prect->bottom) {
        prect->top = pos;

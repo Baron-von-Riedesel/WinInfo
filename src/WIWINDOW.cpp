@@ -320,7 +320,7 @@ BOOL EXPORTED CALLBACK WindowDlg(HWND hDlg,UINT message,WPARAM wParam,LPARAM lPa
  HWND hWnd;
  HWND hWndStyle;
  HWND hWndChild;
- DWORD wStyle;
+ DWORD dwStyle;
  int x;
  RECT rect;
  FARPROC paddr;
@@ -375,13 +375,17 @@ BOOL EXPORTED CALLBACK WindowDlg(HWND hDlg,UINT message,WPARAM wParam,LPARAM lPa
 
       hWndStyle = GetDlgItem(hDlg,ID_WNDSTYLE);
       SendMessage(hWndStyle,CB_RESETCONTENT,0,0);
-      wStyle  = GetWindowLong(hWnd,GWL_STYLE);
+      dwStyle  = GetWindowLong(hWnd,GWL_STYLE);
+      wsprintf(str,"%lX",dwStyle);
+      SetDlgItemText(hDlg,ID_WNDEDITSTYLE,str);
+      EnableDlgItem(hDlg,ID_WNDCHGSTYLE, 0);
+
       GetClassName(hWnd,str1,sizeof(str1));            /* Class des Windows ermitteln */
 
-      if (wStyle & 0x40000000)
+      if (dwStyle & 0x40000000)
           strcpy(str,"WS_CHILD");
       else
-      if (wStyle & 0x80000000)
+      if (dwStyle & 0x80000000)
           strcpy(str,"WS_POPUP");
       else
           strcpy(str,"WS_OVERLAPPED");
@@ -389,21 +393,21 @@ BOOL EXPORTED CALLBACK WindowDlg(HWND hDlg,UINT message,WPARAM wParam,LPARAM lPa
       SendMessage(hWndStyle,CB_ADDSTRING,0,(LONG)(LPSTR)str);
 
       for (x=0;wmsg[x];x++)
-         if ((wStyle & wmsg[x]) == wmsg[x])
+         if ((dwStyle & wmsg[x]) == wmsg[x])
             SendMessage(hWndStyle,CB_ADDSTRING,0,(LONG)(LPSTR)wmsgstr[x]);
 
       AnsiUpper(str1);
       if (!strcmp(str1,"LISTBOX"))
          {
           for (x=0;lbstyle[x];x++)
-              if ((wStyle & lbstyle[x]) == lbstyle[x])
+              if ((dwStyle & lbstyle[x]) == lbstyle[x])
                  SendMessage(hWndStyle,CB_ADDSTRING,0,(LONG)(LPSTR)lbsstr[x]);
          }
       else
       if (!strcmp(str1,"COMBOBOX"))
          {
           for (x=0;cbstyle[x];x++)
-              if ((wStyle & cbstyle[x]) == cbstyle[x])
+              if ((dwStyle & cbstyle[x]) == cbstyle[x])
                  SendMessage(hWndStyle,CB_ADDSTRING,0,(LONG)(LPSTR)cbsstr[x]);
          }
       else
@@ -413,11 +417,11 @@ BOOL EXPORTED CALLBACK WindowDlg(HWND hDlg,UINT message,WPARAM wParam,LPARAM lPa
              {
               if (btnstyle[x] < 0x20)
                  {
-                  if (btnstyle[x] == (wStyle & 0x001F))
+                  if (btnstyle[x] == (dwStyle & 0x001F))
                       SendMessage(hWndStyle,CB_ADDSTRING,0,(LONG)(LPSTR)btsstr[x]);
                  }
               else
-              if ((wStyle & btnstyle[x]) == btnstyle[x])
+              if ((dwStyle & btnstyle[x]) == btnstyle[x])
                   SendMessage(hWndStyle,CB_ADDSTRING,0,(LONG)(LPSTR)btsstr[x]);
              }
          }
@@ -428,11 +432,11 @@ BOOL EXPORTED CALLBACK WindowDlg(HWND hDlg,UINT message,WPARAM wParam,LPARAM lPa
              {
               if (ststyle[x] < 0x20)
                  {
-                 if (ststyle[x] == (wStyle & 0x001F))
+                 if (ststyle[x] == (dwStyle & 0x001F))
                      SendMessage(hWndStyle,CB_ADDSTRING,0,(LONG)(LPSTR)stsstr[x]);
                  }
               else
-              if ((wStyle & ststyle[x]) == ststyle[x])
+              if ((dwStyle & ststyle[x]) == ststyle[x])
                   SendMessage(hWndStyle,CB_ADDSTRING,0,(LONG)(LPSTR)stsstr[x]);
              }
          }
@@ -443,17 +447,17 @@ BOOL EXPORTED CALLBACK WindowDlg(HWND hDlg,UINT message,WPARAM wParam,LPARAM lPa
              {
               if (esstyle[x] < 0x20)
                  {
-                 if (esstyle[x] == (wStyle & 0x001F))
+                 if (esstyle[x] == (dwStyle & 0x001F))
                      SendMessage(hWndStyle,CB_ADDSTRING,0,(LONG)(LPSTR)esstr[x]);
                  }
               else
-              if ((wStyle & esstyle[x]) == esstyle[x])
+              if ((dwStyle & esstyle[x]) == esstyle[x])
                   SendMessage(hWndStyle,CB_ADDSTRING,0,(LONG)(LPSTR)esstr[x]);
              }
          }
       else
           for (x=0;wbmsg[x];x++)
-              if ((wStyle & wbmsg[x]) == wbmsg[x])
+              if ((dwStyle & wbmsg[x]) == wbmsg[x])
                  SendMessage(hWndStyle,CB_ADDSTRING,0,(LONG)(LPSTR)wbmsgstr[x]);
       AdjustCBSize(hWndStyle);
       SendMessage(hWndStyle,CB_SETCURSEL,0,0);
@@ -486,87 +490,100 @@ BOOL EXPORTED CALLBACK WindowDlg(HWND hDlg,UINT message,WPARAM wParam,LPARAM lPa
       rc = TRUE;
       break;
     case WM_COMMAND:
-      switch (wParam)
-         {
-         case ID_WNDCHILD:
-              switch(HIWORD(lParam))
-                 {
-                  case LBN_SELCHANGE:
-                     x = (int)SendDlgItemMessage(hDlg,ID_WNDCHILD,LB_GETCURSEL,0,0);
-                     hWnd = (HWND)SendDlgItemMessage(hDlg, ID_WNDCHILD, LB_GETITEMDATA,x,0);
-                     if (IsWindow(hWnd))
-                        {
-                         hDC = GetWindowDC(hWnd);
-                         GetWindowRect(hWnd,&rect);
-                         rect.right  = rect.right  - rect.left;
-                         rect.bottom = rect.bottom - rect.top;
-                         rect.left = 0;
-                         rect.top  = 0;
-                         DrawFocusRect(hDC,&rect);
-                         ReleaseDC(hWnd,hDC);
-                        }
-                     EnableDlgItem(hDlg,
-                                    ID_WNDVIEW,
-                                    LB_ERR != (WORD)SendMessage((HWND)LOWORD(lParam),LB_GETCURSEL,0,0)
-                                   );
-                     break;
-                  case LBN_DBLCLK:
-                      PostMessage(hDlg,WM_COMMAND,ID_WNDVIEW,0);
-                      break;
-                  case XLBN_RBUTTONDOWN:
-                      TrackPopup(hDlg,BtnTab);
-                      break;
-                 }
-              break;
-         case ID_WNDVIEW:
-              x =  (int)SendDlgItemMessage(hDlg, ID_WNDCHILD, LB_GETCURSEL,0,0);
-              if (x == LB_ERR)
-                 {
-                  MessageBeep(0);
-                  break;
-                 }
-              hWnd = (HWND)SendDlgItemMessage(hDlg, ID_WNDCHILD, LB_GETITEMDATA,x,0);
-              if (IsWindow(hWnd))
-                  CreateDialogParam(hInst,
-                                    MAKEINTRESOURCE(IDD_WINDOW),
-                                    hDlg,
-                                    WindowDlg,
-                                    (LPARAM)(LPVOID)hWnd);
-              else
-                  CreateMessage(hDlg,
-                                MAKEINTRESOURCE(IDS_ERRWND1),
-                                0,
-                                MB_OK
-                               );
-              break;
-         case ID_WNDCHGST:
-              hWnd = (HWND)SendDlgItemMessage(hDlg,ID_WNDCHILD,XLB_GETWINDOWDATA,0,0);
-         	  SetWindowStyle(hWnd,GetWindowStyle(hWnd) & (~ES_PASSWORD));
-			  sprintf(str,"Style geaendert von %X",hWnd);
-			  MessageBox(hDlg,str,0,MB_OK);
-         	  break;	
-         case ID_WNDUNASS:
-              hWnd = (HWND)SendDlgItemMessage(hDlg,ID_WNDCHILD,XLB_GETWINDOWDATA,0,0);
-              paddr = (FARPROC)GetWindowLong(hWnd,GWL_WNDPROC);
-              if (paddr && IsReadableSelector(HIWORD(paddr)))
-                  CreateDialogParam(hInst,
-                                    MAKEINTRESOURCE(IDD_UNASSEM),
-                                    hDlg,
-                                    UnassembleDlg,
-                                    (DWORD)paddr
-                                   );
-              else
-                  MessageBeep(0);
-              break;
-         case IDOK:
-              PostMessage(hDlg,WM_COMMAND,ID_WNDCHILD,MAKELONG(0,LBN_DBLCLK));
-              break;
-         case IDCANCEL:
-              PostMessage(hDlg,WM_CLOSE,0,0);
-              break;
-         }
-      rc = TRUE;
-      break;
+        switch (wParam)
+        {
+        case ID_WNDCHILD:
+            switch(HIWORD(lParam))
+            {
+            case LBN_SELCHANGE:
+                x = (int)SendDlgItemMessage(hDlg,ID_WNDCHILD,LB_GETCURSEL,0,0);
+                hWnd = (HWND)SendDlgItemMessage(hDlg, ID_WNDCHILD, LB_GETITEMDATA,x,0);
+                if (IsWindow(hWnd))
+                {
+                    hDC = GetWindowDC(hWnd);
+                    GetWindowRect(hWnd,&rect);
+                    rect.right  = rect.right  - rect.left;
+                    rect.bottom = rect.bottom - rect.top;
+                    rect.left = 0;
+                    rect.top  = 0;
+                    DrawFocusRect(hDC,&rect);
+                    ReleaseDC(hWnd,hDC);
+                }
+                EnableDlgItem(hDlg,
+                              ID_WNDVIEW,
+                              LB_ERR != (WORD)SendMessage((HWND)LOWORD(lParam),LB_GETCURSEL,0,0)
+                             );
+                break;
+            case LBN_DBLCLK:
+                PostMessage(hDlg,WM_COMMAND,ID_WNDVIEW,0);
+                break;
+            case XLBN_RBUTTONDOWN:
+                TrackPopup(hDlg,BtnTab);
+                break;
+            }
+            break;
+        case ID_WNDVIEW:
+            x =  (int)SendDlgItemMessage(hDlg, ID_WNDCHILD, LB_GETCURSEL,0,0);
+            if (x == LB_ERR)
+            {
+                MessageBeep(0);
+                break;
+            }
+            hWnd = (HWND)SendDlgItemMessage(hDlg, ID_WNDCHILD, LB_GETITEMDATA,x,0);
+            if (IsWindow(hWnd))
+                CreateDialogParam(hInst,
+                                  MAKEINTRESOURCE(IDD_WINDOW),
+                                  hDlg,
+                                  WindowDlg,
+                                  (LPARAM)(LPVOID)hWnd);
+            else
+                CreateMessage(hDlg,
+                              MAKEINTRESOURCE(IDS_ERRWND1),
+                              0,
+                              MB_OK
+                             );
+            break;
+        case ID_WNDEDITSTYLE:
+            switch(HIWORD(lParam))
+            {
+            case EN_CHANGE: /* if "new style" has been changed, enable "Change Style" */
+                EnableDlgItem(hDlg,ID_WNDCHGSTYLE, 1);
+                break;
+            }
+            break;
+        case ID_WNDCHGSTYLE: /* change Style */
+            GetDlgItemText(hDlg,ID_WNDEDITSTYLE,str,sizeof(str));
+            //OutputDebugString(str);
+            //OutputDebugString("\r\n");
+            if (sscanf(str,"%lX",&dwStyle) ) {
+                hWnd = (HWND)SendDlgItemMessage(hDlg,ID_WNDCHILD,XLB_GETWINDOWDATA,0,0);
+                SetWindowStyle(hWnd, dwStyle );
+                wsprintf(str,"Window %X: Style geaendert auf %lX",hWnd, dwStyle);
+                MessageBox(hDlg,str,"Info",MB_OK);
+            }
+            break;
+        case ID_WNDUNASS:
+            hWnd = (HWND)SendDlgItemMessage(hDlg,ID_WNDCHILD,XLB_GETWINDOWDATA,0,0);
+            paddr = (FARPROC)GetWindowLong(hWnd,GWL_WNDPROC);
+            if (paddr && IsReadableSelector(HIWORD(paddr)))
+                CreateDialogParam(hInst,
+                                  MAKEINTRESOURCE(IDD_UNASSEM),
+                                  hDlg,
+                                  UnassembleDlg,
+                                  (DWORD)paddr
+                                 );
+            else
+                MessageBeep(0);
+            break;
+        case IDOK:
+            PostMessage(hDlg,WM_COMMAND,ID_WNDCHILD,MAKELONG(0,LBN_DBLCLK));
+            break;
+        case IDCANCEL:
+            PostMessage(hDlg,WM_CLOSE,0,0);
+            break;
+        }
+        rc = TRUE;
+        break;
    }
  return rc;
 }

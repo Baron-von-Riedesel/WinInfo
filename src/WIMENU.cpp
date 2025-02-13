@@ -12,7 +12,6 @@
 #include "wininfox.h"
 
 #define WM_F1DOWN   0x401
-#define _SHAREWARE 0
 
 extern "C" {
 WORD FAR PASCAL CheckRegister(LPSTR,LPSTR);
@@ -20,7 +19,6 @@ WORD FAR PASCAL CheckRegister(LPSTR,LPSTR);
 
 char   szPassword[40] = {0};
 extern char szVersion[];
-extern WORD wRegistered;
 extern BYTE fNewReg;
 extern HFONT hFont;
 extern char szIniName[];
@@ -64,7 +62,7 @@ static DLGENTRY dlgtab[]  = {
                    ID_DOS,       DosDlg,        IDD_DOS,    &hWndDOS,
                    ID_DPMI,      DPMIDlg,       IDD_DPMI,   &hWndDPMI,
                    ID_SYSTEM,    SysDlg,        IDD_SYSTEM, &hWndSystem,
-                   ID_ABOUT,     AboutDlg,      0,          &hWndAbout,
+                   ID_ABOUT,     AboutDlg,      IDD_ABOUT,  &hWndAbout,
                    0,            0,             0,          0};
 
 static int maxwndtxt;
@@ -107,6 +105,7 @@ BOOL EXPORTED CALLBACK WindowCB1(HWND hWnd, LPARAM lparam)
 
  return TRUE;
 }
+
 void CharFilter(char * pZiel, char * pQuelle, char c)
 {
 	for (;*pQuelle;pQuelle++)
@@ -121,24 +120,24 @@ void CharFilter(char * pZiel, char * pQuelle, char c)
 */
 BOOL EXPORTED CALLBACK MenuDlg(HWND hDlg,UINT message,WPARAM wParam,LPARAM lParam )
 {
- static WORD id;
- static HWND sWnd;
- int i;
- HTASK hTask;
- HMENU hPopupMenu;
- DWORD dwID;
- char str[80];
- HGLOBAL hSel;
- LPMEASUREITEMSTRUCT lpmi;
- LPDRAWITEMSTRUCT lpdi;
- LOGFONT lf;
- DLGENTRY *pdlgentry;
- POINT point;
- BOOL rc = FALSE;
- HWND hWnd;
+    static WORD id;
+    static HWND sWnd;
+    int i;
+    HTASK hTask;
+    HMENU hPopupMenu;
+    DWORD dwID;
+    char str[80];
+    HGLOBAL hSel;
+    LPMEASUREITEMSTRUCT lpmi;
+    LPDRAWITEMSTRUCT lpdi;
+    LOGFONT lf;
+    DLGENTRY *pdlgentry;
+    POINT point;
+    BOOL rc = FALSE;
+    HWND hWnd;
 
- switch (message)
-   {
+    switch (message)
+    {
     case WM_INITDIALOG:
         if (!hFontAlt)
             if (hFontAlt = GetWindowFont(hDlg))
@@ -156,15 +155,12 @@ BOOL EXPORTED CALLBACK MenuDlg(HWND hDlg,UINT message,WPARAM wParam,LPARAM lPara
         DestroyWindow(hWndMain);
         rc = TRUE;
         break;
-	case WM_DESTROY:
-		if (hFontAlt)
-	        DeleteFont(hFontAlt);
-		break;
+    case WM_DESTROY:
+        if (hFontAlt)
+            DeleteFont(hFontAlt);
+        break;
     case WM_MOVE:
         SaveWindowPos(hDlg,&xpos,&ypos);
-        break;
-    case WM_NCPAINT:
-        PostMessage(hDlg,WM_COMMAND,ID_CHECKREGISTER,0);
         break;
     case WM_MEASUREITEM:
         lpmi = (LPMEASUREITEMSTRUCT)lParam;
@@ -187,8 +183,8 @@ BOOL EXPORTED CALLBACK MenuDlg(HWND hDlg,UINT message,WPARAM wParam,LPARAM lPara
             SetBkColor(lpdi->hDC,GetSysColor(COLOR_HIGHLIGHT));
             SetTextColor(lpdi->hDC,GetSysColor(COLOR_HIGHLIGHTTEXT));
            }
-		if (hFont)
-        	SelectObject(lpdi->hDC,hFont);
+        if (hFont)
+            SelectObject(lpdi->hDC,hFont);
         ExtTextOut(lpdi->hDC,
                    lpdi->rcItem.left,
                    lpdi->rcItem.top,
@@ -211,124 +207,86 @@ BOOL EXPORTED CALLBACK MenuDlg(HWND hDlg,UINT message,WPARAM wParam,LPARAM lPara
         break;
     case WM_COMMAND:
         switch (wParam)
-          {
-           case ID_TASK:
-           case ID_MODUL:
-           case ID_GLOBAL:
-           case ID_USER:
-           case ID_GDI:
-           case ID_DOS:
-           case ID_DPMI:
-           case ID_SYSTEM:
-           case ID_ABOUT:
-             for (pdlgentry = dlgtab;pdlgentry->cmdid;pdlgentry++)
-                if (wParam == pdlgentry->cmdid)
-                   {
-                    switch(HIWORD(lParam))
-                       {
-                        case BN_CLICKED:
-                          if (*pdlgentry->phWnd)
-                             {
-                              ShowWindow(*pdlgentry->phWnd,SW_RESTORE);
-                              SetActiveWindow(*pdlgentry->phWnd);
-                             }
-                          else
-                          if (wParam == ID_ABOUT)
-                             {
-                              hSel = LoadUserResource(hInst,
-                                                      MAKEINTRESOURCE(IDU_ABOUT + wRegistered),
-                                                      MAKEINTRESOURCE(RTI_USER),
-                                                      (LPBYTE)0,
-                                                      0
-                                                     );
-                              *pdlgentry->phWnd = CreateDialogIndirect(hInst,
-                                                   (LPSTR)MAKELONG(12,hSel),
-                                                   hDlg,
-                                                   (DLGPROC)pdlgentry->tProc
-                                                  );
-                             }
-                          else
-                             {
-                              *pdlgentry->phWnd = CreateDialog(hInst,
-                                           MAKEINTRESOURCE(pdlgentry->resid),
-                                           hWndMain,
-                                           (DLGPROC)pdlgentry->tProc);
-                             }
-                       }
+        {
+        case ID_TASK:
+        case ID_MODUL:
+        case ID_GLOBAL:
+        case ID_USER:
+        case ID_GDI:
+        case ID_DOS:
+        case ID_DPMI:
+        case ID_SYSTEM:
+        case ID_ABOUT:
+            for (pdlgentry = dlgtab;pdlgentry->cmdid;pdlgentry++)
+                if (wParam == pdlgentry->cmdid) {
+                    switch(HIWORD(lParam)) {
+                    case BN_CLICKED:
+                        if (*pdlgentry->phWnd) {
+                            ShowWindow(*pdlgentry->phWnd,SW_RESTORE);
+                            SetActiveWindow(*pdlgentry->phWnd);
+                        } else {
+                            *pdlgentry->phWnd = CreateDialog(hInst,
+                                                             MAKEINTRESOURCE(pdlgentry->resid),
+                                                             hWndMain,
+                                                             (DLGPROC)pdlgentry->tProc);
+                        }
+                    }
                     break;
-                   }
-             break;
-           case ID_READIDS:
-             GetPrivateProfileString("strings","regid","???",szPassword,sizeof(szPassword),szIniName);
-             break;
-           case ID_WRITEIDS:
-             fNewReg = 0;
-             WritePrivateProfileString("strings","regid",szPassword,szIniName);
-             break;
-           case ID_NEWSELWIN:
-             hTask = GetCurrentTask();
-             windex = ID_OWNERMENU;
-             maxwndtxt = 0;
-             if (hPopupMenu = CreatePopupMenu())
-                {
-                 fMenu = TRUE;
-                 EnumTaskWindows(hTask,WindowCB1,MAKELONG(hPopupMenu,0));
-                 if (fMenu)
-                     WindowCB1(hDlg,MAKELONG(hPopupMenu,ID_EXIT));
-                 else
-                     CreateMessage(hDlg,MAKEINTRESOURCE(IDS_ERRMNU1),0,MB_OK);
-                 GetCursorPos(&point);
-                 TrackPopupMenu(hPopupMenu,
-                                TPM_LEFTALIGN | TPM_RIGHTBUTTON,
-                                point.x,
-                                point.y,
-                                0,
-                                hDlg,
-                                0 );
-                 DestroyMenu(hPopupMenu);
                 }
-             break;
-           case ID_HELP:
-             PostMessage(hWndMain,WM_F1DOWN,0,0);
-             break;
-           case ID_CHECKREGISTER:
-#if _SHAREWARE           
-             if (wRegistered == 0xFFFF)
+            break;
+        case ID_READIDS:
+            GetPrivateProfileString("strings","regid","???",szPassword,sizeof(szPassword),szIniName);
+            break;
+        case ID_WRITEIDS:
+            fNewReg = 0;
+            WritePrivateProfileString("strings","regid",szPassword,szIniName);
+            break;
+        case ID_NEWSELWIN:
+            hTask = GetCurrentTask();
+            windex = ID_OWNERMENU;
+            maxwndtxt = 0;
+            if (hPopupMenu = CreatePopupMenu())
+            {
+                fMenu = TRUE;
+                EnumTaskWindows(hTask,WindowCB1,MAKELONG(hPopupMenu,0));
+                if (fMenu)
+                    WindowCB1(hDlg,MAKELONG(hPopupMenu,ID_EXIT));
+                else
+                    CreateMessage(hDlg,MAKEINTRESOURCE(IDS_ERRMNU1),0,MB_OK);
+                GetCursorPos(&point);
+                TrackPopupMenu(hPopupMenu,
+                               TPM_LEFTALIGN | TPM_RIGHTBUTTON,
+                               point.x,
+                               point.y,
+                               0,
+                               hDlg,
+                               0 );
+                DestroyMenu(hPopupMenu);
+            }
+            break;
+        case ID_HELP:
+            PostMessage(hWndMain,WM_F1DOWN,0,0);
+            break;
+        case IDCANCEL:
+        case ID_EXIT:
+            PostMessage(hDlg,WM_CLOSE,0,0);
+            break;
+        default:
+            if ((wParam >= ID_OWNERMENU) && (wParam < windex))
+            {
+                if (id)
+                    PostMessage(hDlg,WM_COMMAND,id,0);
+                else
                 {
-                 if (!fNewReg)
-                     SendMessage(hDlg,WM_COMMAND,ID_READIDS,0);
-                 if (wRegistered = (CheckRegister(szVersion,szPassword) & 0x0001))
-                    {
-                     if  (fNewReg)
-                         PostMessage(hDlg,WM_COMMAND,ID_WRITEIDS,0);
-                    }
-                 else
-                     PostMessage(hDlg,WM_COMMAND,ID_ABOUT,0);
+                    hWnd = sWnd;
+                    if (IsIconic(hWnd))
+                        PostMessage(hWnd,WM_SYSCOMMAND,SC_RESTORE,0);
+                    SetActiveWindow(hWnd);
                 }
-#else 
-			wRegistered = 1;               
-#endif
-             break;
-           case IDCANCEL:
-           case ID_EXIT:
-             PostMessage(hDlg,WM_CLOSE,0,0);
-             break;
-           default:
-             if ((wParam >= ID_OWNERMENU) && (wParam < windex))
-                {
-                 if (id)
-                     PostMessage(hDlg,WM_COMMAND,id,0);
-                 else
-                    {
-                     hWnd = sWnd;
-                     if (IsIconic(hWnd))
-                         PostMessage(hWnd,WM_SYSCOMMAND,SC_RESTORE,0);
-                     SetActiveWindow(hWnd);
-                    }
-                }
-          }         // end switch (wParam)
+            }
+        }         // end switch (wParam)
         rc = TRUE;
         break;      // end case WM_COMMAND
-   }
- return rc;
+    }
+    return rc;
 }

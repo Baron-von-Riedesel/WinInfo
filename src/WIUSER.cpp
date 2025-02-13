@@ -35,74 +35,75 @@ static GMEMFILTER gmf = {TRUE,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE,
 
 static PSTR fstr[32] = {0};
 
-static int itab[32] = {SM_CXSCREEN,
-                       SM_CYSCREEN,
-                       SM_CXFRAME,
-                       SM_CYFRAME,
-                       SM_CXVSCROLL,
-                       SM_CYVSCROLL,
-                       SM_CXHSCROLL,
-                       SM_CYHSCROLL,
-                       SM_CYCAPTION,
-                       SM_CXBORDER,
-                       SM_CYBORDER,
-                       SM_CXDLGFRAME,
-                       SM_CYDLGFRAME,
-                       SM_CXHTHUMB,
-                       SM_CYVTHUMB,
-                       SM_CXICON,
-                       SM_CYICON,
-                       SM_CXCURSOR,
-                       SM_CYCURSOR,
-                       SM_CYMENU,
-                       SM_CXFULLSCREEN,
-                       SM_CYFULLSCREEN,
-                       SM_CYKANJIWINDOW,
-                       SM_CXMINTRACK,
-                       SM_CYMINTRACK,
-                       SM_CXMIN,
-                       SM_CYMIN,
-                       SM_CXSIZE,
-                       SM_CYSIZE,
-                       SM_MOUSEPRESENT,
-                       SM_DEBUG,
-                       SM_SWAPBUTTON
-                      };
+static int itab[32] = {
+    SM_CXSCREEN,
+    SM_CYSCREEN,
+    SM_CXFRAME,
+    SM_CYFRAME,
+    SM_CXVSCROLL,
+    SM_CYVSCROLL,
+    SM_CXHSCROLL,
+    SM_CYHSCROLL,
+    SM_CYCAPTION,
+    SM_CXBORDER,
+    SM_CYBORDER,
+    SM_CXDLGFRAME,
+    SM_CYDLGFRAME,
+    SM_CXHTHUMB,
+    SM_CYVTHUMB,
+    SM_CXICON,
+    SM_CYICON,
+    SM_CXCURSOR,
+    SM_CYCURSOR,
+    SM_CYMENU,
+    SM_CXFULLSCREEN,
+    SM_CYFULLSCREEN,
+    SM_CYKANJIWINDOW,
+    SM_CXMINTRACK,
+    SM_CYMINTRACK,
+    SM_CXMIN,
+    SM_CYMIN,
+    SM_CXSIZE,
+    SM_CYSIZE,
+    SM_MOUSEPRESENT,
+    SM_DEBUG,
+    SM_SWAPBUTTON
+};
 
 static STRLOADENTRY CODESEG strloadtab[] = {
-                       &fstr[0],  IDS_SPSTR1,
-                       &fstr[1],  IDS_SPSTR2,
-                       &fstr[2],  IDS_SPSTR3,
-                       &fstr[3],  IDS_SPSTR4,
-                       &fstr[4],  IDS_SPSTR5,
-                       &fstr[5],  IDS_SPSTR6,
-                       &fstr[6],  IDS_SPSTR7,
-                       &fstr[7],  IDS_SPSTR8,
-                       &fstr[8],  IDS_SPSTR9,
-                       &fstr[9],  IDS_SPSTR10,
-                       &fstr[10], IDS_SPSTR11,
-                       &fstr[11], IDS_SPSTR12,
-                       &fstr[12], IDS_SPSTR13,
-                       &fstr[13], IDS_SPSTR14,
-                       &fstr[14], IDS_SPSTR15,
-                       &fstr[15], IDS_SPSTR16,
-                       &fstr[16], IDS_SPSTR17,
-                       &fstr[17], IDS_SPSTR18,
-                       &fstr[18], IDS_SPSTR19,
-                       &fstr[19], IDS_SPSTR20,
-                       &fstr[20], IDS_SPSTR21,
-                       &fstr[21], IDS_SPSTR22,
-                       &fstr[22], IDS_SPSTR23,
-                       &fstr[23], IDS_SPSTR24,
-                       &fstr[24], IDS_SPSTR25,
-                       &fstr[25], IDS_SPSTR26,
-                       &fstr[26], IDS_SPSTR27,
-                       &fstr[27], IDS_SPSTR28,
-                       &fstr[28], IDS_SPSTR29,
-                       &fstr[29], IDS_SPSTR30,
-                       &fstr[30], IDS_SPSTR31,
-                       &fstr[31], IDS_SPSTR32,
-                       (PSTR *)(0)};
+    &fstr[0],  IDS_SPSTR1,
+    &fstr[1],  IDS_SPSTR2,
+    &fstr[2],  IDS_SPSTR3,
+    &fstr[3],  IDS_SPSTR4,
+    &fstr[4],  IDS_SPSTR5,
+    &fstr[5],  IDS_SPSTR6,
+    &fstr[6],  IDS_SPSTR7,
+    &fstr[7],  IDS_SPSTR8,
+    &fstr[8],  IDS_SPSTR9,
+    &fstr[9],  IDS_SPSTR10,
+    &fstr[10], IDS_SPSTR11,
+    &fstr[11], IDS_SPSTR12,
+    &fstr[12], IDS_SPSTR13,
+    &fstr[13], IDS_SPSTR14,
+    &fstr[14], IDS_SPSTR15,
+    &fstr[15], IDS_SPSTR16,
+    &fstr[16], IDS_SPSTR17,
+    &fstr[17], IDS_SPSTR18,
+    &fstr[18], IDS_SPSTR19,
+    &fstr[19], IDS_SPSTR20,
+    &fstr[20], IDS_SPSTR21,
+    &fstr[21], IDS_SPSTR22,
+    &fstr[22], IDS_SPSTR23,
+    &fstr[23], IDS_SPSTR24,
+    &fstr[24], IDS_SPSTR25,
+    &fstr[25], IDS_SPSTR26,
+    &fstr[26], IDS_SPSTR27,
+    &fstr[27], IDS_SPSTR28,
+    &fstr[28], IDS_SPSTR29,
+    &fstr[29], IDS_SPSTR30,
+    &fstr[30], IDS_SPSTR31,
+    &fstr[31], IDS_SPSTR32,
+    (PSTR *)(0)};
 
 ////////////////////////////////////////////////////////
 // WinCB - Window Callback                              
@@ -194,7 +195,7 @@ static HWND CheckWindow(HWND hDlg)
   return hWnd;
 }
 ////////////////////////////////////////////////////////
-// WindowDlg - Alle Windows auflisten                   
+// AllWindowDlg - Alle Windows auflisten
 ////////////////////////////////////////////////////////
 BOOL EXPORTED CALLBACK AllWindowDlg(HWND hDlg,UINT message,WPARAM wParam,LPARAM lParam )
 {
@@ -238,11 +239,11 @@ BOOL EXPORTED CALLBACK AllWindowDlg(HWND hDlg,UINT message,WPARAM wParam,LPARAM 
          case IDOK:
               PostMessage(hDlg,WM_COMMAND,ID_LISTBOX1,MAKELONG(0,LBN_DBLCLK));
               break;
-         case ID_SUBDLG1:  // WM_CLOSE nachricht an Window schicken
+         case ID_SUBDLG1:  // "Close" - WM_CLOSE nachricht an Window schicken
               if (hWnd = CheckWindow(hDlg))
                   SendMessage(hWnd,WM_CLOSE,0,0);
               break;
-         case ID_SUBDLG2:  // Klasse des Fensters
+         case ID_SUBDLG2:  // "Klasse" - open "View Class" dialog
               if (!(hWnd = CheckWindow(hDlg)))
                   break;
               hModule = (HMODULE)GetClassWord(hWnd,GCW_HMODULE);
@@ -269,7 +270,7 @@ BOOL EXPORTED CALLBACK AllWindowDlg(HWND hDlg,UINT message,WPARAM wParam,LPARAM 
                   CreateMessage(hDlg,szStr2,"Fehler",MB_OK);
                  }
               break;
-         case ID_SUBDLG3:
+         case ID_SUBDLG3: /* open "Details" dialog */
               if (!(hWnd = CheckWindow(hDlg)))
                   break;
               CreateDialogParam(hInst,

@@ -16,86 +16,86 @@
 extern HWND hWndDPMIVxD;
 
 static KEYENTRY vxdtab[] = {
-				"VMM"       ,1,
-				"Debug"     ,2,
-				"VPICD"     ,3,
-				"VDMAD"     ,4,
-				"VTD"       ,5,
-				"V86MMGR"   ,6,
-				"PageSwap"  ,7,
-				"Parity"    ,8,
-				"ReBoot"    ,9,
-				"VDD"       ,10,
-				"VSD"       ,11,
-				"VMD"       ,12,
-				"VKD"       ,13,
-				"VCD"       ,14,
-				"VPD"       ,15,
-				"VHD"       ,0x010,
-				"VMCPD"     ,0x011,
-				"EBIOS"     ,0x012,
-				"BIOSXLAT"  ,0x013,
-				"VNETBIOS"  ,0x014,
-				"DOSMGR"    ,0x015,
-				"WINLOAD"   ,0x016,
-				"Shell"     ,0x017,
-				"VMPoll"    ,0x018,
-				"VPROD"     ,0x019,
-				"DOSNET"    ,0x01A,
-				"VFD"       ,0x01B,
-				"VDD2"      ,0x01C,
-				"WINDEBUG"  ,0x01D,
-				"TSRLOAD"   ,0x01E,
-				"BiosHook"  ,0x01F,  // Bios interrupt hooker VxD
-				"Int13"     ,0x020,  //
-				"PageFile"  ,0x021,  // Paging File device
-				"SCSI"      ,0x022,  // SCSI device
-				"MCA_POS"   ,0x023,  // MCA_POS device
-				"SCSIFD"    ,0x024,  // SCSI FastDisk device
-				"VPEND"     ,0x025,  // Pen device
-				"APM"       ,0x026,  // Power Management device
-				"Vxdldr"    ,0x027,
-				"NDIS"      ,0x028,
-				"VWIN32"    ,0x02A,
-				"VCOMM"     ,0x02B,
-				"WIN32S"    ,0x02D,
-				"DEBUGCMD"  ,0x02E,
-				"NETBEUI"   ,0x031,	// nur bis wfw 311
-				"Server"    ,0x032,	// nur bis wfw 311
-				"Configmg"  ,0x033,	// ab w95
-				"DWCFGMG"   ,0x034,	// ab w95
-				"SCSIPORT"  ,0x035,
-				"VFBACKUP"  ,0x036,
-				"ENABLE"    ,0x037,	// ab w95
-				"VCOND"     ,0x038,	// ab w95
-				"VPMTD"     ,0x03A,
-				"DblSpace"  ,0x03B,
-				"ISAPNP"    ,0x03C,	// ab w95
-				"IFSMgr"    ,0x040,	// ab w95
-				"VCDFSD"    ,0x041,	// ab w95
-				"MRCI2"     ,0x042,	// ab w95
-				"PCI"       ,0x043,	// ab w95
-				"PELOADER"  ,0x044,	// ab w95
-				"EISA"      ,0x045,	// ab w95
-				"DRAGCLI"   ,0x046,	// ab w95
-				"DRAGSRV"   ,0x047,	// ab w95
-				"PERF"      ,0x048,	// ab w95
-				"AWREDIR"   ,0x049,	// ab w95
-				"VIPX"      ,0x200,
-				"WinICE"    ,0x202,
-				"VClient"   ,0x203,
-				"BCW"       ,0x205,
-				"VCommute"  ,0x234,
-				"VTDAPI"    ,0x442,
-				"VSBD"      ,0x445,
-				"VflatD"    ,0x45D,
-				"VNETSUP"   ,0x480,
-				"VREDIR"    ,0x481,
-				"VSHARE"    ,0x483,
-				"IFSMGR"    ,0x484,
-				"VFAT"      ,0x486,
-				"VCACHE"    ,0x48B,
-				(PSTR)0     ,0};
+    "VMM"       ,1,
+    "Debug"     ,2,
+    "VPICD"     ,3,
+    "VDMAD"     ,4,
+    "VTD"       ,5,
+    "V86MMGR"   ,6,
+    "PageSwap"  ,7,
+    "Parity"    ,8,
+    "ReBoot"    ,9,
+    "VDD"       ,10,
+    "VSD"       ,11,
+    "VMD"       ,12,
+    "VKD"       ,13,
+    "VCD"       ,14,
+    "VPD"       ,15,
+    "VHD"       ,0x010,
+    "VMCPD"     ,0x011,
+    "EBIOS"     ,0x012,
+    "BIOSXLAT"  ,0x013,
+    "VNETBIOS"  ,0x014,
+    "DOSMGR"    ,0x015,
+    "WINLOAD"   ,0x016,
+    "Shell"     ,0x017,
+    "VMPoll"    ,0x018,
+    "VPROD"     ,0x019,
+    "DOSNET"    ,0x01A,
+    "VFD"       ,0x01B,
+    "VDD2"      ,0x01C,
+    "WINDEBUG"  ,0x01D,
+    "TSRLOAD"   ,0x01E,
+    "BiosHook"  ,0x01F,  // Bios interrupt hooker VxD
+    "Int13"     ,0x020,  //
+    "PageFile"  ,0x021,  // Paging File device
+    "SCSI"      ,0x022,  // SCSI device
+    "MCA_POS"   ,0x023,  // MCA_POS device
+    "SCSIFD"    ,0x024,  // SCSI FastDisk device
+    "VPEND"     ,0x025,  // Pen device
+    "APM"       ,0x026,  // Power Management device
+    "Vxdldr"    ,0x027,
+    "NDIS"      ,0x028,
+    "VWIN32"    ,0x02A,
+    "VCOMM"     ,0x02B,
+    "WIN32S"    ,0x02D,
+    "DEBUGCMD"  ,0x02E,
+    "NETBEUI"   ,0x031,	// nur bis wfw 311
+    "Server"    ,0x032,	// nur bis wfw 311
+    "Configmg"  ,0x033,	// ab w95
+    "DWCFGMG"   ,0x034,	// ab w95
+    "SCSIPORT"  ,0x035,
+    "VFBACKUP"  ,0x036,
+    "ENABLE"    ,0x037,	// ab w95
+    "VCOND"     ,0x038,	// ab w95
+    "VPMTD"     ,0x03A,
+    "DblSpace"  ,0x03B,
+    "ISAPNP"    ,0x03C,	// ab w95
+    "IFSMgr"    ,0x040,	// ab w95
+    "VCDFSD"    ,0x041,	// ab w95
+    "MRCI2"     ,0x042,	// ab w95
+    "PCI"       ,0x043,	// ab w95
+    "PELOADER"  ,0x044,	// ab w95
+    "EISA"      ,0x045,	// ab w95
+    "DRAGCLI"   ,0x046,	// ab w95
+    "DRAGSRV"   ,0x047,	// ab w95
+    "PERF"      ,0x048,	// ab w95
+    "AWREDIR"   ,0x049,	// ab w95
+    "VIPX"      ,0x200,
+    "WinICE"    ,0x202,
+    "VClient"   ,0x203,
+    "BCW"       ,0x205,
+    "VCommute"  ,0x234,
+    "VTDAPI"    ,0x442,
+    "VSBD"      ,0x445,
+    "VflatD"    ,0x45D,
+    "VNETSUP"   ,0x480,
+    "VREDIR"    ,0x481,
+    "VSHARE"    ,0x483,
+    "IFSMGR"    ,0x484,
+    "VFAT"      ,0x486,
+    "VCACHE"    ,0x48B,
+    (PSTR)0     ,0};
 
 
 /*

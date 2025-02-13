@@ -14,12 +14,12 @@ NAME=WinInfo
 MSVC=\msvc
 
 !if $(DEBUG)
-COPTD=-D "_DEBUG" -Zi -Od
+COPTD=-D "_DEBUG" -Zi -Od -G2
 AOPTD=-D_DEBUG -Zi
-LOPTD=/DEBUG
+LOPTD=/CO
 OUTDIR=DEBUG
 !else
-COPTD=-D "NDEBUG" -O1 
+COPTD=-D "NDEBUG" -O1 -G3 
 AOPTD=
 LOPTD=
 OUTDIR=RELEASE
@@ -43,7 +43,7 @@ RC  =$(MSVC)\bin\rc.exe
 HC  =$(MSVC)\bin\hc31.exe
 
 AOPT = -c -nologo -Sg -Cp $(AOPTD)
-COPT = -c -nologo -Gs -GA -G3 -Zp1 -W3 -I$(MSVC)\include -IInclude -AM -D "STRICT" $(COPTD)
+COPT = -c -nologo -Gs -GA -Zp1 -W3 -I$(MSVC)\include -IInclude -AM -D "STRICT" $(COPTD)
 LOPTS= /NOLOGO/MAP:FULL/ONE:NOE/NOD/A:16/NOE/ST:8192
 LIBS = $(OUTDIR)\WinInfo.lib libw.lib toolhelp hexdump stattext winutil1 winutil2 winutil3 xlistbox mlibcew user386 userw user oldnames
 LIBPATH= $(MSVC)\lib;Lib;
@@ -78,11 +78,8 @@ $(OUTDIR)\$(NAME).lib: $(OBJMODS) Makefile
 	@$(LIB) /nologo $(NAME).lib $(OBJNAMES:.\=+);
 	@cd ..
 
-$(OUTDIR)\$(NAME).res: $(NAME).rc Res\Witabpos.bin Res\Wiabout1.res
+$(OUTDIR)\$(NAME).res: $(NAME).rc Res\Witabpos.bin
 	@$(RC) -r -iinclude;$(MSVC)\include -fo $*.res $(NAME).rc
-
-Res\WIabout1.res: WIabout1.rc
-	@$(RC) -r -iinclude;$(MSVC)\include -fo $*.res WIabout1.rc
 
 Res\WItabpos.bin: WItabpos.asm
 	@$(ASM) $(AOPT) -bin -Fl$* -Fo$*.bin WItabpos.asm
