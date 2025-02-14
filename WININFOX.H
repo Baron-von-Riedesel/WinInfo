@@ -146,7 +146,7 @@
 #define IDD_frei4     123
 #define IDD_MCB       124
 #define IDD_DOSDEV    125
-#define IDD_DPMIVXD   126
+#define IDD_ENHVXD    126
 #define IDD_USER      127
 #define IDD_XMODULE   128
 #define IDD_DLGTMP    129
@@ -174,7 +174,7 @@
 #define IDD_HEXPARMS  151
 #define IDD_SYSPAGE   152
 #define IDD_PAGETAB   153
-#define IDD_DPMIVM    154
+#define IDD_ENHVM     154
 #define IDD_XTASK     155
 #define IDD_STACKTRACE 156
 #define IDD_DEVCAP    157
@@ -241,11 +241,11 @@
 #define ID_GDIDEV    54
 #define ID_GDIGLOBAL 55
                                       /* IDs DPMI Main */
-#define ID_DPMIMON     62
-#define ID_DPMIINT     64
-#define ID_DPMIANZ     66
-#define ID_DPMIVM      67
-#define ID_DPMIVXD     69
+#define ID_DPMIMON    62
+#define ID_DPMIINT    64
+#define ID_DPMIANZ    66
+#define ID_ENHVM      67
+#define ID_ENHVXD     69
                                       /* IDs VM */
 #define ID_VMSWITCH   63
 #define ID_VMDESTROY  64

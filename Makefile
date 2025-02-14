@@ -46,7 +46,7 @@ AOPT = -c -nologo -Sg -Cp $(AOPTD)
 COPT = -c -nologo -Gs -GA -Zp1 -W3 -I$(MSVC)\include -IInclude -AM -D "STRICT" $(COPTD)
 LOPTS= /NOLOGO/MAP:FULL/ONE:NOE/NOD/A:16/NOE/ST:8192
 LIBS = $(OUTDIR)\WinInfo.lib libw.lib toolhelp hexdump stattext winutil1 winutil2 winutil3 xlistbox mlibcew user386 userw user oldnames
-LIBPATH= $(MSVC)\lib;Lib;
+LIBPATH= Lib;$(MSVC)\lib;
 
 .SUFFIXES: .asm .obj .cpp
 
@@ -74,7 +74,7 @@ $(NAME).def
  
 $(OUTDIR)\$(NAME).lib: $(OBJMODS) Makefile
 	@cd $(OUTDIR)
-	@erase $(NAME).lib
+	@if exist $(NAME).lib erase $(NAME).lib
 	@$(LIB) /nologo $(NAME).lib $(OBJNAMES:.\=+);
 	@cd ..
 

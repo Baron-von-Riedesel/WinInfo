@@ -7,7 +7,7 @@
 #include "user.h"
 #include "userw.h"
 #include "stattext.h"
-#include "stat.h"
+#include "resource.h"
 
 extern "C" {
 HANDLE __export WINAPI StatusTextInfo(void);

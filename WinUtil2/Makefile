@@ -1,14 +1,14 @@
 
 name = WinUtil2
-#LIBS=libw toolhelp user386 cwinrt dpmi cuserw userw cuser user
-LOPTS=/NOLOGO/NOE/NON/A:16/NOD/MAP:FULL/FAR/ONERROR:NOEXE
-LIBS=libw toolhelp dpmi user386 cwinrt userw cuser user
-mods = Lib\anlshl Lib\strcpy Lib\output
 
 MSVC = \msvc
 CC   = $(MSVC)\bin\cl
 LINK = $(MSVC)\bin\link
 RC   = $(MSVC)\bin\rc
+
+LOPTS=/NOLOGO/NOE/NON/A:16/NOD/MAP:FULL/FAR/ONERROR:NOEXE
+LIBS=libw toolhelp dpmi user386 cwinrt userw cuser user
+mods = Lib\anlshl Lib\strcpy Lib\output
 
 ODIR = Build
 
@@ -18,7 +18,7 @@ $(ODIR):
 	@mkdir $(ODIR)
 
 $(ODIR)\$(name).dll: $(ODIR)\$(name).obj $(name).def $(ODIR)\$(name).res Makefile
-	@set lib=$(MSVC)\lib;..\lib;Lib;
+	@set lib=..\lib;Lib;$(MSVC)\lib;
 	@$(LINK) $(LOPTS) @<<
 $* $(mods),
 $*.dll,

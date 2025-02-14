@@ -26,7 +26,7 @@ BOOL CALLBACK PageTabDlg(HWND, UINT, WPARAM, LPARAM);
 BOOL CALLBACK IDTDlg     (HWND, UINT, WPARAM, LPARAM);
 BOOL CALLBACK PMIVDlg    (HWND, UINT, WPARAM, LPARAM);
 
-extern HWND hWndDPMIVM;
+extern HWND hWndENHVM;
 
 static char fClientStr1[] = {"\teax=%lX,ebx=%lX,ecx=%lX,edx=%lX,esi=%lX,edi=%lX,ebp=%lX,efl=%lX"};
 static char fClientStr2[] = {"\tcs:eip=%lX:%lX,ss:esp=%lX:%lX,ds=%lX,es=%lX,fs=%lX,gs=%lX"};
@@ -413,7 +413,7 @@ BOOL EXPORTED CALLBACK VMDlg(HWND hDlg,UINT message,WPARAM wParam,LPARAM lParam)
          rc = TRUE;             /* end WM_COMMAND */
          break;
       case WM_DESTROY:
-         hWndDPMIVM = 0;
+         hWndENHVM = 0;
          break;
       case WM_MOVE:
         SaveWindowPos(hDlg,&xVMpos,&yVMpos);

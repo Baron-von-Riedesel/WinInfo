@@ -16,13 +16,6 @@
 // #define strcat(x,y) lstrcat((LPSTR)x,y)
 // #define strcpy(x,y) lstrcpy((LPSTR)x,y)
 
-extern "C" {
-extern int qsum;
-extern int rqsum;
-};
-
-#define COPYRIGHTCHECK() if (qsum != rqsum) {_asm {_asm cli _asm xor ax,ax _asm mov ss,ax}}
-
 extern HCURSOR hCursor;
 extern HCURSOR hCursorWait;
 extern HBRUSH hbrush;
@@ -433,7 +426,6 @@ BOOL EXPORTED CALLBACK ModulDlg(HWND hDlg,UINT message,WPARAM wParam,LPARAM lPar
 
                      EnableDlgItem(hDlg,ID_IMPORTS,fRelocs);
 
-                     COPYRIGHTCHECK();
                      break;
                   case LBN_DBLCLK:
                      if (!CheckModul(hDlg,&hModule,&moduleentry))
@@ -491,7 +483,6 @@ BOOL EXPORTED CALLBACK ModulDlg(HWND hDlg,UINT message,WPARAM wParam,LPARAM lPar
                        (LPSTR)str1
                       );
               SetDlgItemText(hDlg,ID_STATALL,str);
-              COPYRIGHTCHECK();
               SetCursor(hCursor);
               break;
             }                 /* end switch wParam */

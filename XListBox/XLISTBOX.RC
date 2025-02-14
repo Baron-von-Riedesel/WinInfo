@@ -1,6 +1,6 @@
 
 #include "windows.h"
-#include "xlist.h"
+#include "resource.h"
 
 STRINGTABLE
 BEGIN

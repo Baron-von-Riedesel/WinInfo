@@ -77,9 +77,7 @@ static char szFStrDWd[] = {"%lu %*c"};
 */
 BOOL EXPORTED CALLBACK WindowCB1(HWND hWnd, LPARAM lparam)
 {
- char str[160];
  int x;
- HWND hDlg;
 
   if (IsWindowVisible(hWnd) && IsWindowEnabled(hWnd))
      {
@@ -107,6 +105,7 @@ BOOL EXPORTED CALLBACK WindowCB1(HWND hWnd, LPARAM lparam)
 }
 
 void CharFilter(char * pZiel, char * pQuelle, char c)
+/////////////////////////////////////////////////////
 {
 	for (;*pQuelle;pQuelle++)
 		if (*pQuelle != c)
@@ -122,12 +121,9 @@ BOOL EXPORTED CALLBACK MenuDlg(HWND hDlg,UINT message,WPARAM wParam,LPARAM lPara
 {
     static WORD id;
     static HWND sWnd;
-    int i;
     HTASK hTask;
     HMENU hPopupMenu;
-    DWORD dwID;
     char str[80];
-    HGLOBAL hSel;
     LPMEASUREITEMSTRUCT lpmi;
     LPDRAWITEMSTRUCT lpdi;
     LOGFONT lf;

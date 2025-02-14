@@ -10,7 +10,7 @@ LIBS = libw shell $(MODEL)dllcew userw user386 $(MODEL)user user
 CC   = $(MSVC)\bin\cl -Fo$* -c -A$(model)w -G3Ds -Oxz -W3 -DSTRICT -I$(MSVC)\include -I..\include
 LINK = $(MSVC)\bin\link
 RC   = $(MSVC)\bin\rc
-LIBPATH = $(MSVC)\Lib;..\lib;
+LIBPATH = ..\lib;$(MSVC)\Lib;
 
 all: $(ODIR) $(ODIR)\$(NAME).dll
 

@@ -94,8 +94,9 @@ EXPORTS
         DPMIFREEMEMORY              @95   NODATA
         DPMIALLOCDOSMEMORY          @96   NODATA
         DPMIFREEDOSMEMORY           @97   NODATA
-        DPMIINTCALL                 @98   NODATA
-        DPMIVXDCALL                 @99   NODATA
+
+        INT2FCALL                   @98   NODATA
+        VXDPMCALL                   @99   NODATA
 
         MCBFIRST                    @100  NODATA
         MCBNEXT                     @101  NODATA

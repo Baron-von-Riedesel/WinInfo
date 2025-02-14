@@ -14,6 +14,9 @@
 #include "wininfox.h"
 
 // #define strcpy _fstrcpy
+#ifndef LT_USER_HOOK
+#define LT_USER_HOOK LT_USER_HOOKLIST
+#endif
 
 BOOL CALLBACK AtomDlg    (HWND, UINT, WPARAM, LPARAM);
 BOOL CALLBACK ViewDlg    (HWND, UINT, WPARAM, LPARAM);
@@ -62,7 +65,7 @@ static KEYENTRY usertypetab[] = {
                "Misc"              ,LT_USER_MISC               ,
                "Atoms"             ,LT_USER_ATOMS              ,
                "Lockinputstate"    ,LT_USER_LOCKINPUTSTATE     ,
-               "Hooklist"          ,LT_USER_HOOK	           ,
+               "Hooklist"          ,LT_USER_HOOK               ,
                "Userseeuserdoalloc",LT_USER_USERSEEUSERDOALLOC ,
                "Hotkeylist"        ,LT_USER_HOTKEYLIST         ,
                "Popupmenu"         ,LT_USER_POPUPMENU          ,
@@ -109,7 +112,6 @@ BOOL EXPORTED CALLBACK LocalDlg(HWND hDlg,UINT message,WPARAM wParam,LPARAM lPar
   HWND hWnd;
   WORD wSortPos;
   DWORD dx;
-  DWORD * p1;
   LOCALENTRY localentry;
   HGLOBAL hLocal;
 //  HDC hDC;

@@ -6,7 +6,7 @@ ODIR  = Build
 name  = HexDump
 model = S
 LOPT  = /NOLOGO/NOD/A:16/NON/NOE/FAR/MAP:FULL/ONERROR:NOEXE
-LIBPATH=$(MSVC)\lib;..\lib;
+LIBPATH=..\lib;$(MSVC)\lib;
 LIBS  = libw toolhelp commdlg sdllcew user386 userw suser user
 
 all: $(ODIR) $(ODIR)\$(name).dll

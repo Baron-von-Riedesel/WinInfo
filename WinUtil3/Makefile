@@ -1,14 +1,15 @@
 
 name   = winutil3
 name1  = winutil3
-LOPTS  = /NOLOGO/FAR/MAP:FULL/A:16/NON/ONERROR:NOEXE
-LIBS   = libw toolhelp user386 libc32vx suserw userw suser user
-MSVC   = \msvc
-LIBPATH= $(MSVC)\lib;..\lib;Lib;
 
+MSVC   = \msvc
 LINK   = $(MSVC)\bin\link.exe
 RC     = $(MSVC)\bin\rc.exe
 IMPLIB = $(MSVC)\bin\implib.exe
+
+LIBPATH= ..\lib;Lib;$(MSVC)\lib;
+LOPTS  = /NOLOGO/FAR/MAP:FULL/A:16/NON/ONERROR:NOEXE
+LIBS   = libw toolhelp user386 libc32vx suserw userw suser user
 
 ODIR = Build
 

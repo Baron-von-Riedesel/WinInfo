@@ -27,8 +27,8 @@ int    yDPMIpos  = 100;
 HWND   hWndDPMI     = 0;
 HWND   hwndDPMIStat = 0;
 HWND   hWndDPMIInt  = 0;
-HWND   hWndDPMIVM   = 0;
-HWND   hWndDPMIVxD  = 0;
+HWND   hWndENHVM   = 0;
+HWND   hWndENHVxD  = 0;
 
 static WNDPROC fpDPMIStatWndProc;
 static int wFlag = 0;
@@ -80,8 +80,8 @@ BOOL EXPORTED CALLBACK DPMIDlg(HWND hDlg,UINT message,WPARAM wParam,LPARAM lPara
         SetWindowPos(hDlg,0,xDPMIpos,yDPMIpos,0,0,SWP_NOSIZE | SWP_NOZORDER);
         if ((!(LOWORD(&_WINFLAGS) & WF_ENHANCED)))
             {
-             EnableDlgItem(hDlg,ID_DPMIVM,0);
-             EnableDlgItem(hDlg,ID_DPMIVXD,0);
+             EnableDlgItem(hDlg,ID_ENHVM,0);
+             EnableDlgItem(hDlg,ID_ENHVXD,0);
             }
         ShowWindow(hDlg,SW_SHOWNORMAL);
         if (fSpaceErr)
@@ -122,21 +122,21 @@ BOOL EXPORTED CALLBACK DPMIDlg(HWND hDlg,UINT message,WPARAM wParam,LPARAM lPara
                 EnableWindow(GetDlgItem(hDlg,ID_DPMIKON),1);
                 break;
 */
-            case ID_DPMIVM:
-                if (hWndDPMIVM)
-                    ShowWindow(hWndDPMIVM,SW_RESTORE);
+            case ID_ENHVM:
+                if (hWndENHVM)
+                    ShowWindow(hWndENHVM,SW_RESTORE);
                 else
-                    hWndDPMIVM = CreateDialog(hInst,
-                                              MAKEINTRESOURCE(IDD_DPMIVM),
+                    hWndENHVM = CreateDialog(hInst,
+                                              MAKEINTRESOURCE(IDD_ENHVM),
                                               hDlg,
                                               VMDlg);
                 break;
-            case ID_DPMIVXD:
-                if (hWndDPMIVxD)
-                    ShowWindow(hWndDPMIVxD,SW_RESTORE);
+            case ID_ENHVXD:
+                if (hWndENHVxD)
+                    ShowWindow(hWndENHVxD,SW_RESTORE);
                 else
-                    hWndDPMIVxD = CreateDialog(hInst,
-                                               MAKEINTRESOURCE(IDD_DPMIVXD),
+                    hWndENHVxD = CreateDialog(hInst,
+                                               MAKEINTRESOURCE(IDD_ENHVXD),
                                                hDlg,
                                                VxDDlg);
                 break;

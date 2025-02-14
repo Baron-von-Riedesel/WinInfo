@@ -423,8 +423,6 @@ int  __cdecl _fcputs(const char _far *);
 int      FAR PASCAL _lopen(const char _far *, int );
 #endif
 
-PSTR     FAR PASCAL GetCopyRightName(void);
-
 #ifndef _WINDOWS
 unsigned _cdecl _dos_reallocmem(unsigned, unsigned);
 int     FAR CDECL wsprintf(LPSTR lpszOut, LPCSTR lpszFmt, ...);

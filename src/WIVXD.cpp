@@ -13,7 +13,7 @@
 #define strcat lstrcat
 #define strcpy lstrcpy
 
-extern HWND hWndDPMIVxD;
+extern HWND hWndENHVxD;
 
 static KEYENTRY vxdtab[] = {
     "VMM"       ,1,
@@ -148,7 +148,7 @@ BOOL EXPORTED CALLBACK VxDDlg(HWND hDlg,UINT message,WPARAM wParam,LPARAM lParam
                    int2f1.rEDX = 0;
                    int2f1.rEDI = 0;    /* es:di = 0000:0000 */
                    int2f1.rES  = 0;
-                   if (DPMIIntCall(&int2f1,&int2f2))
+                   if ( Int2FCall(&int2f1,&int2f2) )
                       if (int2f2.rES)
                          {
                           _fmemchr(xbytes,0,sizeof(xbytes));
@@ -162,7 +162,7 @@ BOOL EXPORTED CALLBACK VxDDlg(HWND hDlg,UINT message,WPARAM wParam,LPARAM lParam
                           int2f1.rES  = HIWORD(&vxdname);
                           vxdname[0] = 0;
                           vxdname[8] = 0;
-//                          DPMIVxDCall(lpproc,&int2f1,&int2f2);
+//                          VxDPMCall(lpproc,&int2f1,&int2f2);
                           str1[0] = 0;
 //                          if (pstr = SearchKeyTable((PSTR)&vxdtab,x))
                           pstr = pKE->name;
@@ -192,7 +192,7 @@ BOOL EXPORTED CALLBACK VxDDlg(HWND hDlg,UINT message,WPARAM wParam,LPARAM lParam
          rc = TRUE;             // end WM_COMMAND
          break;
       case WM_DESTROY:
-         hWndDPMIVxD = 0;
+         hWndENHVxD = 0;
          break;
       case WM_CLOSE:
          DestroyWindow(hDlg);

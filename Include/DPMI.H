@@ -70,33 +70,6 @@ typedef struct tagDPMIMEMORY
     DWORD       reserved3;
   } DPMIMEMORY,FAR * LPDPMIMEMORY;
 
-typedef struct _tagINT2FSTRUC
-  {
-    DWORD       rEAX;
-    DWORD       rEBX;
-    DWORD       rECX;
-    DWORD       rEDX;
-    DWORD       rESI;
-    DWORD       rEDI;
-    WORD        rES;
-  } INT2FSTRUC;
-
-typedef INT2FSTRUC FAR * LPINT2FSTRUC;
-
-// struktur fuer LDT browse
-
-typedef struct _tagDPMISTRUCT
-   {
-     WORD  selector;           // 00: aktueller selector
-     DWORD base;               // 02: base
-     DWORD limit;              // 06: limit
-     WORD  attribute;          // 0A: attr
-     WORD  wSize;              // 0C: groesse der LDT
-     WORD  wLDTSel;            // 0E: LDT selector
-   } DPMISTRUCT;
-
-typedef DPMISTRUCT FAR * LPDPMISTRUCT;
-
 // Prototypen
 
 #ifdef __cplusplus
@@ -138,11 +111,39 @@ BOOL    FAR PASCAL  DPMILockRegion(DWORD,DWORD);         /* RC: 1=ok parm1: LinA
 BOOL    FAR PASCAL  DPMIUnlockRegion(DWORD,DWORD);       /* RC: 1=ok parm1: LinAddr Parm2: Laenge */
 DWORD   FAR PASCAL  DPMIMapPhysToLinear(DWORD,DWORD);
 
-BOOL    FAR PASCAL  DPMIIntCall(LPINT2FSTRUC,LPINT2FSTRUC);  /* int 2f call */
-BOOL    FAR PASCAL  DPMIVxDCall(FARPROC,LPINT2FSTRUC,LPINT2FSTRUC);  /* int 2f call */
+// structure for LDT browse
+
+typedef struct _tagDPMISTRUCT
+   {
+     WORD  selector;           // 00: aktueller selector
+     DWORD base;               // 02: base
+     DWORD limit;              // 06: limit
+     WORD  attribute;          // 0A: attr
+     WORD  wSize;              // 0C: groesse der LDT
+     WORD  wLDTSel;            // 0E: LDT selector
+   } DPMISTRUCT;
+
+typedef DPMISTRUCT FAR * LPDPMISTRUCT;
 
 BOOL    FAR PASCAL  GetDPMIDescriptorFirst(LPDPMISTRUCT);
 BOOL    FAR PASCAL  GetDPMIDescriptorNext(LPDPMISTRUCT);
+
+typedef struct _tagINT2FSTRUC
+  {
+    DWORD       rEAX;
+    DWORD       rEBX;
+    DWORD       rECX;
+    DWORD       rEDX;
+    DWORD       rESI;
+    DWORD       rEDI;
+    WORD        rES;
+  } INT2FSTRUC;
+
+typedef INT2FSTRUC FAR * LPINT2FSTRUC;
+
+BOOL    FAR PASCAL  Int2FCall(LPINT2FSTRUC,LPINT2FSTRUC);          /* int 2f call */
+BOOL    FAR PASCAL  VxDPMCall(FARPROC,LPINT2FSTRUC,LPINT2FSTRUC);  /* int 2f call */
+
 
 #ifdef __cplusplus
 }

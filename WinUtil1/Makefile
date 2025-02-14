@@ -1,13 +1,16 @@
 
 name = WinUtil1
 model= S
+
 MSVC = \msvc
+
 CC   = $(MSVC)\bin\cl
 LINK = $(MSVC)\bin\link
 RC   = $(MSVC)\bin\rc
-OBJS = $(model)windll
-LIBPATH = \msvc\lib;\lib\win;\lib\omf;
+
+LIBPATH = ..\Lib;Lib;$(MSVC)\lib;
 LIBS = libw toolhelp $(model)dllcew $(model)userw userw $(model)user user
+MODS = swindll.obj
 
 COPTS = -c -A$(model)w -Zp1 -G3Ds -Oxz -W3 -nologo -I$(MSVC)\include -I..\include
 LOPTS=/NOLOGO/NOD/A:16/NON/NOE/MAP:FULL/FAR/ONE:NOE
@@ -25,7 +28,7 @@ $(ODIR):
 $(ODIR)\$(name).dll: $(ODIR)\$(name).obj $(ODIR)\$(mod1).obj $(ODIR)\$(mod2).obj $(ODIR)\$(name).res $(name).def Makefile
 	@set LIB=$(LIBPATH)
 	@$(LINK) $(LOPTS) @<<
-$* + $(OBJS) + $(ODIR)\$(mod1) + $(ODIR)\$(mod2),
+$* $(MODS) $(ODIR)\$(mod1) $(ODIR)\$(mod2),
 $*.dll,
 $*.map,
 $(LIBS),

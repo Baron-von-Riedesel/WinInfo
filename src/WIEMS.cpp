@@ -6,7 +6,6 @@
 #include "windows.h"
 #include "windowsx.h"
 #include "toolhelp.h"
-#include "ems.h"
 #include "user.h"
 #include "user386.h"
 #include "dpmi.h"

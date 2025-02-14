@@ -552,10 +552,7 @@ void FreeMyObjects()
 BOOL InitInstance(HINSTANCE hInstance, HINSTANCE hPrevInstance)
 {
   PPROFILEENTRY pprofstruc;
-  PINT  pInt;
   const char  * *ppStr;
-//  HANDLE hAccelTable;
-//  char  str[20];
   HDC   hDC;
   WORD  i,xm,ym;
 
@@ -612,8 +609,6 @@ BOOL InitInstance(HINSTANCE hInstance, HINSTANCE hPrevInstance)
        }
 
     lpFilterFunc = SetWindowsHook(WH_MSGFILTER, (HOOKPROC)FilterFunc);
-
-    GetCopyRightName();
 
     hWndMain = CreateWindow("WIDlg",
                         pszWinName,

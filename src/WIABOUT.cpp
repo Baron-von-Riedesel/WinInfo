@@ -32,13 +32,9 @@ int GetExePath(HINSTANCE hInst,PSTR pstr,int strsize)
 ////////////////////////////////////////////////////////
 BOOL CALLBACK AboutDlg(HWND hDlg,UINT message,WPARAM wParam,LPARAM lParam )
 {
- WORD i,k;
- char str[128];
  char str1[256];
  HGLOBAL hObj;
  WORD wString;
- LPWORD lpword;
- int  hFile;
  BOOL rc = FALSE;
 
  switch (message) {

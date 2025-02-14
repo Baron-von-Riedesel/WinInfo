@@ -8,7 +8,6 @@
 #include "user.h"
 #include "dpmi.h"
 #include "dosx.h"
-#include "ems.h"
 #include "userw.h"
 #include "wininfo.h"
 #include "wininfox.h"

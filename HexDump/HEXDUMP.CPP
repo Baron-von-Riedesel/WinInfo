@@ -21,6 +21,11 @@
 
 #define XPOS 0
 
+/* OFN_EXPLORER is defined for Win version 4 only */
+#ifndef OFN_EXPLORER
+#define OFN_EXPLORER 0x00080000
+#endif
+
 extern "C" {
 long   __export WINAPI HexdumpWndFn(HWND,UINT,WPARAM,LPARAM);
 extern NEAR _WINFLAGS;
