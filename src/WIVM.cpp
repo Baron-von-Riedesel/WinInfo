@@ -113,24 +113,24 @@ BOOL EXPORTED CALLBACK VMDlg(HWND hDlg,UINT message,WPARAM wParam,LPARAM lParam)
                                              LB_GETITEMDATA,
                                              x,
                                              0);
-               if (VMFindHandle(dwHandle,&vmentry))
-                  {
+               if (VMFindHandle(dwHandle,&vmentry)) {
                    vmentry.dwPageTab = GetPageTable(vmentry.dwV86High);
 
-                   if (vmentry.dwCurHandle != vmentry.dwHandle)
-                       vmentry.dwPageTab = vmentry.dwPageTab | 1;
+                   if ( vmentry.dwPageTab ) {
+                       if (vmentry.dwCurHandle != vmentry.dwHandle)
+                           vmentry.dwPageTab = vmentry.dwPageTab | 1;
 
-                   hWnd = CreateDialogParam(hInst,
-                                            MAKEINTRESOURCE(IDD_PAGETAB),
-                                            hDlg,
-                                            PageTabDlg,
-                                            vmentry.dwPageTab);
-                   GetWindowText(hWnd,str,sizeof(str));
-                   wsprintf(str1,",VM=%X",LOWORD(vmentry.dwVMID));
-                   strcat(str,str1);
-                   SetWindowText(hWnd,str);
-                  }
-               else
+                       hWnd = CreateDialogParam(hInst,
+                                                MAKEINTRESOURCE(IDD_PAGETAB),
+                                                hDlg,
+                                                PageTabDlg,
+                                                vmentry.dwPageTab);
+                       GetWindowText(hWnd,str,sizeof(str));
+                       wsprintf(str1,",VM=%X",LOWORD(vmentry.dwVMID));
+                       strcat(str,str1);
+                       SetWindowText(hWnd,str);
+                   }
+               } else
                    MessageBeep(0);
                break;
            case ID_SUBDLG2:

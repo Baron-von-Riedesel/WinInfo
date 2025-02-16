@@ -79,14 +79,15 @@ BOOL EXPORTED CALLBACK ImportedFromDlg(HWND hDlg,UINT message,WPARAM wParam,LPAR
       SendMessage(hDlg,WM_COMMAND,ID_REFRESH,lParam);
 
       LoadString(hInst,IDS_IMPFROM,szStr1,sizeof(szStr));
-      if (LOWORD(lParam))
-          GetProcedureName((HMODULE)HIWORD(lParam),LOWORD(lParam),szStr,sizeof(szStr));
-      else
-         {
+
+      if (LOWORD(lParam)) {
+          if (!GetProcedureName((HMODULE)HIWORD(lParam),LOWORD(lParam),szStr,sizeof(szStr)))
+              wsprintf(szStr,"@%u",LOWORD(lParam));
+      } else {
           SetDlgItemText(hDlg,ID_LISTBOX1,"Module");
           SetDlgItemText(hDlg,ID_SUBDLG1,"Detail");
           GetModuleName((HMODULE)HIWORD(lParam),szStr,sizeof(szStr));
-         }
+      }
       strcat(szStr,szStr1);
       SetWindowText(hDlg,szStr);
       ShowWindow(hDlg,SW_SHOWNORMAL);

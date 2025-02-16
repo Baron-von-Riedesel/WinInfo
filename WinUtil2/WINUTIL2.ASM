@@ -5,8 +5,6 @@
 
 _TRACE_ = 0
 
-;extrn   __aFchkstk:FAR
-
 OutputdebugString proto far pascal pString:dword
 
         .code
@@ -16,9 +14,14 @@ text0   db "WINUTIL2 will start now",cr,lf,00
 text1   db "WINUTIL2 will exit now",cr,lf,00
 endif
 
+;--- return stack space available
+;--- called by lqsort()
+;--- which in turn is called by ImportNext() [implist.c]
+
 stackavail proc near c
 
         mov ax,sp
+        sub ax,ss:[000Ah]  ;assume contains _end + x
         ret
 
 stackavail endp

@@ -118,8 +118,7 @@ BOOL EXPORTED WINAPI XMSDlg(HWND hDlg,UINT message,WPARAM wParam,LPARAM lParam )
               wsprintf(szStr,"XMB: %X L\344nge:%lu kB)", wHandleAlt, rmcstruct.rEDX );
               hdp.dwOffset = DPMIMapPhysToLinear(hdp.dwOffset,hdp.dwLength);
               if (!hdp.dwOffset) {
-                  //MessageBox(0,"XMS","3",MB_OK);
-                  MessageBeep(0);
+                  CreateMessage(hDlg,MAKEINTRESOURCE(IDS_ERRXMS3),0,MB_OK);
                   break;
               }
               hdp.wType = HDP_LINEAR;
@@ -132,15 +131,24 @@ BOOL EXPORTED WINAPI XMSDlg(HWND hDlg,UINT message,WPARAM wParam,LPARAM lParam )
               SetWindowText(hWnd,szStr);
               break;
          case ID_LISTBOX1:
-              switch(HIWORD(lParam))
-                {
-                 case LBN_DBLCLK:
-                   SendMessage(hDlg,WM_COMMAND,ID_SUBDLG1,0);
-                   break;
-                  case XLBN_RBUTTONDOWN:
-                    TrackPopup(hDlg,BtnTab);
-                    break;
-                }
+             switch(HIWORD(lParam))
+             {
+             case LBN_DBLCLK:
+                 SendMessage(hDlg,WM_COMMAND,ID_SUBDLG1,0);
+                 break;
+             case LBN_SELCHANGE:
+                 hWnd = GetDlgItem(hDlg,ID_LISTBOX1);
+                 x =  (int)SendMessage(hWnd,LB_GETCURSEL,0,0);
+                 if ( x != LB_ERR ) {
+                     SendMessage(hWnd,LB_GETTEXT,x,(LPARAM)(LPSTR)szStr);
+                     i = sscanf(szStr,"%X %lX %lu %u", &wHandleAlt, &hdp.dwOffset, &rmcstruct.rEDX, &x );
+                     EnableDlgItem( hDlg, ID_SUBDLG1, (i == 4) && hdp.dwOffset );
+                 }
+                 break;
+             case XLBN_RBUTTONDOWN:
+                 TrackPopup(hDlg,BtnTab);
+                 break;
+             }
               break;
          case ID_REFRESH:
               hWnd = GetDlgItem(hDlg,ID_LISTBOX1);

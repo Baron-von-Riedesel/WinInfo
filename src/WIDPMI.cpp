@@ -14,6 +14,9 @@ void FAR _WINFLAGS();
 
 extern HFONT hFontAlt;
 
+extern CATCHBUF cb;
+extern int WINAPI interruptcallback(void);
+
 BOOL WINAPI  CheckMessage(MSG *,WORD,HWND);
 
 BOOL CALLBACK ViewDlg  (HWND, UINT, WPARAM, LPARAM);
@@ -203,37 +206,45 @@ BOOL EXPORTED CALLBACK DPMIDlg(HWND hDlg,UINT message,WPARAM wParam,LPARAM lPara
                hWnd = GetDlgItem(hDlg,ID_LISTBOX1);
                SendMessage(hWnd,LB_RESETCONTENT,0,0);
 
-               x = GetDPMIDescriptorFirst(&dpmistruct);
-               y = 0;
-               z = 0;
-
-               while (x && CheckMessage(&msg,PM_REMOVE,hDlg))
-                  {
-                   GetDescriptorType(dpmistruct.attribute,str1);
-                   wsprintf(str,
-                            "%X\t%08lX\t%08lX\t%04X\t%s",
-                            dpmistruct.selector,
-                            dpmistruct.base,
-                            dpmistruct.limit,
-                            dpmistruct.attribute,
-                            (LPSTR)str1
-                           );
-                   if (!fSpaceErr)
-                      {
-                       x = (int)SendMessage(hWnd,LB_ADDSTRING,0,(LPARAM)(LPSTR)str);
-                       if (x == LB_ERRSPACE)
-                           fSpaceErr = TRUE;
-                       else
-                           SendMessage(hWnd,LB_SETITEMDATA,x,MAKELONG(dpmistruct.selector,0));
-                      }
-                   if (!y)
-                      SendMessage(hWnd,LB_SETCURSEL,0,0);
-                   x = GetDPMIDescriptorNext(&dpmistruct);
-//                   if (GetQueueStatus(QS_ALLINPUT & (~QS_MOUSEMOVE)))
-                   y++;
-                   if (dpmistruct.attribute)
-                       z++;
-                  }
+               /* protecting this loop may not be sufficient for the real DOSX.EXE;
+                * it has a large LDT and if it runs out of memory, wininfo will
+                * be terminated.
+                */
+               InterruptRegister(0,(FARPROC)interruptcallback);
+               if (!Catch(cb)) {
+                   x = GetDPMIDescriptorFirst(&dpmistruct);
+                   y = 0;
+                   z = 0;
+                   while (x && CheckMessage(&msg,PM_REMOVE,hDlg)) {
+                       GetDescriptorType(dpmistruct.attribute,str1);
+                       wsprintf(str,
+                                "%X\t%08lX\t%08lX\t%04X\t%s",
+                                dpmistruct.selector,
+                                dpmistruct.base,
+                                dpmistruct.limit,
+                                dpmistruct.attribute,
+                                (LPSTR)str1
+                               );
+                       if (!fSpaceErr)
+                       {
+                           x = (int)SendMessage(hWnd,LB_ADDSTRING,0,(LPARAM)(LPSTR)str);
+                           if (x == LB_ERRSPACE)
+                               fSpaceErr = TRUE;
+                           else
+                               SendMessage(hWnd,LB_SETITEMDATA,x,MAKELONG(dpmistruct.selector,0));
+                       }
+                       x = GetDPMIDescriptorNext(&dpmistruct);
+                       //                   if (GetQueueStatus(QS_ALLINPUT & (~QS_MOUSEMOVE)))
+                       y++;
+                       if (dpmistruct.attribute)
+                           z++;
+                   }
+               } else {
+                   SendMessage(hWnd,LB_ADDSTRING,0,(LPARAM)(LPSTR)"???");
+               }
+               InterruptUnRegister(0);
+               if (y)
+                   SendMessage(hWnd,LB_SETCURSEL,0,0);
                InvalidateRect(hWnd,0,1);
 
                LoadString(hInst,IDS_XVER1, str1, sizeof(str1));

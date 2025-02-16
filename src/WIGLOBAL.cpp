@@ -252,7 +252,7 @@ BOOL EXPORTED CALLBACK GlobalDlg(HWND hDlg,UINT message,WPARAM wParam,LPARAM lPa
                  case ID_FREEMEM:
                     CreateMessageParam(hDlg,
                                      MAKEINTRESOURCE(IDS_ERRMEM6),
-                                     MAKEINTRESOURCE(IDS_WARNING),
+                                     MAKEINTRESOURCE(IDS_WARNING), /* you know what you're doing? */
                                      MB_OKCANCEL,
                                      ID_WARNING2);
                     break;

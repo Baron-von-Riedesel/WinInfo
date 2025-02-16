@@ -219,10 +219,10 @@ int EXPORTED CALLBACK AddressDlg(HWND hDlg,UINT message,WPARAM wParam,LPARAM lPa
 #endif
 /*
 ษออออออออออออออออออออออออออออออออออออออออออออออออออออออป
-บ HexParmsDlg                                          บ
+บ View Options Dialog                                  บ
 ศออออออออออออออออออออออออออออออออออออออออออออออออออออออผ
 */
-BOOL EXPORTED CALLBACK HexParmsDlg(HWND hDlg,UINT message,WPARAM wParam,LPARAM lParam )
+BOOL EXPORTED CALLBACK ViewOptionsDlg(HWND hDlg,UINT message,WPARAM wParam,LPARAM lParam )
 {
  char szStr[20];
  char str[80];
@@ -559,9 +559,9 @@ BOOL EXPORTED CALLBACK ViewDlg(HWND hDlg,UINT message,WPARAM wParam,LPARAM lPara
      case ID_SUBDLG1:         /* optionen dialog */
          i = (int)SendDlgItemMessage(hDlg,ID_LISTBOX1,HD_GETMODE,0,0);
          CreateDialogParam(hInst,
-                           MAKEINTRESOURCE(IDD_HEXPARMS),
+                           MAKEINTRESOURCE(IDD_VIEWOPT),
                            hDlg,
-                           HexParmsDlg,
+                           ViewOptionsDlg,
                            i
                           );
          EnableDlgItem(hDlg,ID_SUBDLG1,0);

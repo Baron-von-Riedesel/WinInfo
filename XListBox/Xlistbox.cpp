@@ -1,5 +1,6 @@
 
 /* Aenderungen:
+    02/2025: GlobalReAlloc() won't destroy hStrings in case it fails.
    24.11.99: Umstellung auf Visual C 1.52, Copyrightcheck entfernt
     8.12.94: ???
     7.01.04: Umstellung auf .cpp
@@ -1043,7 +1044,7 @@ WORD XLISTBOX::SetItemData(WORD wParam,DWORD lParam)
        wDataSize = wParam + 1;
       }
   if (!hData)
-      return (WORD)LB_ERR;
+      return (WORD)LB_ERRSPACE;
 
   *((DWORD FAR *)GlobalLock(hData)+wParam) = lParam;
   GlobalUnlock(hData);
@@ -1318,13 +1319,15 @@ WORD XLISTBOX::FindString(LPSTR lpFindString,WORD size,WORD wIndex,WORD wType)
 */
 int XLISTBOX::AddString(LPSTR lpszStr)
 {
- WORD len;
+    WORD len;
+    HGLOBAL hTmp;
 
   len = _hstrlen(lpszStr) + 1;
 //  if ((DWORD)dwStringSize + len > 0xFFFFL)
 //      return LB_ERRSPACE;
-  if (!(hStrings = GlobalReAlloc(hStrings,dwStringSize + len,GMEM_MOVEABLE)))
+  if (!(hTmp = GlobalReAlloc(hStrings,dwStringSize + len,GMEM_MOVEABLE)))
       return LB_ERRSPACE;
+  hStrings = hTmp;
   _hmemcpy((HPSTR)GlobalLock(hStrings) + dwStringSize,lpszStr,len);
   GlobalUnlock(hStrings);
   dwStringSize = dwStringSize + len;
@@ -1357,6 +1360,7 @@ WORD XLISTBOX::ReplaceString(WORD index,LPSTR str,WORD wMode)
 {
  DWORD dwOffsetX;
  HPBYTE lpstr;
+ HGLOBAL hTmp;
  WORD  len1,len2;
  DWORD nsize;
                                         /* eingefuegt kann auch bei leerer */
@@ -1402,9 +1406,11 @@ WORD XLISTBOX::ReplaceString(WORD index,LPSTR str,WORD wMode)
 
   nsize = dwStringSize + len1 - len2;
   if (nsize > dwStringSize)
-     {                                  /* string hat sich vergroessert */
+  {                                  /* string hat sich vergroessert */
       GlobalUnlock(hStrings);
-      hStrings = GlobalReAlloc(hStrings,nsize,GMEM_MOVEABLE);
+      if (!(hTmp = GlobalReAlloc(hStrings,nsize,GMEM_MOVEABLE)))
+          return LB_ERRSPACE;
+      hStrings = hTmp;
       lpstr = (HPBYTE)GlobalLock(hStrings) + dwOffsetX;
       _hmemcpyd(lpstr+len1,lpstr+len2,dwStringSize - dwOffsetX - len2);
      }
@@ -1412,16 +1418,16 @@ WORD XLISTBOX::ReplaceString(WORD index,LPSTR str,WORD wMode)
   if (str)
       _hmemcpy(lpstr,str,len1+1-wMode);
 
-  if (nsize < dwStringSize)
-     {
+  if (nsize < dwStringSize) {
       _hmemcpy(lpstr+len1,lpstr+len2,dwStringSize - dwOffsetX - len2);
       GlobalUnlock(hStrings);
       if (nsize)
-          hStrings = GlobalReAlloc(hStrings,nsize,GMEM_MOVEABLE);
+          hTmp = GlobalReAlloc(hStrings,nsize,GMEM_MOVEABLE);
       else
-          hStrings = GlobalReAlloc(hStrings,1,GMEM_MOVEABLE);
-     }
-  else
+          hTmp = GlobalReAlloc(hStrings,1,GMEM_MOVEABLE);
+      if ( hTmp )
+          hStrings = hTmp;
+  } else
       GlobalUnlock(hStrings);
 
   dwStringSize = nsize;
@@ -1930,9 +1936,9 @@ WORD XLISTBOX::AddInsertItem(UINT message,WORD wParam,LONG lParam)
 */
 WORD XLISTBOX::DeleteString(WORD wParam)
 {
-  WORD rc;
-  DWORD style;
-  RECT rect;
+    WORD rc;
+    DWORD style;
+    RECT rect;
 
     if (!wNumItems)
         return 0;
@@ -1940,12 +1946,12 @@ WORD XLISTBOX::DeleteString(WORD wParam)
     if (style & LBS_HASSTRINGS)
         rc = ReplaceString(wParam,0,0);
     else
-    if (style & LBS_OWNERDRAW)
-        rc = SetItemData(wParam,0);
-    else
-        rc = ReplaceString(wParam,0,0);
-    if (rc != LB_ERR)
-       {
+        if (style & LBS_OWNERDRAW)
+            rc = SetItemData(wParam,0);
+        else
+            rc = ReplaceString(wParam,0,0);
+
+    if (rc != LB_ERR && rc != LB_ERRSPACE) {
         wNumItems--;
         flags.vscrollrange = 1;
         if (wParam >= wVPos)

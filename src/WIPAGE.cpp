@@ -22,6 +22,9 @@ extern HCURSOR hCursor;
 extern HCURSOR hCursorWait;
 extern HFONT hFontAlt;
 
+extern CATCHBUF cb;
+extern int WINAPI interruptcallback(void);
+
 BOOL CALLBACK ViewDlg      (HWND, UINT, WPARAM, LPARAM);
 extern HWND hWndSysPage;
 
@@ -152,40 +155,46 @@ BOOL EXPORTED CALLBACK PageTabDlg(HWND hDlg,UINT message,WPARAM wParam,LPARAM lP
             dwPageTab = GetWindowLong(hDlg,DLGWINDOWEXTRA);
             dwLinBase = (dwPageTab & 0x00000FFC)<<20;
             dwPageTab = dwPageTab & 1;
-            x = PageFirst(lpdword,&pageentry);
-            while (x)
-            {
-                if (pageentry.wFlags & 2)
-                    strcpy(str1,"r/w");
-                else
-                    strcpy(str1,"r/o");
-                if (pageentry.wFlags & 4)
-                    strcat(str1,",usr");
-                else
-                    strcat(str1,",sys");
-                if (pageentry.wFlags & 0x20)
-                    strcat(str1,",acc");
-                if (pageentry.wFlags & 0x40)
-                    strcat(str1,",dirty");
 
-                wsprintf(szStr,
-                         "%08lX\t%05lX\t%03X %s",
-                         dwLinBase + ((DWORD)pageentry.wEntry<<12),
-                         pageentry.dwPage,
-                         pageentry.wFlags,
-                         (LPSTR)str1
-                        );
-                x = (WORD)SendMessage(hWnd,LB_ADDSTRING,0,(LONG)(LPSTR)szStr);
-                if (dwPageTab)
-                    if (pageentry.wFlags & 1)
-                        SendMessage(hWnd,LB_SETITEMDATA,x,pageentry.dwPage<<12);
+            InterruptRegister(0,(FARPROC)interruptcallback);
+            if (!Catch(cb)) {
+                x = PageFirst(lpdword,&pageentry);
+                while (x) {
+                    if (pageentry.wFlags & 2)
+                        strcpy(str1,"r/w");
                     else
-                        SendMessage(hWnd,LB_SETITEMDATA,x,0xFFFFFFFF);
-                else
-                    SendMessage(hWnd,LB_SETITEMDATA,x,dwLinBase+((DWORD)pageentry.wEntry<<12));
-                x = PageNext(lpdword,&pageentry);
+                        strcpy(str1,"r/o");
+                    if (pageentry.wFlags & 4)
+                        strcat(str1,",usr");
+                    else
+                        strcat(str1,",sys");
+                    if (pageentry.wFlags & 0x20)
+                        strcat(str1,",acc");
+                    if (pageentry.wFlags & 0x40)
+                        strcat(str1,",dirty");
+
+                    wsprintf(szStr,
+                             "%08lX\t%05lX\t%03X %s",
+                             dwLinBase + ((DWORD)pageentry.wEntry<<12),
+                             pageentry.dwPage,
+                             pageentry.wFlags,
+                             (LPSTR)str1
+                            );
+                    x = (WORD)SendMessage(hWnd,LB_ADDSTRING,0,(LONG)(LPSTR)szStr);
+                    if (dwPageTab)
+                        if (pageentry.wFlags & 1)
+                            SendMessage(hWnd,LB_SETITEMDATA,x,pageentry.dwPage<<12);
+                        else
+                            SendMessage(hWnd,LB_SETITEMDATA,x,0xFFFFFFFF);
+                    else
+                        SendMessage(hWnd,LB_SETITEMDATA,x,dwLinBase+((DWORD)pageentry.wEntry<<12));
+                    x = PageNext(lpdword,&pageentry);
+                }
+            } else {
+                SendMessage(hWnd,LB_ADDSTRING,0,(LPARAM)(LPSTR)"???");
             }
 
+            InterruptUnRegister(0);
             FreeBigDescriptor(sel);
             SetCursor(hCursor);
             break;
@@ -231,8 +240,9 @@ DWORD WINAPI GetPageTable(DWORD dwAddr)
 
     return dwPageTab;
 }
-///////////////////////////////////////////////////////////
+
 LPDWORD GetPageDirPtr(HWND hDlg)
+////////////////////////////////
 {
     WORD sel;
 
@@ -244,8 +254,7 @@ LPDWORD GetPageDirPtr(HWND hDlg)
     }
 
     dwPageDir = DPMIMapPhysToLinear(dwCR3 & 0xFFFFF000,0x1000);
-    if (!dwPageDir)
-    {
+    if (!dwPageDir) {
         CreateMessage(hDlg,"CR3 kann nicht in lineare Adresse umgesetzt werden",0,MB_OK);
         return 0;
     }

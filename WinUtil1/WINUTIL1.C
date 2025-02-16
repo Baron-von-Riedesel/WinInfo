@@ -27,10 +27,10 @@ static STRLOADENTRY CODESEG strloadtab[] = {
 ศออออออออออออออออออออออออออออออออออออออออออออออออออออออผ
 */
 WORD __export WINAPI GetStdString(WORD id,LPSTR lpStr,WORD wSize)
+/////////////////////////////////////////////////////////////////
 {
- PSTR * ppStr;
+ PSTR *ppStr;
  PSTR pStr;
- WORD rc;
 
  if (!fInit)
     {
@@ -45,6 +45,7 @@ WORD __export WINAPI GetStdString(WORD id,LPSTR lpStr,WORD wSize)
 }
 
 LPSTR __export WINAPI GetStdStringAddress(WORD wID)
+///////////////////////////////////////////////////
 {
  if (!fInit)
     {
@@ -62,12 +63,11 @@ BOOL __export WINAPI WEP(WORD code)
 {
   return TRUE;
 }
-/*
-ษออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออป
-บ LibMain - Hauptroutine                                             บ
-ศออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออผ
-*/
-int PASCAL LibMain(HANDLE hInstance,WORD hPrevInstance,WORD x,LPSTR y)
+/* must be far if just MSVC sdllcew.lib is used;
+ * must be near if module sdllwin.obj is added.
+ *
+ */
+int FAR PASCAL LibMain(HANDLE hInstance,WORD hPrevInstance,WORD x,LPSTR y)
 {
     hInst = hInstance;
     return TRUE;

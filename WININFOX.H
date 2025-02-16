@@ -171,7 +171,7 @@
 #define IDD_LDT       148
 #define IDD_XMS       149
 #define IDD_UNASSEM32 150
-#define IDD_HEXPARMS  151
+#define IDD_VIEWOPT   151
 #define IDD_SYSPAGE   152
 #define IDD_PAGETAB   153
 #define IDD_ENHVM     154
@@ -498,6 +498,8 @@
 #define IDS_ERRMEM7 125
 #define IDS_ERREMS2 126
 #define IDS_ERREMS3 127
+
+#define IDS_ERRXMS3 128
 
 #define IDS_XMODUL00 160
 #define IDS_XMODUL01 161
