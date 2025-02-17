@@ -40,7 +40,7 @@ HWND hWndSysPage = 0;
 ////////////////////////////////////////////////////////
 // SysDlg - GDT Entries ausgeben                       
 ////////////////////////////////////////////////////////
-BOOL CALLBACK SysDlg(HWND hDlg,UINT message,WPARAM wParam,LPARAM lParam)
+BOOL EXPORTED CALLBACK SysDlg(HWND hDlg,UINT message,WPARAM wParam,LPARAM lParam)
 {
   static int BtnTab[] = {ID_SYSVIEW,
                          ID_SYSTSS,

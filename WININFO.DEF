@@ -3,7 +3,7 @@ EXETYPE WINDOWS
 
 PROTMODE
 
-DESCRIPTION 'WinInfo - Windows Information Utility Version 1.6'
+DESCRIPTION 'WinInfo - Windows Information Utility Version 1.8'
 
 CODE    LOADONCALL MOVEABLE DISCARDABLE
 DATA    PRELOAD    MOVEABLE MULTIPLE

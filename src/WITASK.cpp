@@ -32,17 +32,17 @@ HWND hWndTask = 0;
 int  xTaskpos = 100;
 int  yTaskpos = 100;
 
-BOOL EXPORTED CALLBACK WindowDlg     (HWND, UINT, WPARAM, LPARAM);
-BOOL EXPORTED CALLBACK GlobalDlg     (HWND, UINT, WPARAM, LPARAM);
-BOOL EXPORTED CALLBACK UnassembleDlg (HWND, UINT, WPARAM, LPARAM);
-BOOL EXPORTED CALLBACK LocalDlg      (HWND, UINT, WPARAM, LPARAM);
-BOOL EXPORTED CALLBACK ViewDlg       (HWND, UINT, WPARAM, LPARAM);
-BOOL EXPORTED CALLBACK AtomDlg       (HWND, UINT, WPARAM, LPARAM);
-BOOL EXPORTED CALLBACK StackDlg      (HWND, UINT, WPARAM, LPARAM);
-BOOL EXPORTED CALLBACK PSPDlg        (HWND, UINT, WPARAM, LPARAM);
-BOOL EXPORTED CALLBACK ViewTaskDlg   (HWND, UINT, WPARAM, LPARAM);
-BOOL EXPORTED CALLBACK TaskDlg       (HWND, UINT, WPARAM, LPARAM);
-BOOL EXPORTED CALLBACK XModulDlg     (HWND, UINT, WPARAM, LPARAM);
+BOOL CALLBACK WindowDlg     (HWND, UINT, WPARAM, LPARAM);
+BOOL CALLBACK GlobalDlg     (HWND, UINT, WPARAM, LPARAM);
+BOOL CALLBACK UnassembleDlg (HWND, UINT, WPARAM, LPARAM);
+BOOL CALLBACK LocalDlg      (HWND, UINT, WPARAM, LPARAM);
+BOOL CALLBACK ViewDlg       (HWND, UINT, WPARAM, LPARAM);
+BOOL CALLBACK AtomDlg       (HWND, UINT, WPARAM, LPARAM);
+BOOL CALLBACK StackDlg      (HWND, UINT, WPARAM, LPARAM);
+BOOL CALLBACK PSPDlg        (HWND, UINT, WPARAM, LPARAM);
+BOOL CALLBACK ViewTaskDlg   (HWND, UINT, WPARAM, LPARAM);
+BOOL CALLBACK TaskDlg       (HWND, UINT, WPARAM, LPARAM);
+BOOL CALLBACK XModulDlg     (HWND, UINT, WPARAM, LPARAM);
 
 // statische Variable
 
@@ -150,7 +150,9 @@ BOOL CheckTask(HWND hDlg,HTASK * phandle,TASKENTRY * ptaskentry)
   fErr = TRUE;
   return FALSE;
 }
+
 void GetCSIP(DWORD * pdw)
+/////////////////////////
 {
    _asm
       {
@@ -162,46 +164,47 @@ void GetCSIP(DWORD * pdw)
 }
 
 BOOL TaskOnCommand(HWND hDlg, WPARAM wParam, LPARAM lParam)
+///////////////////////////////////////////////////////////
 {
-	int x;
-	UINT y;
-	char  str[80];
-	int    tabpos[10];
-	TASKENTRY taskentry;
-	HTASK  hTask;
-	DWORD  dw[2];
-	HWND   hWnd;
-	RECT   rect;
-	HDC    hDC;
-	LPINT  lpint;
-	HEXDUMPPARM hdp;
-	int    wStackTop,wStackMin,wStackBot;
+    int x;
+    UINT y;
+    char  str[80];
+    int    tabpos[10];
+    TASKENTRY taskentry;
+    HTASK  hTask;
+    DWORD  dw[2];
+    HWND   hWnd;
+    RECT   rect;
+    HDC    hDC;
+    LPINT  lpint;
+    HEXDUMPPARM hdp;
+    int    wStackTop,wStackMin,wStackBot;
 
-	switch (wParam) {
-	case ID_REFRESH:
-		hWnd = GetDlgItem(hDlg,ID_LISTBOX1);
-		ListBox_ResetContent(hWnd);
-		taskentry.dwSize = sizeof(taskentry);
-		x = TaskFirst(&taskentry);
-		while (x) {
-			wsprintf(str,
-					"%04X\t%s\t%04X\t%04X\t%04X",
-					taskentry.hTask,
-					(LPSTR)taskentry.szModule,
-					taskentry.hInst,
-					taskentry.wPSPOffset,
-					taskentry.hModule
+    switch (wParam) {
+    case ID_REFRESH:
+        hWnd = GetDlgItem(hDlg,ID_LISTBOX1);
+        ListBox_ResetContent(hWnd);
+        taskentry.dwSize = sizeof(taskentry);
+        x = TaskFirst(&taskentry);
+        while (x) {
+            wsprintf(str,
+                    "%04X\t%s\t%04X\t%04X\t%04X",
+                    taskentry.hTask,
+                    (LPSTR)taskentry.szModule,
+                    taskentry.hInst,
+                    taskentry.wPSPOffset,
+                    taskentry.hModule
 //                         taskentry.hQueue
-					);
+                    );
 
-			y = ListBox_AddString(hWnd,str);
-			ListBox_SetItemData(hWnd,y,MAKELONG(taskentry.hTask,0));
-			x = TaskNext(&taskentry);
-		}
-		SendMessage(hWnd,LB_SETCURSEL,0,0);
-		break;
-	case ID_LISTBOX1:
-		switch(HIWORD(lParam)) {
+            y = ListBox_AddString(hWnd,str);
+            ListBox_SetItemData(hWnd,y,MAKELONG(taskentry.hTask,0));
+            x = TaskNext(&taskentry);
+        }
+        SendMessage(hWnd,LB_SETCURSEL,0,0);
+        break;
+    case ID_LISTBOX1:
+        switch(HIWORD(lParam)) {
                 case LBN_SELCHANGE:                       /* selektion geaendert */
                      if (!CheckTask(hDlg,&hTask,&taskentry))
                          break;
@@ -279,46 +282,46 @@ BOOL TaskOnCommand(HWND hDlg, WPARAM wParam, LPARAM lParam)
                                  );
                }
             break;
-	case ID_MODULTASK:
-		if (CheckTask(hDlg,&hTask,&taskentry)) {
-			CreateDialogParam(hInst,
-							MAKEINTRESOURCE(IDD_XMODULE),
-							hDlg,
-							XModulDlg,
-							(LPARAM)(LPVOID)taskentry.hModule);
-		}
-		break;
-	case ID_DETAILTASK:
-		if (CheckTask(hDlg,&hTask,&taskentry)) {
+    case ID_MODULTASK:
+        if (CheckTask(hDlg,&hTask,&taskentry)) {
+            CreateDialogParam(hInst,
+                            MAKEINTRESOURCE(IDD_XMODULE),
+                            hDlg,
+                            XModulDlg,
+                            (LPARAM)(LPVOID)taskentry.hModule);
+        }
+        break;
+    case ID_DETAILTASK:
+        if (CheckTask(hDlg,&hTask,&taskentry)) {
                 CreateDialogParam(hInst,
                                   MAKEINTRESOURCE(IDD_XTASK),
                                   hDlg,
                                   ViewTaskDlg,
                                   (LPARAM)(LPVOID)hTask
                                  );
-		}
-		break;
-	case ID_VIEWTASK:
-		if (CheckTask(hDlg,&hTask,&taskentry)) {
-			if (GetFocus() == GetDlgItem(hDlg,ID_LISTWINDOWS)) {
+        }
+        break;
+    case ID_VIEWTASK:
+        if (CheckTask(hDlg,&hTask,&taskentry)) {
+            if (GetFocus() == GetDlgItem(hDlg,ID_LISTWINDOWS)) {
                     PostMessage(hDlg,WM_COMMAND,ID_LISTWINDOWS,MAKELONG(0,LBN_DBLCLK));
                     break;
-			}
-			hdp.dwOffset = 0;
-			hdp.hGlobal  = hTask;
-			hdp.dwLength = 0;
-			hdp.wType    = 0;
-			hWnd = CreateDialogParam( hInst,
-							MAKEINTRESOURCE(IDD_VIEW),
-							hDlg,
-							ViewDlg,
-							(LPARAM)(LPVOID)&hdp);
-			strcpy(str,"Task: ");
-			strcat(str,taskentry.szModule);
-			SetWindowText(hWnd,str);
-		}
-		break;
-	case ID_AUTOTASK:
+            }
+            hdp.dwOffset = 0;
+            hdp.hGlobal  = hTask;
+            hdp.dwLength = 0;
+            hdp.wType    = 0;
+            hWnd = CreateDialogParam( hInst,
+                            MAKEINTRESOURCE(IDD_VIEW),
+                            hDlg,
+                            ViewDlg,
+                            (LPARAM)(LPVOID)&hdp);
+            strcpy(str,"Task: ");
+            strcat(str,taskentry.szModule);
+            SetWindowText(hWnd,str);
+        }
+        break;
+    case ID_AUTOTASK:
             if (CheckTask(hDlg,&hTask,&taskentry))
                {
                 hdp.dwOffset = 0;
@@ -337,7 +340,7 @@ BOOL TaskOnCommand(HWND hDlg, WPARAM wParam, LPARAM lParam)
                 SetWindowText(hWnd,str);
                }
             break;
-	case ID_PSPTASK:
+    case ID_PSPTASK:
             if (CheckTask(hDlg,&hTask,&taskentry))
                 CreateDialogParam( hInst,
                                    MAKEINTRESOURCE(IDD_PSP),
@@ -345,7 +348,7 @@ BOOL TaskOnCommand(HWND hDlg, WPARAM wParam, LPARAM lParam)
                                    PSPDlg,
                                    (DWORD)MAKELONG(taskentry.wPSPOffset,hTask));
             break;
-	case ID_GLOBALTASK:
+    case ID_GLOBALTASK:
             if (CheckTask(hDlg,&hTask,&taskentry))
                {
                 gmf.hOwner = taskentry.hTask;
@@ -357,7 +360,7 @@ BOOL TaskOnCommand(HWND hDlg, WPARAM wParam, LPARAM lParam)
                                  );
                }
             break;
-	case ID_QUEUTASK:                           /* task queue */
+    case ID_QUEUTASK:                           /* task queue */
             if (CheckTask(hDlg,&hTask,&taskentry))
                {
                 hdp.dwOffset = 0;
@@ -387,27 +390,27 @@ BOOL TaskOnCommand(HWND hDlg, WPARAM wParam, LPARAM lParam)
                                         );
                }
             break;
-	case ID_TRMTASK:                                  /* task beenden */
-		if (CheckTask(hDlg,&hTask,&taskentry)) {
-			zWnd = 0;
-			EnumTaskWindows(hTask,WindowCB,0);
-			if (!zWnd) {
-				PostEvent(hTask);					// zusไtzlich
-				if (PostAppMessage(hTask,WM_QUIT,0x00FF,0)) {
-					DirectedYield(hTask);
-				} else
-					CreateMessage(hDlg,
-								MAKEINTRESOURCE(IDS_ERRTSK3),
-								MAKEINTRESOURCE(IDS_HINT),
-								MB_OK);
-			} else {
-//				PostMessage(zWnd,WM_CLOSE,0,0);
-				PostMessage(zWnd,WM_SYSCOMMAND,SC_CLOSE,0);
-				DirectedYield(hTask);
-			}
-		}
-		break;
-	case ID_KILLTASK:
+    case ID_TRMTASK:                                  /* task beenden */
+        if (CheckTask(hDlg,&hTask,&taskentry)) {
+            zWnd = 0;
+            EnumTaskWindows(hTask,WindowCB,0);
+            if (!zWnd) {
+                PostEvent(hTask);                   // zusไtzlich
+                if (PostAppMessage(hTask,WM_QUIT,0x00FF,0)) {
+                    DirectedYield(hTask);
+                } else
+                    CreateMessage(hDlg,
+                                MAKEINTRESOURCE(IDS_ERRTSK3),
+                                MAKEINTRESOURCE(IDS_HINT),
+                                MB_OK);
+            } else {
+//              PostMessage(zWnd,WM_CLOSE,0,0);
+                PostMessage(zWnd,WM_SYSCOMMAND,SC_CLOSE,0);
+                DirectedYield(hTask);
+            }
+        }
+        break;
+    case ID_KILLTASK:
             CreateMessageParam(hDlg,
                                MAKEINTRESOURCE(IDS_ERRTSK2),
                                MAKEINTRESOURCE(IDS_WARNING),
@@ -415,12 +418,12 @@ BOOL TaskOnCommand(HWND hDlg, WPARAM wParam, LPARAM lParam)
                                ID_WARNING1
                               );
             break;
-	case ID_WARNING1:
+    case ID_WARNING1:
             if (HIWORD(lParam) == IDOK)
                 if (CheckTask(hDlg,&hTask,&taskentry))
                     TerminateApp(hTask,UAE_BOX);
             break;
-	case ID_SWTTASK:
+    case ID_SWTTASK:
             if (CheckTask(hDlg,&hTask,&taskentry))
                {
                 zWnd = 0;
@@ -432,7 +435,7 @@ BOOL TaskOnCommand(HWND hDlg, WPARAM wParam, LPARAM lParam)
                    }
                }
             break;
-	case ID_WINDTASK:
+    case ID_WINDTASK:
             if (CheckTask(hDlg,&hTask,&taskentry))
                {
                 x =  (WORD)SendDlgItemMessage(hDlg, ID_LISTWINDOWS, LB_GETCURSEL,0,0);
@@ -482,12 +485,12 @@ BOOL TaskOnCommand(HWND hDlg, WPARAM wParam, LPARAM lParam)
                   }
                }
             break;
-	case IDCANCEL:
-	case IDOK:
+    case IDCANCEL:
+    case IDOK:
             PostMessage(hDlg,WM_CLOSE,0,0);
             break;
-	}
-	return TRUE;
+    }
+    return TRUE;
 }
 /*
 ษออออออออออออออออออออออออออออออออออออออออออออออออออออออป
@@ -502,45 +505,45 @@ BOOL EXPORTED CALLBACK TaskDlg(HWND hDlg,UINT message,WPARAM wParam,LPARAM lPara
  int    tabpos[10];
  BOOL   rc = FALSE;
 
-	switch (message) {
-	case WM_INITDIALOG:
-		fErr = TRUE;
-		SendDlgItemMessage(hDlg,ID_STATTASK,ST_SETALTFONT,-1,0);
-		tabpos[0] = 28;
-		tabpos[1] = 72;
-		tabpos[2] = 96;
-		tabpos[3] = 120;
-		tabpos[4] = 144;
-		SendDlgItemMessage(hDlg,ID_LISTBOX1,LB_SETTABSTOPS,5,(LPARAM)(LPINT)&tabpos);
-		SendDlgItemMessage(hDlg,ID_LISTBOX1,XLB_SETEXTSTYLE,XLBES_RBUTTONTRACK,
+    switch (message) {
+    case WM_INITDIALOG:
+        fErr = TRUE;
+        SendDlgItemMessage(hDlg,ID_STATTASK,ST_SETALTFONT,-1,0);
+        tabpos[0] = 28;
+        tabpos[1] = 72;
+        tabpos[2] = 96;
+        tabpos[3] = 120;
+        tabpos[4] = 144;
+        SendDlgItemMessage(hDlg,ID_LISTBOX1,LB_SETTABSTOPS,5,(LPARAM)(LPINT)&tabpos);
+        SendDlgItemMessage(hDlg,ID_LISTBOX1,XLB_SETEXTSTYLE,XLBES_RBUTTONTRACK,
                          (LPARAM)(LPVOID)hFontAlt);
-		tabpos[0] = 22;
-		tabpos[1] = 44;
-		tabpos[2] = 84;
-		tabpos[3] = 134;
-		SendDlgItemMessage(hDlg,ID_LISTWINDOWS,LB_SETTABSTOPS,4,(LPARAM)(LPVOID)&tabpos);
-		SendDlgItemMessage(hDlg,ID_LISTWINDOWS,XLB_SETEXTSTYLE,XLBES_RBUTTONTRACK,
+        tabpos[0] = 22;
+        tabpos[1] = 44;
+        tabpos[2] = 84;
+        tabpos[3] = 134;
+        SendDlgItemMessage(hDlg,ID_LISTWINDOWS,LB_SETTABSTOPS,4,(LPARAM)(LPVOID)&tabpos);
+        SendDlgItemMessage(hDlg,ID_LISTWINDOWS,XLB_SETEXTSTYLE,XLBES_RBUTTONTRACK,
                          (LPARAM)(LPVOID)hFontAlt);
-		SendMessage(hDlg,WM_COMMAND,ID_REFRESH,0);
-		SetWindowPos(hDlg,0,xTaskpos,yTaskpos,0,0,SWP_NOSIZE | SWP_NOZORDER);
-		ShowWindow(hDlg,SW_NORMAL);
-		rc = TRUE;
-		break;
-	case WM_CLOSE:
-//		PostMessage(hWndMenu,WM_COMMAND,ID_DESTROY,(LPARAM)hDlg);
-		DestroyWindow(hDlg);
-		rc = TRUE;
-		break;
+        SendMessage(hDlg,WM_COMMAND,ID_REFRESH,0);
+        SetWindowPos(hDlg,0,xTaskpos,yTaskpos,0,0,SWP_NOSIZE | SWP_NOZORDER);
+        ShowWindow(hDlg,SW_NORMAL);
+        rc = TRUE;
+        break;
+    case WM_CLOSE:
+//      PostMessage(hWndMenu,WM_COMMAND,ID_DESTROY,(LPARAM)hDlg);
+        DestroyWindow(hDlg);
+        rc = TRUE;
+        break;
     case WM_DESTROY:
-		hWndTask = 0;
-		break;
-	case WM_MOVE:
-		SaveWindowPos(hDlg,&xTaskpos,&yTaskpos);
-		break;
-	case WM_COMMAND:
-		rc = TaskOnCommand(hDlg,wParam,lParam);
-		break;
-	default:
+        hWndTask = 0;
+        break;
+    case WM_MOVE:
+        SaveWindowPos(hDlg,&xTaskpos,&yTaskpos);
+        break;
+    case WM_COMMAND:
+        rc = TaskOnCommand(hDlg,wParam,lParam);
+        break;
+    default:
       break;
     }
  return rc;

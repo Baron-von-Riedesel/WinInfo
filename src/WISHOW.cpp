@@ -32,7 +32,7 @@ extern CATCHBUF cb;
 บ XDlg - Dummy Dialogfunktion                          บ
 ศออออออออออออออออออออออออออออออออออออออออออออออออออออออผ
 */
-int CALLBACK EXPORTED XDlg(HWND hDlg,UINT message,WPARAM wParam,LPARAM lParam)
+int EXPORTED CALLBACK XDlg(HWND hDlg,UINT message,WPARAM wParam,LPARAM lParam)
 {
     static fOwner = 1;
     RECT rect;
@@ -104,7 +104,7 @@ int CALLBACK EXPORTED XDlg(HWND hDlg,UINT message,WPARAM wParam,LPARAM lParam)
 บ ShowResDlg - Resource anzeigen                       บ
 ศออออออออออออออออออออออออออออออออออออออออออออออออออออออผ
 */
-BOOL CALLBACK EXPORTED ShowResDlg(HWND hDlg,UINT message,WPARAM wParam,LPARAM lParam)
+BOOL EXPORTED CALLBACK ShowResDlg(HWND hDlg,UINT message,WPARAM wParam,LPARAM lParam)
 {
   LPSTR lpstr;
   RESENTRY FAR * lpres;

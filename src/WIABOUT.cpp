@@ -30,7 +30,7 @@ int GetExePath(HINSTANCE hInst,PSTR pstr,int strsize)
 ////////////////////////////////////////////////////////
 // AboutDlg - About Dialog                              
 ////////////////////////////////////////////////////////
-BOOL CALLBACK AboutDlg(HWND hDlg,UINT message,WPARAM wParam,LPARAM lParam )
+BOOL EXPORTED CALLBACK AboutDlg(HWND hDlg,UINT message,WPARAM wParam,LPARAM lParam )
 {
  char str1[256];
  HGLOBAL hObj;

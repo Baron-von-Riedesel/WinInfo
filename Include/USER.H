@@ -11,73 +11,7 @@
 #define  _FF_ 12
 #define  _CR_ 13
 
-#ifndef __WINDOWS_H
-
-#define VOID void
-#define FAR __far
-#define NEAR __near
-#define PASCAL __pascal
-#define CDECL __cdecl
-#define FALSE 0
-#define TRUE  1
-#define WINAPI FAR PASCAL
-#define DECLARE_HANDLE(name)    struct name##__ { int unused; }; \
-                                typedef const struct name##__ NEAR* name
-
-typedef int                 BOOL;
-typedef unsigned char       BYTE;
-typedef unsigned int        WORD;
-typedef unsigned int        UINT;
-typedef long                LONG;
-typedef unsigned long       DWORD;
-typedef char                *PSTR;
-typedef BYTE                *PBYTE;
-
-#define LOBYTE(w)       ((BYTE)(w))
-#define HIBYTE(w)       ((BYTE)(((UINT)(w) >> 8) & 0xFF))
-#define LOWORD(l)       ((unsigned)(l))
-#define HIWORD(l)       ((unsigned)(((DWORD)(l) >> 16)))
-#define MAKELONG(a, b)  ((LONG)(((WORD)(a)) | (((DWORD)((WORD)(b))) << 16)))
-#define MAKEFPLONG(a)   (((DWORD)(a) >> 12 & 0xFFFF0) + (WORD)(a))
-#define MAKELP(sel, off)    ((void FAR*)MAKELONG((off), (sel)))
-
-typedef void __far           *LPVOID;
-typedef char __far           *LPSTR;
-typedef const char __far     *LPCSTR;
-typedef BYTE __far           *LPBYTE;
-typedef WORD __far           *LPWORD;
-typedef int  __far           *LPINT;
-typedef DWORD __far          *LPDWORD;
-typedef int (FAR  PASCAL *FARPROC)();
-typedef int (NEAR PASCAL *NEARPROC)();
-
-#ifndef HANDLE
-typedef WORD                HANDLE;
-#endif
-
-typedef int                 HFILE;
-DECLARE_HANDLE(HMODULE);
-DECLARE_HANDLE(HINSTANCE);
-
-#ifdef __cplusplus
-extern "C" {
-#endif
-void    WINAPI OutputDebugString(LPSTR);
-HMODULE WINAPI GetModuleHandle(LPCSTR);
-int     WINAPI GetModuleFileName(HINSTANCE, LPSTR, int);
-LPSTR   WINAPI GetDOSEnvironment(void);
-HFILE   WINAPI _lclose(HFILE);
-#ifdef __cplusplus
-}
-#endif
-
-#endif  /* windows */
-
 #define IsModule(x) (*(LPINT)MAKELONG(0,x) == 0x454E)
-
-#ifndef MK_FP
-#define MK_FP(sel, off)     ((void FAR*)MAKELONG((off), (sel)))
-#endif
 
 typedef void                *PVOID;
 
@@ -101,7 +35,6 @@ typedef WORD __huge         *HPWORD;
 typedef void __huge         *HPVOID;
 
 #define CODESEG _based(_segname("_CODE"))
-
 typedef const char _based(_segname("_CODE")) CSTRC,*PCSTRC;
 
 typedef struct tagFWORD {
@@ -330,17 +263,6 @@ WORD         _CDECL  GetMyDS();
 WORD         pascal  xsetjmp(void *);                  /* 9 register */
 WORD         _CDECL  xlongjmp(void *,WORD);
 
-HANDLE   FAR PASCAL RegisterNotPresentHandler(WORD, FARPROC);
-BOOL     FAR PASCAL UnregisterNotPresentHandler(WORD);
-HANDLE   FAR PASCAL RegisterStackErrorHandler(WORD, FARPROC);
-BOOL     FAR PASCAL UnregisterStackErrorHandler(WORD);
-HANDLE   FAR PASCAL RegisterProtectionHandler(WORD, FARPROC);
-BOOL     FAR PASCAL UnregisterProtectionHandler(WORD);
-HANDLE   FAR PASCAL RegisterPageErrorHandler(WORD, FARPROC);
-BOOL     FAR PASCAL UnregisterPageErrorHandler(WORD);
-BOOL     FAR PASCAL RegisterExceptionHandler(WORD,int (FAR *)(), LPVOID);
-BOOL     FAR PASCAL UnregisterExceptionHandler(WORD, LPVOID);
-
 WORD     FAR PASCAL GetLastException(void);
 BOOL     FAR PASCAL RegisterKeyboardDispatcher(FARPROC);
 BOOL     FAR PASCAL UnregisterKeyboardDispatcher(void);
@@ -371,13 +293,8 @@ BOOL     FAR PASCAL LDTFirst(WORD,LPLDTENTRY);
 BOOL     FAR PASCAL LDTNext(WORD,LPLDTENTRY);
 BOOL     FAR PASCAL LDTClose(WORD,LPLDTENTRY);
 BOOL     FAR PASCAL LDTFind(WORD,LPLDTENTRY);
-
 WORD     FAR PASCAL GetTextField(PSTR,WORD,PSTR,WORD); /* feldinhalt aus tabstring holen */
 
-int          pascal _MonPutChar(char);                 /* zeichen auf monitor ausgeben */
-int          pascal _MonPutString(char *);
-
-int          _CDECL  skipline(void);                   /* bis zum zeilenende lesen */
 int          _CDECL GetDrive();
 int          _CDECL SetDrive(int);
 DWORD    FAR PASCAL Unassemble(FWORD,LPSTR,WORD);
@@ -394,26 +311,19 @@ DWORD    FAR PASCAL GetIDTAddress(void);
 WORD     FAR PASCAL GetIDTLimit(void);
 WORD     FAR PASCAL GetIOPL(void);
 WORD     FAR PASCAL GetCPL(void);
-WORD     FAR PASCAL Encrypt(LPBYTE,WORD,WORD);
-WORD     FAR PASCAL Decrypt(LPBYTE,WORD,WORD);
 VOID     FAR PASCAL _strout(LPSTR);
 DWORD    FAR PASCAL _GetFileSize(LPSTR);
-VOID     FAR PASCAL DebugBreak(void);
 VOID     FAR PASCAL _lwriteline(int,LPSTR);
 BOOL     FAR PASCAL CallRing0Proc(FARPROC,LPDWORD);
 BOOL     FAR PASCAL PageFirst(LPDWORD,PAGEENTRY FAR *);
 BOOL     FAR PASCAL PageNext(LPDWORD,PAGEENTRY FAR *);
-BOOL     FAR PASCAL IsMonoScreenAvailable(void);
 BOOL     FAR PASCAL CreateRegister(LPSTR,DWORD,LPSTR);
-BOOL     FAR PASCAL ComWrite(WORD wPort, WORD wChar);
-char     FAR PASCAL ComRead(WORD wPort);
 BOOL     FAR PASCAL SetComSpeed(WORD wPort, WORD wSpeed);
 LPSTR    FAR PASCAL FindEnvironmentString(LPSTR lpKey);
 WORD     FAR PASCAL GetEnvironmentString(LPSTR lpKey,LPSTR lpDest,WORD wSize);
 WORD     FAR PASCAL ReplaceEnvironmentString(LPSTR lpKey,LPSTR lpNewString);
 WORD     FAR PASCAL GetEnvironmentSize();
 BOOL     FAR PASCAL CopyCS(LPSTR,LPSTR,WORD);
-VOID     FAR PASCAL OutputMonoString(LPSTR);
 BOOL     FAR PASCAL EnumFiles(LPENUMFILESTRUCT);
 LPVOID   FAR PASCAL GetSDAAddr();
 WORD     FAR PASCAL GetLDTSelector();

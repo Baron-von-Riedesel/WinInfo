@@ -640,9 +640,14 @@ BOOL InitInstance(HINSTANCE hInstance, HINSTANCE hPrevInstance)
 */
 int PASCAL WinMain(HINSTANCE hInstance,HINSTANCE hPrevInstance,LPSTR lpszCmdLine,int cmdShow )
 {
-  MSG   msg;
-  HWND  hWnd;
-                                                     /* instance global verfuegbar machen */
+    MSG   msg;
+    HWND  hWnd;
+#if 0
+    char szStr[80];
+    wsprintf(szStr,"WinInfo: WinVer=%X\r\n",WINVER);
+    OutputDebugString(szStr);
+#endif
+    /* instance global verfuegbar machen */
     if (InitInstance(hInstance,hPrevInstance)) {
         while (GetMessage((LPMSG)&msg, 0, 0, 0)) {
              hWnd = GetParent(msg.hwnd);

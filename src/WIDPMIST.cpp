@@ -1,5 +1,4 @@
 
-
 #define ITEMS 10
 
 #include "string.h"
@@ -43,54 +42,59 @@ static STRLOADENTRY CODESEG strloadtab[] = {
 ////////////////////////////////////////////////////////
 static void OutputIconic(HWND hWnd,HDC hDC,LPDPMIMEMORY lpdm)
 {
-  char str[80];
-  WORD wProz1,wProz2;
-  HBRUSH hBrush,xBrush;
-  TEXTMETRIC tm;
-  RECT rect;
-  DWORD xx;
-  BOOL fWin95;
+    char str[80];
+    WORD wProz1,wProz2;
+    HBRUSH hBrush,oldBrush;
+    TEXTMETRIC tm;
+    RECT rect;
+    DWORD xx;
+    BOOL fWin95;
 
-        xx = GetVersion();
-        fWin95 = FALSE;
-        if (LOBYTE(LOWORD(xx)) == 3)
-                if (HIBYTE(LOWORD(xx)) > 10)
-                        fWin95 = TRUE;
+    xx = GetVersion();
+    fWin95 = FALSE;
+    if (LOBYTE(LOWORD(xx)) == 3)
+        if (HIBYTE(LOWORD(xx)) > 10)
+            fWin95 = TRUE;
 
-   xx = lpdm->dwLinearSpace - lpdm->dwFreeLinearSpace + lpdm->dwFreePages;
-   if (xx)
-       wProz1 = lpdm->dwFreePages * 100 / xx;
-   else
-       wProz1 = 0;
+    xx = lpdm->dwLinearSpace - lpdm->dwFreeLinearSpace + lpdm->dwFreePages;
+    if (xx)
+        wProz1 = (WORD)(lpdm->dwFreePages * 100 / xx);
+    else
+        wProz1 = 0;
 
-   if (lpdm->dwPhysPages)
-       wProz2 = lpdm->dwFreePhysPages * 100 / lpdm->dwPhysPages;
-   else
-       wProz2 = 0;
+    if (lpdm->dwPhysPages)
+        wProz2 = (WORD)(lpdm->dwFreePhysPages * 100 / lpdm->dwPhysPages);
+    else
+        wProz2 = 0;
 
-        if (fWin95) {
-                wsprintf(str,"%u%%/%u%%",wProz1,wProz2);
-                SetWindowText(hWnd,str);
-                //OutputDebugString(str);
-                //OutputDebugString("\r\n");
-        } else {
-                hBrush = (HBRUSH)GetStockObject(LTGRAY_BRUSH);
-                xBrush = (HBRUSH)SelectObject(hDC,hBrush);
-                GetClientRect(hWnd,&rect);
-                Rectangle(hDC,rect.left,rect.top,rect.right,rect.bottom);
-                SetBkMode(hDC,TRANSPARENT);
+    if (fWin95) {
+        wsprintf(str,"%u%%/%u%%",wProz1,wProz2);
+        SetWindowText(hWnd,str);
+        //OutputDebugString(str);
+        //OutputDebugString("\r\n");
+    } else {
+        SetMapMode( hDC, MM_TEXT );
+        GetClientRect(hWnd,&rect);
+#if 0
+        wsprintf(str,"rect=%u,%u,%u,%u\r\n",rect.left,rect.top,rect.right,rect.bottom);
+        OutputDebugString(str);
+#endif
+        hBrush = (HBRUSH)GetStockObject(LTGRAY_BRUSH);
+        oldBrush = (HBRUSH)SelectObject(hDC,hBrush);
+        Rectangle(hDC,0,0,rect.right,rect.bottom);
+        SetBkMode(hDC,TRANSPARENT);
 
-                GetTextMetrics(hDC,&tm);
-                tm.tmHeight--;
+        GetTextMetrics(hDC,&tm);
+        tm.tmHeight--;
 
-                wsprintf(str,"%u%%",wProz1);
-                TextOut(hDC,2,tm.tmHeight*0,str,strlen(str));
+        wsprintf(str,"%u%%",wProz1);
+        TextOut(hDC,2,tm.tmHeight*0,str,strlen(str));
 
-                wsprintf(str,"%u%%",wProz2);
-                TextOut(hDC,2,tm.tmHeight*1,str,strlen(str));
+        wsprintf(str,"%u%%",wProz2);
+        TextOut(hDC,2,tm.tmHeight*1,str,strlen(str));
 
-                SelectObject(hDC,xBrush);
-        }
+        SelectObject(hDC,oldBrush);
+    }
 }
 /*
 浜様様様様様様様様様様様様様様様様様様様様様様様様様様融
@@ -120,7 +124,8 @@ void UpdateProc(HWND hDlg,int initf)
     if (IsIconic(hDlg)) {
         InvalidateRect(hDlg,0,1);
         return;
-    }                        //  freier linearer Adressraum
+    }
+    //  freier linearer Adressraum
     if (dm.dwFreeLinearSpace != dm1.dwFreeLinearSpace) {
         wsprintf(str,fstr[x],dm.dwFreeLinearSpace<<2);
         SetDlgItemText(hDlg,x+ID_DPMISTAT1,str);
@@ -191,39 +196,39 @@ void UpdateProc(HWND hDlg,int initf)
 */
 LRESULT EXPORTED CALLBACK DPMIStatWndProc(HWND hWnd,UINT message,WPARAM wParam,LPARAM lParam)
 {
- PAINTSTRUCT ps;
-// HBRUSH hBrush;
- LRESULT rc;
+    PAINTSTRUCT ps;
+    // HBRUSH hBrush;
+    LRESULT rc;
 
-   rc = FALSE;
+    rc = 0;
 
-   switch (message)
-     {
-      case WM_ICONERASEBKGND:
+    switch (message)
+    {
+    case WM_ICONERASEBKGND:
         break;
-      case WM_SYSCOMMAND:
+    case WM_SYSCOMMAND:
         if (wParam == SC_MINIMIZE)
-            SetWindowText(hWnd,"VMem/RMem");
-        else
-        if (wParam == SC_RESTORE)
+            SetWindowText(hWnd,"Virt/Phys");
+        else if (wParam == SC_RESTORE || wParam == SC_MAXIMIZE)
             SetWindowText(hWnd,szMonText);
         rc = CallWindowProc(fpDPMIStatWndProc,hWnd,message,wParam,lParam);
         break;
-      case WM_PAINT:
+    case WM_PAINT:
         if (!IsIconic(hWnd)) {
-                rc = CallWindowProc(fpDPMIStatWndProc,hWnd,message,wParam,lParam);
-                break;
-            }
-      case WM_PAINTICON:
-        BeginPaint(hWnd,(LPPAINTSTRUCT)&ps);
+            rc = CallWindowProc(fpDPMIStatWndProc,hWnd,message,wParam,lParam);
+            break;
+        }
+        /* fall thru */
+    case WM_PAINTICON:
+        BeginPaint(hWnd,&ps);
         OutputIconic(hWnd,ps.hdc,&dm);
-        EndPaint(hWnd,(LPPAINTSTRUCT)&ps);
+        EndPaint(hWnd,&ps);
         break;
-      default:
+    default:
         rc = CallWindowProc(fpDPMIStatWndProc,hWnd,message,wParam,lParam);
         break;
-     }
- return rc;
+    }
+    return rc;
 }
 /*
 浜様様様様様様様様様様様様様様様様様様様様様様様様様様融

@@ -93,6 +93,8 @@
     
     - exceptions during paging and DPMI ldt enlisting captured by
       toolhelp interruptregister().
+    - fixed: DPMI status monitor displaying virt/phys memory status
+      if in iconic mode.
 
     WinInfo Version 1.8 (2025)
 

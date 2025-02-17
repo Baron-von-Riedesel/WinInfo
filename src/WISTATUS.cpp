@@ -140,7 +140,7 @@ static void OutputIconic(HWND hWnd,HDC hDC, WINSTATSTRUCT FAR * lpws)
 บ WinStatWndProc - window subclass                     บ
 ศออออออออออออออออออออออออออออออออออออออออออออออออออออออผ
 */
-LRESULT CALLBACK EXPORTED WinStatWndProc(HWND hWnd,UINT message,WPARAM wParam,LPARAM lParam)
+LRESULT EXPORTED CALLBACK WinStatWndProc(HWND hWnd,UINT message,WPARAM wParam,LPARAM lParam)
 {
  PAINTSTRUCT ps;
  LRESULT rc;
@@ -176,7 +176,7 @@ LRESULT CALLBACK EXPORTED WinStatWndProc(HWND hWnd,UINT message,WPARAM wParam,LP
 บ StatusDlg - Status Dialog                            บ
 ศออออออออออออออออออออออออออออออออออออออออออออออออออออออผ
 */
-BOOL EXPORTED WINAPI StatusDlg(HWND hDlg,UINT message,WPARAM wParam,LPARAM lParam )
+BOOL EXPORTED CALLBACK StatusDlg(HWND hDlg,UINT message,WPARAM wParam,LPARAM lParam )
 {
  char str[80];
  char str1[80];

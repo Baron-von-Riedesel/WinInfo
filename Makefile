@@ -43,7 +43,7 @@ RC  =$(MSVC)\bin\rc.exe
 HC  =$(MSVC)\bin\hc31.exe
 
 AOPT = -c -nologo -Sg -Cp $(AOPTD)
-COPT = -c -nologo -Gs -GA -Zp1 -W3 -I$(MSVC)\include -IInclude -AM -D "STRICT" $(COPTD)
+COPT = -c -nologo -Gs -GA -Zp1 -W3 -I$(MSVC)\include -IInclude -AM -D "STRICT" -D "WINVER=0x30a" $(COPTD)
 LOPTS= /NOLOGO/MAP:FULL/ONE:NOE/NOD/A:16/NOE/ST:8192
 LIBS = $(OUTDIR)\WinInfo.lib libw.lib toolhelp hexdump stattext winutil1 winutil2 winutil3 xlistbox mlibcew user386 userw user oldnames
 LIBPATH= Lib;$(MSVC)\lib;

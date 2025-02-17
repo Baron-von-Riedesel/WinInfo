@@ -14,7 +14,6 @@
 #define strcpy lstrcpy
 
 extern HWND hWndDEV;
-BOOL CALLBACK DevDlg(HWND hDlg,UINT message,WPARAM wParam,LPARAM lParam );
 
 int  xDevpos = 100;
 int  yDevpos = 100;

@@ -14,7 +14,7 @@
 
 extern HFONT hFontAlt;
 
-BOOL EXPORTED CALLBACK UnassembleDlg (HWND, UINT, WPARAM, LPARAM);
+BOOL CALLBACK UnassembleDlg (HWND, UINT, WPARAM, LPARAM);
 
 /*
 浜様様様様様様様様様様様様様様様様様様様様様様様様様様融

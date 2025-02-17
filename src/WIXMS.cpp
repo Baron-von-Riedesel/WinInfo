@@ -35,7 +35,6 @@ extern HFONT hFontAlt;
 extern HWND hWndXMS;
 
 BOOL CALLBACK ViewDlg   (HWND, UINT, WPARAM, LPARAM);
-BOOL WINAPI XMSDlg      (HWND, UINT, WPARAM, LPARAM);
 
 int  xXMSpos = 50;
 int  yXMSpos = 50;
@@ -43,7 +42,7 @@ int  yXMSpos = 50;
 ////////////////////////////////////////////////////////
 // XMSDlg - XMS Dialog                                 
 ////////////////////////////////////////////////////////
-BOOL EXPORTED WINAPI XMSDlg(HWND hDlg,UINT message,WPARAM wParam,LPARAM lParam )
+BOOL EXPORTED CALLBACK XMSDlg(HWND hDlg,UINT message,WPARAM wParam,LPARAM lParam )
 {
  static int BtnTab[] = {ID_SUBDLG1,
                         0};

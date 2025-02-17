@@ -10,8 +10,6 @@
 #include "wininfo.h"
 #include "wininfox.h"
 
-BOOL CALLBACK AtomDlg(HWND,UINT,WPARAM,LPARAM);
-
 int xAtompos,yAtompos = 100;
 /*
 浜様様様様様様様様様様様様様様様様様様様様様様様様様様融

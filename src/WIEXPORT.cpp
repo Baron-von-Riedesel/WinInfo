@@ -104,7 +104,7 @@ static void SetSortParms(HWND hDlg)
 ////////////////////////////////////////////////////////
 // ExportDlg - exportierte Entries auflisten            
 ////////////////////////////////////////////////////////
-BOOL CALLBACK ExportDlg(HWND hDlg,unsigned message,WPARAM wParam,LPARAM lParam )
+BOOL EXPORTED CALLBACK ExportDlg(HWND hDlg,unsigned message,WPARAM wParam,LPARAM lParam )
 {
  static int BtnTab[] = {ID_SUBDLG1,ID_SUBDLG2,0};
  WORD  y,i;
@@ -112,12 +112,11 @@ BOOL CALLBACK ExportDlg(HWND hDlg,unsigned message,WPARAM wParam,LPARAM lParam )
  char szStr[80];
  char szStr1[128];
  char cRes;
- PSTR pStr,pStr2;
  FARPROC paddr;
- WORD  wSortPos;
+ //WORD  wSortPos;
  HWND  hWnd;
  MODULEENTRY moduleentry;
- EXPORTENTRY exportentry;
+ //EXPORTENTRY exportentry;
  ENTRYENTRY  entryentry;
  LPMODSTRUC lpmodstruc;
  HMODULE hModule;

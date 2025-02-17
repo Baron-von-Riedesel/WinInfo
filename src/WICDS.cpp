@@ -16,7 +16,6 @@
 #define strlen lstrlen
 
 extern HWND hWndCDS;
-BOOL CALLBACK CDSDlg(HWND hDlg,UINT message,WPARAM wParam,LPARAM lParam );
 
 int  xCDSpos = 100;
 int  yCDSpos = 100;

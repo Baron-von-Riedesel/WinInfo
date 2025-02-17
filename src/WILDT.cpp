@@ -26,7 +26,7 @@ int yLDTpos = 100;
 ////////////////////////////////////////////////////////
 // LDTDlg - LDT Entries ausgeben                        
 ////////////////////////////////////////////////////////
-BOOL EXPORTED WINAPI LDTDlg(HWND hDlg,UINT message,WPARAM wParam,LPARAM lParam)
+BOOL EXPORTED CALLBACK LDTDlg(HWND hDlg,UINT message,WPARAM wParam,LPARAM lParam)
 {
   static int BtnTab[] = {ID_SUBDLG1,
                          0};
