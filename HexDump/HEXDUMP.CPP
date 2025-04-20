@@ -1,9 +1,4 @@
 
-// Achtung: Byte alignment auf 1 setzen
-// kritische Funktionen bspw: GetDescriptor()
-               
-//#define STRICT
-               
 #include "stdlib.h"
 #include "stdio.h"
 #include "string.h"
@@ -108,13 +103,15 @@ static HINSTANCE hAppInstance;
 // CS ermitteln
 
 static WORD GetCS()
+///////////////////
 {
- WORD rc;
- _asm {mov rc,cs}
-return rc;
+    WORD rc;
+    _asm {mov rc,cs}
+    return rc;
 }
 
 int __export interruptcallback(void)
+////////////////////////////////////
 {
     _asm {
         pusha
@@ -140,15 +137,15 @@ int __export interruptcallback(void)
 ////////////////////////////////////////////////////////
 static WORD ValidateSegment(HANDLE hSegm)
 {
- int i = 1;
- WORD hSel;
- LPBYTE lpByte = 0;
+    int i = 1;
+    WORD hSel;
+    LPBYTE lpByte = 0;
 
- hSel = GlobalHandleToSel(hSegm);
- if (!IsValidAddress((LPVOID)MAKELONG(0,hSel)))
-     return 0;
+    hSel = GlobalHandleToSel(hSegm);
+    if (!IsValidAddress((LPVOID)MAKELONG(0,hSel)))
+        return 0;
 
- return hSel;
+    return hSel;
 }
 ////////////////////////////////////////////////////////
 // VertScroll - vertikal scrollen                      
@@ -701,6 +698,7 @@ void HEXDUMP::SetSizeParms()
 }
 
 LRESULT HEXDUMP::OnSave(WPARAM wParam, LPARAM lParam)
+/////////////////////////////////////////////////////
 {
     LRESULT rc = 0;
     int    hFile;
@@ -748,6 +746,7 @@ LRESULT HEXDUMP::OnSave(WPARAM wParam, LPARAM lParam)
 // vor save Filename holen
 
 LRESULT HEXDUMP::OnSaveEx()
+///////////////////////////
 {
     DWORD x;
     LRESULT rc = 0;
@@ -803,6 +802,7 @@ LRESULT HEXDUMP::OnSaveEx()
 // OnResetContent
 
 LRESULT HEXDUMP::OnResetContent(WPARAM wParam, LPARAM lParam)
+/////////////////////////////////////////////////////////////
 {            
     HANDLE handle;
     LPHEXDUMPPARM lphdp;
@@ -819,7 +819,7 @@ LRESULT HEXDUMP::OnResetContent(WPARAM wParam, LPARAM lParam)
     dwMaxSize      = lphdp->dwLength;
     wType          = lphdp->wType & 0x7FFF;
 
-    if (wType & HDP_LINEAR)
+    if (wType & HDP_LINEAR) {
         if (fAddr.selector = AllocSelector(GetCS())) {
             SetSelectorBase(fAddr.selector,fAddr.offset);
             dwViewOffset = fAddr.offset;
@@ -827,6 +827,7 @@ LRESULT HEXDUMP::OnResetContent(WPARAM wParam, LPARAM lParam)
             SetSelectorLimit(fAddr.selector,dwMaxSize - 1);
             wType = wType | 0x8000;
         }
+    }
     handle = (HANDLE)fAddr.selector;
 
     sel = GlobalHandleToSel(handle);
@@ -852,6 +853,7 @@ LRESULT HEXDUMP::OnResetContent(WPARAM wParam, LPARAM lParam)
 // OnSetMode
 
 int HEXDUMP::OnSetMode(WPARAM wParam)
+/////////////////////////////////////
 {
     WORD x;
 
@@ -872,6 +874,7 @@ int HEXDUMP::OnSetMode(WPARAM wParam)
 // konstruktor
 
 HEXDUMP::HEXDUMP(HWND hWndSrc, WPARAM wParam, LPARAM lParam)
+////////////////////////////////////////////////////////////
 {
     WORD i;
 
@@ -911,6 +914,7 @@ HEXDUMP::HEXDUMP(HWND hWndSrc, WPARAM wParam, LPARAM lParam)
 // destruktor
 
 HEXDUMP::~HEXDUMP()
+///////////////////
 {
     if (wType & 0x8000) {
         SetSelectorLimit(fAddr.selector,0);
@@ -1025,8 +1029,10 @@ long __export CALLBACK HexdumpWndFn(HWND hWnd,UINT message,WPARAM wParam,LPARAM 
         rc = pHD->wflags;
         break;
     case HD_GETOFFSET:
-//        rc = GetSelectorBase(pHD->fAddr.selector);
-        rc = pHD->fAddr.offset;
+        if (pHD->wType & HDP_LINEAR)
+            rc = GetSelectorBase(pHD->fAddr.selector);
+        else
+            rc = pHD->fAddr.offset;
         break;
     case HD_SETVIEWOFFSET:
         pHD->dwViewOffset = lParam;

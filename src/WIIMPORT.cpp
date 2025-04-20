@@ -111,12 +111,12 @@ BOOL EXPORTED CALLBACK ImportDlg(HWND hDlg,UINT message,WPARAM wParam,LPARAM lPa
     case WM_INITDIALOG:
       SetWindowLong(hDlg,DLGWINDOWEXTRA,lParam);
 
-      LoadTabs(IDUS_10,szStr);
-      SendDlgItemMessage(hDlg,ID_LISTBOX1,LB_SETTABSTOPS,*(LPINT)szStr,(LONG)(LPINT)(szStr+2));
+      ;
+      SendDlgItemMessage(hDlg,ID_LISTBOX1,LB_SETTABSTOPS,LoadTabs(IDUS_10,szStr),(LPARAM)(LPVOID)szStr);
       SendDlgItemMessage(hDlg,ID_LISTBOX1,XLB_SETEXTSTYLE,XLBES_RBUTTONTRACK,
                          (LPARAM)(LPVOID)hFontAlt);
-      LoadTabs(IDUS_11,szStr);
-      SendDlgItemMessage(hDlg,ID_STATUS1,ST_SETTABSTOPS,*(LPINT)szStr,(LONG)(LPINT)(szStr+2));
+      ;
+      SendDlgItemMessage(hDlg,ID_STATUS1,ST_SETTABSTOPS,LoadTabs(IDUS_11,szStr),(LPARAM)(LPVOID)szStr);
 
       SetWindowPos(hDlg,0,xImppos,yImppos,0,0,SWP_NOSIZE | SWP_NOZORDER);
       SendMessage(hDlg,WM_COMMAND,ID_REFRESH,0);

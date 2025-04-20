@@ -109,7 +109,7 @@
 #endif
 #endif
 
-#define DEBOUT(y)  {OutputDebugString(y);OutputDebugString("\r\n");}
+#define DEBOUT(y)  OutputDebugString(y "\r\n") /* ;OutputDebugString("\r\n");} */
 #define DEBIN()    {_asm mov ax,0001 _asm int 41h}
 #define GetModuleFromTask(x) (HMODULE)*(HMODULE FAR *)MAKELONG(0x1E,x)
 
@@ -119,20 +119,20 @@
  #define TRACEOUT(y)
 #endif
 
-#define USESTACKENTRY() _asm mov ax,ss _asm push ds _asm mov ds,ax
-#define USESTACKEXIT()  _asm pop ds
+//#define USESTACKENTRY() _asm mov ax,ss _asm push ds _asm mov ds,ax
+//#define USESTACKEXIT()  _asm pop ds
 
 #ifndef _dll_
-  #define CALLBACKENTRY() _asm push ds _asm mov ax,ss _asm mov ds,ax
-  #define CALLBACKEXIT() _asm pop ds
-  #define LOADDS
+  //#define CALLBACKENTRY() _asm push ds _asm mov ax,ss _asm mov ds,ax
+  //#define CALLBACKEXIT() _asm pop ds
+  //#define LOADDS
 #else
-  #define CALLBACKENTRY()
-  #define CALLBACKEXIT()
-  #define LOADDS _loadds
+  //#define CALLBACKENTRY()
+  //#define CALLBACKEXIT()
+  //#define LOADDS _loadds
 #endif
-#define WNDCALLBACKENTRY() _asm push ds _asm mov ds,ax
-#define WNDCALLBACKEXIT() _asm pop ds
+//#define WNDCALLBACKENTRY() _asm push ds _asm mov ds,ax
+//#define WNDCALLBACKEXIT() _asm pop ds
 // #define EXPENTRY  FAR PASCAL _loadds
 #ifndef GetWindowStyle
 #define GetWindowStyle(x) GetWindowLong(x,GWL_STYLE)
@@ -522,7 +522,6 @@ void     WINAPI AdjustClientSize(HWND,int,int,int);
 BOOL     WINAPI EnableDlgItem(HWND,UINT,BOOL);
 PSTR     WINAPI SearchKeyTable(PSTR,WORD);
 int      WINAPI xsprintf(DDENTRY * ,PSTR,LPSTR);
-HGLOBAL  WINAPI LoadUserResource(HINSTANCE,LPCSTR,LPCSTR,LPBYTE,WORD);
 int      WINAPI LoadUserBytes(HINSTANCE,LPCSTR,LPCSTR,WORD,LPVOID,WORD);
 int      WINAPI LoadStringTab(HANDLE,LPSTRLOADENTRY);
 int             GetChildRect(HWND,LPRECT);

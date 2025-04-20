@@ -61,11 +61,11 @@ BOOL EXPORTED CALLBACK XMSDlg(HWND hDlg,UINT message,WPARAM wParam,LPARAM lParam
  switch (message)
     {
     case WM_INITDIALOG:
-      LoadTabs(IDUS_40,szStr);
-      SendDlgItemMessage(hDlg,ID_LISTBOX1,LB_SETTABSTOPS,*(LPINT)szStr,(LPARAM)(LPINT)(szStr+2));
+      ;
+      SendDlgItemMessage(hDlg,ID_LISTBOX1,LB_SETTABSTOPS,LoadTabs(IDUS_40,szStr),(LPARAM)(LPVOID)szStr);
       SendDlgItemMessage(hDlg,ID_LISTBOX1,XLB_SETEXTSTYLE,XLBES_RBUTTONTRACK,(LPARAM)(LPVOID)hFontAlt);
-      LoadTabs(IDUS_42,szStr);
-      SendDlgItemMessage(hDlg,ID_STATUS2,ST_SETTABSTOPS,*(LPINT)szStr,(LPARAM)(LPINT)(szStr+2));
+      ;
+      SendDlgItemMessage(hDlg,ID_STATUS2,ST_SETTABSTOPS,LoadTabs(IDUS_42,szStr),(LPARAM)(LPVOID)szStr);
       SetWindowPos(hDlg,0,xXMSpos,yXMSpos,0,0,SWP_NOSIZE | SWP_NOZORDER);
       ShowWindow(hDlg,SW_NORMAL);
       PostMessage(hDlg,WM_COMMAND,ID_REFRESH,0);
@@ -207,8 +207,8 @@ BOOL EXPORTED CALLBACK XMSDlg(HWND hDlg,UINT message,WPARAM wParam,LPARAM lParam
                             (LPSTR)p );
                   SendMessage(hWnd,LB_ADDSTRING,0,(LONG)(LPSTR)szStr);
               }
-              LoadTabs(IDUS_41,szStr);
-              SendDlgItemMessage(hDlg,ID_STATUS1,ST_SETTABSTOPS,*(LPINT)szStr,(LONG)(LPINT)(szStr+2));
+              ;
+              SendDlgItemMessage(hDlg,ID_STATUS1,ST_SETTABSTOPS,LoadTabs(IDUS_41,szStr),(LPARAM)(LPVOID)szStr);
 
               rmcstruct.rAX = 0x0000; /* Get XMS Version Number */
               DPMICallRMFarProc(fpXMSProc,&rmcstruct,0,0);

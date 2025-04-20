@@ -31,10 +31,8 @@ BOOL EXPORTED CALLBACK AtomDlg(HWND hDlg,UINT message,WPARAM wParam,LPARAM lPara
    {
     case WM_INITDIALOG:
       SetWindowLong(hDlg,DLGWINDOWEXTRA,lParam);
-      LoadTabs(IDUS_53,str);
-      SendDlgItemMessage(hDlg,ID_LISTBOX1,LB_SETTABSTOPS,*(LPINT)str,(LPARAM)(LPINT)(str+2));
-      LoadTabs(IDUS_52,str);
-      SendDlgItemMessage(hDlg,ID_STATUS1,ST_SETTABSTOPS,*(LPINT)str,(LPARAM)(LPINT)(str+2));
+      SendDlgItemMessage(hDlg,ID_LISTBOX1,LB_SETTABSTOPS,LoadTabs(IDUS_53,str),(LPARAM)(LPVOID)str);
+      SendDlgItemMessage(hDlg,ID_STATUS1,ST_SETTABSTOPS,LoadTabs(IDUS_52,str),(LPARAM)(LPVOID)str);
       SendMessage(hDlg,WM_COMMAND,ID_REFRESH,0);
       SetWindowPos(hDlg,0,xAtompos,yAtompos,0,0,SWP_NOSIZE | SWP_NOZORDER);
       ShowWindow(hDlg,SW_SHOWNORMAL);

@@ -133,6 +133,7 @@ EXPORTS
         GETTSS                      @141  NODATA
         LDTFIND                     @142  NODATA
         GETLDTSELECTOR              @143  NODATA
+        GETMSW                      @144  NODATA
 
         ALLOCBIGDESCRIPTOR          @171  NODATA
         FREEBIGDESCRIPTOR           @172  NODATA

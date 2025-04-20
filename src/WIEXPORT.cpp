@@ -130,12 +130,12 @@ BOOL EXPORTED CALLBACK ExportDlg(HWND hDlg,unsigned message,WPARAM wParam,LPARAM
           pes = &es;
       pes->iSort = fSort;
       SetWindowLong(hDlg,DLGWINDOWEXTRA,MAKELONG(LOWORD(lParam),pes));
-      LoadTabs(IDUS_12,szStr);
-      SendDlgItemMessage(hDlg,ID_LISTBOX1,LB_SETTABSTOPS,*(LPINT)szStr,(LONG)(LPINT)(szStr+2));
+      ;
+      SendDlgItemMessage(hDlg,ID_LISTBOX1,LB_SETTABSTOPS,LoadTabs(IDUS_12,szStr),(LPARAM)(LPVOID)szStr);
       SendDlgItemMessage(hDlg,ID_LISTBOX1,XLB_SETEXTSTYLE,XLBES_RBUTTONTRACK,
                          (LPARAM)(LPVOID)hFontAlt);
-      LoadTabs(IDUS_13,szStr);
-      SendDlgItemMessage(hDlg,ID_STATUS1,ST_SETTABSTOPS,*(LPINT)szStr,(LONG)(LPINT)(szStr+2));
+      ;
+      SendDlgItemMessage(hDlg,ID_STATUS1,ST_SETTABSTOPS,LoadTabs(IDUS_13,szStr),(LPARAM)(LPVOID)szStr);
       SetWindowPos(hDlg,0,xExppos,yExppos,0,0,SWP_NOSIZE | SWP_NOZORDER);
       SendMessage(hDlg,WM_COMMAND,ID_REFRESH,0);
       if (fShow)

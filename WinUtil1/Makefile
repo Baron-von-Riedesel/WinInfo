@@ -8,11 +8,10 @@ CC   = $(MSVC)\bin\cl
 LINK = $(MSVC)\bin\link
 RC   = $(MSVC)\bin\rc
 
-LIBPATH = ..\Lib;$(MSVC)\lib;
 LIBS = libw toolhelp $(model)dllcew $(model)userw userw $(model)user user
 
 COPTS = -c -A$(model)w -Zp1 -G3Ds -Oxz -W3 -nologo -D "WINVER=0x30a" -I$(MSVC)\include -I..\include
-LOPTS=/NOLOGO/NOD/A:16/NON/NOE/MAP:FULL/FAR/ONE:NOE
+LOPTS=/NOLOGO/NOD/NOI/A:16/NON/NOE/MAP:FULL/FAR/ONE:NOE
 
 mod1 = creatmsg
 mod2 = opendlg
@@ -25,11 +24,12 @@ $(ODIR):
 	@mkdir $(ODIR)
 
 $(ODIR)\$(name).dll: $(ODIR)\$(name).obj $(ODIR)\$(mod1).obj $(ODIR)\$(mod2).obj $(ODIR)\$(name).res $(name).def Makefile
-	@set LIB=$(LIBPATH)
 	@$(LINK) $(LOPTS) @<<
 $* $(ODIR)\$(mod1) $(ODIR)\$(mod2),
 $*.dll,
 $*.map,
+..\Lib\+
+$(MSVC)\lib\+
 $(LIBS),
 $(name).def;
 <<

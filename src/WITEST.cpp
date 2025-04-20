@@ -143,7 +143,7 @@ BOOL EXPORTED CALLBACK TestDlg(HWND hDlg,UINT message,WPARAM wParam,LPARAM lPara
         tabpos[1] = 72;
         tabpos[2] = 102;
         tabpos[3] = 144;
-        SendDlgItemMessage(hDlg,ID_TESTLB,ST_SETTABSTOPS,4,(LONG)tabpos);
+        SendDlgItemMessage(hDlg,ID_TESTLB,ST_SETTABSTOPS,4,(LPARAM)tabpos);
         SendMessage(hDlg,WM_COMMAND,ID_FILLBOX,0);
         ShowWindow(hDlg,SHOW_OPENWINDOW);
         rc = TRUE;

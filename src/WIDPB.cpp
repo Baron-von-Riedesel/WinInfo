@@ -24,7 +24,7 @@ int  yDPBpos = 100;
 BOOL EXPORTED CALLBACK DPBDlg(HWND hDlg,UINT message,WPARAM wParam,LPARAM lParam )
 {
  char  szStr[80];
- int   y,i;
+ int   y;
  HWND hWnd;
  DPBENTRY dpbentry;
  DWORD dwCapacity;
@@ -40,9 +40,9 @@ BOOL EXPORTED CALLBACK DPBDlg(HWND hDlg,UINT message,WPARAM wParam,LPARAM lParam
               PostMessage(hDlg,WM_CLOSE,0,0);
               break;
          case ID_LISTBOX1:
-              switch(HIWORD(lParam))
+              /* switch(HIWORD(lParam))
                  {
-                 }
+                 } */
               break;
          case ID_REFRESH:
               hWnd = GetDlgItem(hDlg,ID_LISTBOX1);
@@ -92,10 +92,8 @@ BOOL EXPORTED CALLBACK DPBDlg(HWND hDlg,UINT message,WPARAM wParam,LPARAM lParam
       rc = TRUE;
       break;
     case WM_INITDIALOG:
-      LoadTabs(IDUS_26,szStr);
-      SendDlgItemMessage(hDlg,ID_LISTBOX1,LB_SETTABSTOPS,*(LPINT)szStr,(LONG)(LPINT)(szStr+2));
-//    LoadTabs(IDUS_27,szStr);
-//    SendDlgItemMessage(hDlg,ID_STATUS1,ST_SETTABSTOPS,*(LPINT)szStr,(LONG)(LPINT)(szStr+2));
+      SendDlgItemMessage(hDlg,ID_LISTBOX1,LB_SETTABSTOPS,LoadTabs(IDUS_26,szStr),(LPARAM)(LPVOID)szStr);
+//    SendDlgItemMessage(hDlg,ID_STATUS1,ST_SETTABSTOPS,LoadTabs(IDUS_27,szStr),(LPARAM)(LPVOID)szStr);
       SendMessage(hDlg,WM_COMMAND,ID_REFRESH,0);
       SetWindowPos(hDlg,0,xDPBpos,yDPBpos,0,0,SWP_NOSIZE | SWP_NOZORDER);
       ShowWindow(hDlg,SW_SHOWNORMAL);

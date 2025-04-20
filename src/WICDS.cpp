@@ -106,10 +106,8 @@ BOOL EXPORTED CALLBACK CDSDlg(HWND hDlg,UINT message,WPARAM wParam,LPARAM lParam
       rc = TRUE;
       break;
     case WM_INITDIALOG:
-      LoadTabs(IDUS_24,szStr);
-      SendDlgItemMessage(hDlg,ID_LISTBOX1,LB_SETTABSTOPS,*(LPINT)szStr,(LONG)(LPINT)(szStr+2));
-      LoadTabs(IDUS_25,szStr);
-      SendDlgItemMessage(hDlg,ID_STATUS1,ST_SETTABSTOPS,*(LPINT)szStr,(LONG)(LPINT)(szStr+2));
+      SendDlgItemMessage(hDlg,ID_LISTBOX1,LB_SETTABSTOPS,LoadTabs(IDUS_24,szStr),(LPARAM)(LPVOID)szStr);
+      SendDlgItemMessage(hDlg,ID_STATUS1,ST_SETTABSTOPS,LoadTabs(IDUS_25,szStr),(LPARAM)(LPVOID)szStr);
       SendMessage(hDlg,WM_COMMAND,ID_REFRESH,0);
       SetWindowPos(hDlg,0,xCDSpos,yCDSpos,0,0,SWP_NOSIZE | SWP_NOZORDER);
       ShowWindow(hDlg,SW_SHOWNORMAL);

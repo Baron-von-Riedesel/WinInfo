@@ -1,4 +1,8 @@
 
+#ifdef _DEBUG
+#define _TRACE_
+#endif
+
 #include "string.h"
 #include "windows.h"
 #include "toolhelp.h"
@@ -9,11 +13,7 @@
 #include "wininfo.h"
 #include "wininfox.h"
 
-// #define strcpy lstrcpy
-// #define strcat lstrcat
-
 extern "C" {
-// DWORD FAR PASCAL GetCR0(void);
 DWORD FAR PASCAL GetCR3(void);
 };
 
@@ -61,8 +61,8 @@ BOOL EXPORTED CALLBACK PageTabDlg(HWND hDlg,UINT message,WPARAM wParam,LPARAM lP
     {
     case WM_INITDIALOG:
         SetWindowLong(hDlg,DLGWINDOWEXTRA,lParam);
-        LoadTabs(IDUS_59,szStr);
-        SendDlgItemMessage(hDlg,ID_LISTBOX1,LB_SETTABSTOPS,*(LPINT)szStr,(LONG)(LPINT)(szStr+2));
+        ;
+        SendDlgItemMessage(hDlg,ID_LISTBOX1,LB_SETTABSTOPS,LoadTabs(IDUS_59,szStr),(LPARAM)(LPVOID)szStr);
         SendDlgItemMessage(hDlg,ID_LISTBOX1,XLB_SETEXTSTYLE,XLBES_RBUTTONTRACK,
                            (LPARAM)(LPVOID)hFontAlt);
 
@@ -86,6 +86,10 @@ BOOL EXPORTED CALLBACK PageTabDlg(HWND hDlg,UINT message,WPARAM wParam,LPARAM lP
         case ID_LISTBOX1:
             switch (HIWORD(lParam))
             {
+            case LBN_SELCHANGE:
+                if ( (WORD)SendDlgItemMessage(hDlg, ID_LISTBOX1,LB_GETCURSEL,0,0) != LB_ERR )
+                    EnableDlgItem( hDlg, ID_SUBDLG1, 1 );
+                break;
             case LBN_DBLCLK:
                 PostMessage(hDlg,WM_COMMAND,ID_SUBDLG1,0);
                 break;
@@ -94,7 +98,7 @@ BOOL EXPORTED CALLBACK PageTabDlg(HWND hDlg,UINT message,WPARAM wParam,LPARAM lP
                 break;
             }
             break;
-        case ID_SUBDLG1:
+        case ID_SUBDLG1: /* anzeigen */
             dwPageTab = GetWindowLong(hDlg,DLGWINDOWEXTRA) & 0x00000001;
             x =  (WORD)SendDlgItemMessage(hDlg,ID_LISTBOX1,LB_GETCURSEL,0,0);
             if (x == LB_ERR) { MessageBeep(0); break;}
@@ -107,6 +111,7 @@ BOOL EXPORTED CALLBACK PageTabDlg(HWND hDlg,UINT message,WPARAM wParam,LPARAM lP
                     else
                     {
                         dwPhysAddr = dwAddr;
+#if 0
                         _asm {
                             pusha
                             mov byte ptr fEntryOK,0
@@ -122,6 +127,11 @@ BOOL EXPORTED CALLBACK PageTabDlg(HWND hDlg,UINT message,WPARAM wParam,LPARAM lP
                             mov byte ptr fEntryOK,1
                         label1:
                             popa}
+#else
+                        fEntryOK = 0;
+                        if ( dwAddr = DPMIMapPhysToLinear(dwPhysAddr,0x1000) )
+                            fEntryOK = 1;
+#endif
                         if (!fEntryOK) {MessageBeep(0);break;}
                     }
 
@@ -190,12 +200,11 @@ BOOL EXPORTED CALLBACK PageTabDlg(HWND hDlg,UINT message,WPARAM wParam,LPARAM lP
                         SendMessage(hWnd,LB_SETITEMDATA,x,dwLinBase+((DWORD)pageentry.wEntry<<12));
                     x = PageNext(lpdword,&pageentry);
                 }
-            } else {
-                SendMessage(hWnd,LB_ADDSTRING,0,(LPARAM)(LPSTR)"???");
             }
 
             InterruptUnRegister(0);
             FreeBigDescriptor(sel);
+            EnableDlgItem( hDlg, ID_SUBDLG1, 0 );
             SetCursor(hCursor);
             break;
         }                    /* end switch wParam */
@@ -246,20 +255,23 @@ LPDWORD GetPageDirPtr(HWND hDlg)
 {
     WORD sel;
 
+    TRACEOUT("GetPageDirPtr: enter");
     dwCR3 = 0xFFFFFFFF;
     if ((!CallRing0Proc((FARPROC)GetCR3,&dwCR3)) || (dwCR3 == 0xFFFFFFFF))
     {
-        CreateMessage(hDlg,"CR3 kann nicht gelesen werden",0,MB_OK);
+        CreateMessage(hDlg,MAKEINTRESOURCE(IDS_ERRPAG1),0,MB_OK);
         return 0;
     }
 
+    TRACEOUT("GetPageDirPtr: calling DPMIMapPhysToLinear()");
     dwPageDir = DPMIMapPhysToLinear(dwCR3 & 0xFFFFF000,0x1000);
     if (!dwPageDir) {
-        CreateMessage(hDlg,"CR3 kann nicht in lineare Adresse umgesetzt werden",0,MB_OK);
+        CreateMessage(hDlg,MAKEINTRESOURCE(IDS_ERRPAG2),0,MB_OK);
         return 0;
     }
     if (!(sel = AllocBigDescriptor(dwPageDir,0x0FFF)))
         return 0;
+    TRACEOUT("GetPageDirPtr: ok, exit");
 
     return (LPDWORD)MAKELP(sel,0);
 }
@@ -285,10 +297,10 @@ BOOL EXPORTED CALLBACK PageDirDlg(HWND hDlg,UINT message,WPARAM wParam,LPARAM lP
     switch (message)
     {
     case WM_INITDIALOG:
-        LoadTabs(IDUS_47,str);
-        SendDlgItemMessage(hDlg,ID_STATUS1,ST_SETTABSTOPS,*(LPINT)str,(LONG)(LPINT)(str+2));
-        LoadTabs(IDUS_60,str);
-        SendDlgItemMessage(hDlg,ID_LISTBOX1,LB_SETTABSTOPS,*(LPINT)str,(LONG)(LPINT)(str+2));
+        ;
+        SendDlgItemMessage(hDlg,ID_STATUS1,ST_SETTABSTOPS,LoadTabs(IDUS_47,str),(LPARAM)(LPVOID)str);
+        ;
+        SendDlgItemMessage(hDlg,ID_LISTBOX1,LB_SETTABSTOPS,LoadTabs(IDUS_60,str),(LPARAM)(LPVOID)str);
         SendDlgItemMessage(hDlg,ID_LISTBOX1,XLB_SETEXTSTYLE,XLBES_RBUTTONTRACK,
                            (LPARAM)(LPVOID)hFontAlt);
 
@@ -336,58 +348,51 @@ BOOL EXPORTED CALLBACK PageDirDlg(HWND hDlg,UINT message,WPARAM wParam,LPARAM lP
             }
             break;
         case ID_REFRESH:
-            fShow = TRUE;
+            fShow = FALSE;
             hWnd = GetDlgItem(hDlg,ID_LISTBOX1);
             SendMessage(hWnd,LB_RESETCONTENT,0,0);
-            /*
-             dwCR0 = 0;
-             CallRing0Proc(GetCR0,&dwCR0);
-             if (!(dwCR0 & 0x80000000))
-             {
-             CreateMessage(hDlg,
-             "Paging ist nicht aktiv",
-             0,
-             MB_OK);
-             fShow = FALSE;
-             break;
-             }
-             */
-            if (!(lpdword = GetPageDirPtr(hDlg))) {
-                fShow = FALSE;
-                break;
-            }
-            x = PageFirst(lpdword,&pageentry);
-            while (x)
-            {
-                dwPageTab = DPMIMapPhysToLinear(pageentry.dwPage<<12,0x1000);
 
-                if (pageentry.wFlags & 2)
-                    strcpy(str1,"r/w");
-                else
-                    strcpy(str1,"r/o");
-                if (pageentry.wFlags & 4)
-                    strcat(str1,",usr");
-                else
-                    strcat(str1,",sys");
-                if (pageentry.wFlags & 0x20)
-                    strcat(str1,",acc");
-                if (pageentry.wFlags & 0x40)
-                    strcat(str1,",dirty");
+            TRACEOUT("PageDirDlg: ID_REFRESH");
+            InterruptRegister(0,(FARPROC)interruptcallback);
+            if (!Catch(cb)) {
+                if (!(lpdword = GetPageDirPtr(hDlg))) {
+                    InterruptUnRegister(0);
+                    break;
+                }
+                x = PageFirst(lpdword,&pageentry);
+                while (x) {
+                    dwPageTab = DPMIMapPhysToLinear(pageentry.dwPage<<12,0x1000);
 
-                wsprintf(str,
-                         "%08lX-%08lX\t%05lX\t%08lX\t%03X %s",
-                         (DWORD)pageentry.wEntry<<22,
-                         ((DWORD)pageentry.wEntry<<22)+0x3FFFFF,
-                         pageentry.dwPage,
-                         dwPageTab,
-                         pageentry.wFlags,
-                         (LPSTR)str1
-                        );
-                x = (WORD)SendMessage(hWnd,LB_ADDSTRING,0,(LONG)(LPSTR)str);
-                SendMessage(hWnd,LB_SETITEMDATA,x,dwPageTab | (pageentry.wEntry<<2));
-                x = PageNext(lpdword,&pageentry);
+                    if (pageentry.wFlags & 2)
+                        strcpy(str1,"r/w");
+                    else
+                        strcpy(str1,"r/o");
+                    if (pageentry.wFlags & 4)
+                        strcat(str1,",usr");
+                    else
+                        strcat(str1,",sys");
+                    if (pageentry.wFlags & 0x20)
+                        strcat(str1,",acc");
+                    if (pageentry.wFlags & 0x40)
+                        strcat(str1,",dirty");
+
+                    fShow = TRUE;
+                    wsprintf(str,
+                             "%08lX-%08lX\t%05lX\t%08lX\t%03X %s",
+                             (DWORD)pageentry.wEntry<<22,
+                             ((DWORD)pageentry.wEntry<<22)+0x3FFFFF,
+                             pageentry.dwPage,
+                             dwPageTab,
+                             pageentry.wFlags,
+                             (LPSTR)str1
+                            );
+                    x = (WORD)SendMessage(hWnd,LB_ADDSTRING,0,(LONG)(LPSTR)str);
+                    SendMessage(hWnd,LB_SETITEMDATA,x,dwPageTab | (pageentry.wEntry<<2));
+                    x = PageNext(lpdword,&pageentry);
+                }
             }
 
+            InterruptUnRegister(0);
             FreeBigDescriptor(HIWORD(lpdword));
             wsprintf(str,
                      "CR3\t%08lX\tPageDir\t%08lX",

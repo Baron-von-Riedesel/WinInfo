@@ -1,15 +1,9 @@
 
-#define LoadTabs(x,y) LoadUserBytes(hInst,MAKEINTRESOURCE(IDU_TABPOS),MAKEINTRESOURCE(RTI_USER),x,y,sizeof(y))
-
 /* resourcen identifikatoren */
                                       /* icons */
 #define ICON1       1
                                       /* accelerators */
 #define ACCELTAB    10
-                                      /* about string */
-#define IDU_ABOUT3  7
-                                      /* small byte sets */
-#define IDU_TABPOS  2
                                       /* beginnen mit 0 */
                                       /* wimem */
 #define IDUS_0      0
@@ -500,6 +494,10 @@
 #define IDS_ERREMS3 127
 
 #define IDS_ERRXMS3 128
+#define IDS_ERRENV1 129
+#define IDS_ERRPAG1 130
+#define IDS_ERRPAG2 131
+#define IDS_ABOUT3  132
 
 #define IDS_XMODUL00 160
 #define IDS_XMODUL01 161

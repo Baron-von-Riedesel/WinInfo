@@ -148,8 +148,8 @@ BOOL EXPORTED CALLBACK RefModuleDlg(HWND hDlg,UINT message,WPARAM wParam,LPARAM 
       hWnd = GetDlgItem(hDlg,ID_SUBDLG4);
       hModule = (HMODULE)LOWORD(lParam);
       SendMessage(hWnd,XLB_SETWINDOWDATA,0,(LPARAM)(LPVOID)hModule);
-      LoadTabs(IDUS_14,szStr);
-      SendMessage(hWnd,LB_SETTABSTOPS,*(LPINT)szStr,(LONG)(LPINT)(szStr+2));
+      ;
+      SendMessage(hWnd,LB_SETTABSTOPS,LoadTabs(IDUS_14,szStr),(LPARAM)(LPVOID)szStr);
       SendMessage(hWnd,XLB_SETEXTSTYLE,XLBES_RBUTTONTRACK,
                   (LPARAM)(LPVOID)hFontAlt);
 //    SendMessage(hDlg,WM_COMMAND,ID_REFRESH,0);
@@ -447,7 +447,7 @@ BOOL EXPORTED WINAPI XModulDlg(HWND hDlg,UINT message,WPARAM wParam,LPARAM lPara
                   break;
               tabpos[0] = 108;
               hWnd = GetDlgItem(hDlg,ID_LISTBOX1);
-              ListBox_SetTabStops(hWnd,1,&tabpos);
+              ListBox_SetTabStops(hWnd,1,tabpos);
               GetWindowText(hDlg,str1,sizeof(str1));
               GetModuleName(hModule,str2,sizeof(str2));
               wsprintf(str,str1,(LPSTR)str2);

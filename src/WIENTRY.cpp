@@ -44,8 +44,7 @@ BOOL EXPORTED CALLBACK ModulEntriesDlg(HWND hDlg,UINT message,WPARAM wParam,LPAR
  switch (message)
    {
     case WM_INITDIALOG:
-      LoadTabs(IDUS_57,str);
-      SendDlgItemMessage(hDlg,ID_LISTBOX1,LB_SETTABSTOPS,*(LPINT)str,(LPARAM)(LPINT)(str+2));
+      SendDlgItemMessage(hDlg,ID_LISTBOX1,LB_SETTABSTOPS,LoadTabs(IDUS_57,str),(LPARAM)(LPVOID)str);
       SendDlgItemMessage(hDlg,ID_LISTBOX1,XLB_SETEXTSTYLE,XLBES_RBUTTONTRACK,
                          (LPARAM)(LPVOID)hFontAlt);
       SetWindowLong(hDlg,DLGWINDOWEXTRA,lParam); // parameter hModule

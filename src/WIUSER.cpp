@@ -215,8 +215,8 @@ BOOL EXPORTED CALLBACK AllWindowDlg(HWND hDlg,UINT message,WPARAM wParam,LPARAM 
  switch (message)
     {
     case WM_INITDIALOG:
-      LoadTabs(IDUS_18,szStr);
-      SendDlgItemMessage(hDlg,ID_LISTBOX1,LB_SETTABSTOPS,*(LPINT)szStr,(LONG)(LPINT)(szStr+2));
+      ;
+      SendDlgItemMessage(hDlg,ID_LISTBOX1,LB_SETTABSTOPS,LoadTabs(IDUS_18,szStr),(LPARAM)(LPVOID)szStr);
       SendDlgItemMessage(hDlg,ID_LISTBOX1,XLB_SETEXTSTYLE,XLBES_RBUTTONTRACK,
                          (LPARAM)(LPVOID)hFontAlt);
       SendMessage(hDlg,WM_COMMAND,ID_REFRESH,0);
@@ -297,12 +297,12 @@ BOOL EXPORTED CALLBACK AllWindowDlg(HWND hDlg,UINT message,WPARAM wParam,LPARAM 
                    EnableDlgItem(hDlg,ID_SUBDLG3,x);
                    if (xWnd)
                       {
-                       LoadTabs(IDUS_56,szStr);
+                       ;
                        SendDlgItemMessage(hDlg,
                                           ID_STATUS1,
                                           ST_SETTABSTOPS,
-                                          *(LPINT)szStr,
-                                          (LONG)(LPINT)(szStr+2));
+                                          LoadTabs(IDUS_56,szStr),
+                                          (LPARAM)(LPVOID)szStr);
                         dw = GetWindowLong(xWnd,GWL_WNDPROC);
                         dw1 = GetClassLong(xWnd,GCL_WNDPROC);
                         hMenu1 = GetMenu(xWnd);
@@ -351,7 +351,7 @@ BOOL EXPORTED CALLBACK UserDlg(HWND hDlg,UINT message,WPARAM wParam,LPARAM lPara
       SendDlgItemMessage(hDlg,ID_SYSPARMLB,LB_RESETCONTENT,0,0);
       tabpos[0] = 90;
       tabpos[1] = 110 | 0x8000;
-      SendDlgItemMessage(hDlg,ID_SYSPARMLB,LB_SETTABSTOPS,2,(LPARAM)(LPVOID)&tabpos);
+      SendDlgItemMessage(hDlg,ID_SYSPARMLB,LB_SETTABSTOPS,2,(LPARAM)(LPVOID)tabpos);
       for (i=0;i<32;i++)
          {
           j = GetSystemMetrics(itab[i]);

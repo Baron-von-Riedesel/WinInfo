@@ -20,6 +20,7 @@ EXPORTS
         CREATEOPENFILEDIALOG        @2
         CREATEMESSAGE               @3
         CREATEMESSAGEPARAM          @4
+        CREATEMSGDLG                @5
         GETSTDSTRING                @12
         GETSTDSTRINGADDRESS         @15
         OPENFILEDLG                 @16

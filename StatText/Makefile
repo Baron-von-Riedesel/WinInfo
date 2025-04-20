@@ -1,13 +1,12 @@
 
 name  = StatText
 MODEL = S
-LOPTS = /NOLOGO/NOD/A:16/NON/NOE/FAR/MAP:FULL
+LOPTS = /NOLOGO/NOD/NOI/A:16/NON/NOE/FAR/MAP:FULL
 LIBS  = libw $(MODEL)dllcew
 MSVC  = \msvc
 CC    = $(MSVC)\bin\cl
 LINK  = $(MSVC)\bin\link
 RC    = $(MSVC)\bin\rc
-LIBPATH=$(MSVC)\lib;..\lib;
 
 COPT  = -c -A$(model)w -G3Ds -Oxz -W3 -DSTRICT -I$(MSVC)\include -I..\include
 COPTD =
@@ -20,11 +19,12 @@ $(ODIR):
 	@mkdir $(ODIR)
 
 $(ODIR)\$(name).dll: $*.obj $(name).def $*.res Makefile
-    @set LIB=$(LIBPATH)
 	@$(LINK) $(LOPTS) @<<
-$* + nocidll1 + winheap,
+$* + ..\lib\nocidll1 + ..\lib\winheap,
 $*.dll,
 $*,
+$(MSVC)\lib\+
+..\lib\+
 $(LIBS),
 $(name).def
 <<

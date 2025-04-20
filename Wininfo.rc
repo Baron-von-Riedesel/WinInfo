@@ -30,14 +30,6 @@ ICON1                   ICON    DISCARDABLE     "RES\\WININFO.ICO"
 
 //////////////////////////////////////////////////////////////////////////////
 //
-// 256
-//
-
-IDU_TABPOS 256 DISCARDABLE "RES\\WITABPOS.BIN"
-IDU_ABOUT3 256 DISCARDABLE "RES\\WIABOUT.TXT"
-
-//////////////////////////////////////////////////////////////////////////////
-//
 // Accelerator
 //
 
@@ -947,17 +939,17 @@ CAPTION "DPMI Status"
 //CLASS "WIDlg"
 FONT 8, "Helv"
 BEGIN
-    CONTROL         "",ID_DPMIUEB1,"statustext",0x2,0,0,130,12
-    CONTROL         "",54,"statustext",0x1,0,12,130,12
-    CONTROL         "",51,"statustext",0x0,0,24,130,12
-    CONTROL         "",52,"statustext",0x0,0,36,130,12
-    CONTROL         "",53,"statustext",0x0,0,48,130,12
-    CONTROL         "",55,"statustext",0x0,0,60,130,12
-    CONTROL         "",58,"statustext",0x0,0,72,130,12
-    CONTROL         "",57,"statustext",0x0,0,84,130,12
-    CONTROL         "",56,"statustext",0x0,0,96,130,12
-    CONTROL         "",59,"statustext",0x0,0,108,130,12
-    CONTROL         "",60,"statustext",0x0,0,120,130,12
+    CONTROL         "",ID_DPMIUEB1,   "statustext",0x2,0,  0,130,12
+    CONTROL         "",ID_DPMISTAT1+3,"statustext",0x1,0, 12,130,12  /* total address space */
+    CONTROL         "",ID_DPMISTAT1+0,"statustext",0x0,0, 24,130,12  /* free address space */
+    CONTROL         "",ID_DPMISTAT1+1,"statustext",0x0,0, 36,130,12  /* free virtual */
+    CONTROL         "",ID_DPMISTAT1+2,"statustext",0x0,0, 48,130,12  /* max free virtual block */
+    CONTROL         "",ID_DPMISTAT1+4,"statustext",0x0,0, 60,130,12  /* max free virtual block, lockable */
+    CONTROL         "",ID_DPMISTAT1+7,"statustext",0x0,0, 72,130,12  /* total physical */
+    CONTROL         "",ID_DPMISTAT1+6,"statustext",0x0,0, 84,130,12  /* free physical in pool */
+    CONTROL         "",ID_DPMISTAT1+5,"statustext",0x0,0, 96,130,12  /* free physical unlocked */
+    CONTROL         "",ID_DPMISTAT1+8,"statustext",0x0,0,108,130,12  /* swapfile */
+    CONTROL         "",ID_DPMISTAT1+9,"statustext",0x0,0,120,130,12  /* DOS mem */
 END
 
 IDD_ENHVXD DIALOG DISCARDABLE  20, 20, 200, 124
@@ -1261,7 +1253,12 @@ END
 STRINGTABLE DISCARDABLE 
 BEGIN
     IDS_ERRXMS3             "Auf Addressbereich kann nicht zugegriffen werden"
+    IDS_ERRENV1             "Zugriff auf Environment nicht möglich"
+    IDS_ERRPAG1             "CR3 kann nicht gelesen werden"
+    IDS_ERRPAG2             "CR3 kann nicht in lineare Adresse umgesetzt werden"
+    IDS_ABOUT3              "\r\nWinInfo Version 1.8\r\n\r\nCopyright (C) japheth 1991-1999\r\n\r\nFreeware"
 END
+
 /* 160-175 */
 STRINGTABLE DISCARDABLE 
 BEGIN
@@ -1317,17 +1314,17 @@ END
 
 STRINGTABLE DISCARDABLE 
 BEGIN
-    IDS_XDPMI00             "linear,frei,ungesperrt\t%lu\t"
-    IDS_XDPMI01             "linear,frei\t%lu\t"
-    IDS_XDPMI02             "max. Block,allokierbar\t%lu\t"
-    IDS_XDPMI03             "linearer Adressraum\t%lu\t"
-    IDS_XDPMI04             "max. Block,sperrbar\t%lu\t"
-    IDS_XDPMI05             "physikalisch,ungesperrt\t%lu\t"
-    IDS_XDPMI06             "physikalisch,frei\t%lu\t"
-    IDS_XDPMI07             "physikalisch,gesamt\t%lu\t"
-    IDS_XDPMI08             "Swap Datei\t%lu\t"
-    IDS_XDPMI09             "max. DOS,frei\t%u\t"
-    IDS_XDPMI0A             "linearer Adressraum, frei\t%lu\t"
+//    IDS_XDPMI00             "virt. - frei,unlocked\t%lu\t"
+    IDS_XDPMI01             "virt. - frei\t%lu\t"
+    IDS_XDPMI02             "virt. - max fr. Block,unlocked\t%ld\t"
+    IDS_XDPMI03             "Adressraum - gesamt\t%lu\t"
+    IDS_XDPMI04             "virt. - max fr. Block,locked\t%ld\t"
+    IDS_XDPMI05             "phys. - unlocked\t%lu\t"
+    IDS_XDPMI06             "phys. - frei\t%lu\t"
+    IDS_XDPMI07             "phys. - gesamt\t%lu\t"
+    IDS_XDPMI08             "Swap Datei\t%ld\t"
+    IDS_XDPMI09             "max. DOS - frei\t%u\t"
+    IDS_XDPMI0A             "Adressraum - frei\t%lu\t"
 END
 
 STRINGTABLE DISCARDABLE 

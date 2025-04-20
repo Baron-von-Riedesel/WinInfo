@@ -30,7 +30,6 @@ extern PSTR winName;
 extern PSTR errorstr1;
 extern PSTR errorstr2;
 extern char fnstr[128];
-extern char grech[14];
 
 extern HINSTANCE hInst;        /* Instanz der Task */
 extern HICON  hIcon;
@@ -38,5 +37,7 @@ extern HWND   hWndMain;        /* Handle des Hauptfensters */
 extern HWND   hWndMenu;
 
 extern int xpos,ypos;
+
+extern "C" int FAR PASCAL LoadTabs(int, void *);
 
 HMENU WINAPI TrackPopup(HWND, PINT);

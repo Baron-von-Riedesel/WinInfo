@@ -122,7 +122,7 @@ BOOL EXPORTED CALLBACK ViewTaskDlg(HWND hDlg,UINT message,WPARAM wParam,LPARAM l
                   break;
               tabpos[0] = 108;
               hWnd = GetDlgItem(hDlg,ID_LISTBOX1);
-              ListBox_SetTabStops(hWnd,1,&tabpos);
+              ListBox_SetTabStops(hWnd,1,tabpos);
               lptsk = (TASKSTRUC FAR *)MAKELONG(0,hTask);
               lpstr = (LPSTR)lptsk;
               pddentry = tskstrtab;

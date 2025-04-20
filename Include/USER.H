@@ -333,10 +333,10 @@ int  __cdecl _fcputs(const char _far *);
 int      FAR PASCAL _lopen(const char _far *, int );
 #endif
 
+//int     FAR CDECL sprintf(LPSTR lpszOut, LPCSTR lpszFmt, ...);
+
 #ifndef _WINDOWS
 unsigned _cdecl _dos_reallocmem(unsigned, unsigned);
-int     FAR CDECL wsprintf(LPSTR lpszOut, LPCSTR lpszFmt, ...);
-
 #endif
 
 #ifdef __cplusplus

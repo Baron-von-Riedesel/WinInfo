@@ -109,14 +109,11 @@ BOOL EXPORTED CALLBACK GlobalDlg(HWND hDlg,UINT message,WPARAM wParam,LPARAM lPa
 
       SetWindowWord(hDlg,DLGWINDOWEXTRA,(WORD)pgmf);
 
-      LoadTabs(IDUS_0,str);                /* status all */
-      SendDlgItemMessage(hDlg,ID_STATUS1,ST_SETTABSTOPS,*(LPINT)str,(LPARAM)(LPINT)(str+2));
-
-      LoadTabs(IDUS_1,str);                /* status Handle */
-      SendDlgItemMessage(hDlg,ID_STATUS2,ST_SETTABSTOPS,*(LPINT)str,(LPARAM)(LPINT)(str+2));
-
-      LoadTabs(IDUS_2,str);
-      SendDlgItemMessage(hDlg,ID_LISTBOX1,LB_SETTABSTOPS,*(LPINT)str,(LPARAM)(LPINT)(str+2));
+      /* status all */
+      SendDlgItemMessage(hDlg,ID_STATUS1,ST_SETTABSTOPS,LoadTabs(IDUS_0,str),(LPARAM)(LPVOID)str);
+      /* status Handle */
+      SendDlgItemMessage(hDlg,ID_STATUS2,ST_SETTABSTOPS,LoadTabs(IDUS_1,str),(LPARAM)(LPVOID)str);
+      SendDlgItemMessage(hDlg,ID_LISTBOX1,LB_SETTABSTOPS,LoadTabs(IDUS_2,str),(LPARAM)(LPVOID)str);
       SendDlgItemMessage(hDlg,ID_LISTBOX1,XLB_SETEXTSTYLE,XLBES_RBUTTONTRACK,(LPARAM)(LPVOID)hFontAlt);
 
       if (pgmf != &gmf)
@@ -429,15 +426,15 @@ BOOL EXPORTED CALLBACK GlobalDlg(HWND hDlg,UINT message,WPARAM wParam,LPARAM lPa
                          if (memflags & GMEM_DISCARDED)
                              strcat(str2,",discarded");
                          else
-                         	if (memflags & GMEM_DISCARDABLE) {
-                            	strcat(str2,",discardable");
-                         	} else
-                         		if (globalentry.wcLock) {
-	                            	strcat(str2,",fixed");
-    	                        	if (globalentry.wcLock != (memflags & 0xFF))
-        	                    		strcat(str2,",DOS");
-            	             	} else
-                	            	strcat(str2,",moveable");
+                            if (memflags & GMEM_DISCARDABLE) {
+                                strcat(str2,",discardable");
+                            } else
+                                if (globalentry.wcLock) {
+                                    strcat(str2,",fixed");
+                                    if (globalentry.wcLock != (memflags & 0xFF))
+                                        strcat(str2,",DOS");
+                                } else
+                                    strcat(str2,",moveable");
 
                          if (memflags & GMEM_DISCARDABLE)
                              SetWindowText(GetDlgItem(hDlg,ID_SETRESETDISCARDABLEMEM),
@@ -473,9 +470,9 @@ BOOL EXPORTED CALLBACK GlobalDlg(HWND hDlg,UINT message,WPARAM wParam,LPARAM lPa
                      EnableWindow(GetDlgItem(hDlg,ID_UNFIXMEM),(WORD)hGlobalx && wLocks);
                      EnableWindow(GetDlgItem(hDlg,ID_SETRESETDISCARDABLEMEM),(WORD)hGlobalx);
                      if (hGlobal && !hGlobalx)	// zwischenzeitlich ungültig?
-	                     EnableWindow(GetDlgItem(hDlg,ID_SUBDLG1),0);
-					 else
-     	                EnableWindow(GetDlgItem(hDlg,ID_SUBDLG1),		// Anzeigen
+                         EnableWindow(GetDlgItem(hDlg,ID_SUBDLG1),0);
+                     else
+                        EnableWindow(GetDlgItem(hDlg,ID_SUBDLG1),       // Anzeigen
                                   (WORD)hGlobalx || (hflags != GT_INTERNAL && hflags != GT_SENTINEL)
                                  );
                      EnableWindow(GetDlgItem(hDlg,ID_SUBDLG2),hGlobalx && IsValidLocalHeap((HGLOBAL)tsel));

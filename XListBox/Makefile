@@ -5,12 +5,11 @@ MSVC = \msvc
 MODEL= S
 ODIR=Build
 
-LOPT = /NOLOGO/NOD/A:16/NON/NOE/MAP:FULL/FAR/ONERROR:NOEXE
+LOPT = /NOLOGO/NOD/NOI/A:16/NON/NOE/MAP:FULL/FAR/ONERROR:NOEXE
 LIBS = libw shell $(MODEL)dllcew userw user386 $(MODEL)user user
 CC   = $(MSVC)\bin\cl -Fo$* -c -A$(model)w -G3Ds -Oxz -W3 -DSTRICT -I$(MSVC)\include -I..\include
 LINK = $(MSVC)\bin\link
 RC   = $(MSVC)\bin\rc
-LIBPATH = ..\lib;$(MSVC)\Lib;
 
 all: $(ODIR) $(ODIR)\$(NAME).dll
 
@@ -18,11 +17,12 @@ $(ODIR):
 	@mkdir $(ODIR)
 
 $(ODIR)\$(NAME).dll: $*.obj $*.res $(NAME).def Makefile
-	@set LIB=$(LIBPATH)
 	@$(LINK) $(LOPT) @<<
-$* nocidll1 winheap,
+$* ..\lib\nocidll1 ..\lib\winheap,
 $*.dll,
 $*.map,
+..\lib\+
+$(MSVC)\Lib\+
 $(LIBS),
 $(NAME).def
 <<

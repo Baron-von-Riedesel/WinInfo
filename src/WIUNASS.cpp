@@ -435,8 +435,8 @@ BOOL EXPORTED CALLBACK UnassembleDlg(HWND hDlg,UINT message,WPARAM wParam,LPARAM
       SendMessage(hDlg,WM_COMMAND,ID_REFRESH,(LONG)(LPSTR)pentry);
 //      SetWindowPos(hDlg,0,xUnassPos,yUnassPos,0,0,SWP_NOSIZE | SWP_NOZORDER);
       ShowWindow(hDlg,SW_SHOWNORMAL);
-      LoadTabs(IDUS_43,str);
-      SendDlgItemMessage(hDlg,ID_STATUS1,ST_SETTABSTOPS,*(LPINT)str,(LONG)(LPINT)(str+2));
+      ;
+      SendDlgItemMessage(hDlg,ID_STATUS1,ST_SETTABSTOPS,LoadTabs(IDUS_43,str),(LPARAM)(LPVOID)str);
       EnableDlgItem(hDlg,ID_SNAPSHOT,1);
       rc = TRUE;
       break;
@@ -691,8 +691,8 @@ BOOL EXPORTED CALLBACK Unassemble32Dlg(HWND hDlg,UINT message,WPARAM wParam,LPAR
         if (fShow) {
             //          SetWindowPos(hDlg,0,xUnassPos,yUnassPos,0,0,SWP_NOSIZE | SWP_NOZORDER);
             ShowWindow(hDlg,SW_SHOWNORMAL);
-            LoadTabs(IDUS_43,str);
-            SendDlgItemMessage(hDlg,ID_STATUS1,ST_SETTABSTOPS,*(LPINT)str,(LPARAM)(LPINT)(str+2));
+            ;
+            SendDlgItemMessage(hDlg,ID_STATUS1,ST_SETTABSTOPS,LoadTabs(IDUS_43,str),(LPARAM)(LPVOID)str);
         } else
             PostMessage(hDlg,WM_CLOSE,0,0);
         rc = TRUE;

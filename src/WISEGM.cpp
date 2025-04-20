@@ -195,14 +195,14 @@ BOOL EXPORTED CALLBACK SegmentDlg(HWND hDlg,UINT message,WPARAM wParam,LPARAM lP
  switch (message)
    {
     case WM_INITDIALOG:
-      LoadTabs(IDUS_4,tabpos);
-      SendDlgItemMessage(hDlg,ID_LISTSEGM,LB_SETTABSTOPS,tabpos[0],(LPARAM)(LPINT)&tabpos[1]);
+      ;
+      SendDlgItemMessage(hDlg,ID_LISTSEGM,LB_SETTABSTOPS,LoadTabs(IDUS_4,tabpos),(LPARAM)(LPVOID)tabpos);
       SendDlgItemMessage(hDlg,ID_LISTSEGM,XLB_SETEXTSTYLE,XLBES_RBUTTONTRACK,
                          (LPARAM)(LPVOID)hFontAlt);
-      LoadTabs(IDUS_3,tabpos);
-      SendDlgItemMessage(hDlg,ID_STATMODUL,ST_SETTABSTOPS,tabpos[0],(LPARAM)(LPVOID)&tabpos[1]);
-      LoadTabs(IDUS_6,tabpos);
-      SendDlgItemMessage(hDlg,ID_STATSEGM,ST_SETTABSTOPS,tabpos[0],(LPARAM)(LPVOID)&tabpos[1]);
+      ;
+      SendDlgItemMessage(hDlg,ID_STATMODUL,ST_SETTABSTOPS,LoadTabs(IDUS_3,tabpos),(LPARAM)(LPVOID)tabpos);
+      ;
+      SendDlgItemMessage(hDlg,ID_STATSEGM,ST_SETTABSTOPS,LoadTabs(IDUS_6,tabpos),(LPARAM)(LPVOID)tabpos);
 
       if (LOWORD(lParam))
          {

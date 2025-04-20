@@ -138,7 +138,7 @@ BOOL EXPORTED CALLBACK VxDDlg(HWND hDlg,UINT message,WPARAM wParam,LPARAM lParam
                tabpos[3] = 150;
                tabpos[4] = 180;
                tabpos[5] = 210;
-               SendDlgItemMessage(hDlg,ID_LISTBOX1,LB_SETTABSTOPS,6,(LPARAM)(LPVOID)&tabpos);
+               SendDlgItemMessage(hDlg,ID_LISTBOX1,LB_SETTABSTOPS,6,(LPARAM)(LPVOID)tabpos);
 
                for (pKE = vxdtab;pKE->wert;pKE++)
                   {

@@ -1,4 +1,8 @@
 
+/* DPMI status monitor;
+ * uses a timer to update status display every 2 seconds.
+ */
+
 #define ITEMS 10
 
 #include "string.h"
@@ -23,6 +27,7 @@ static int wFlag = 0;
 static DPMIMEMORY dm;
                                       /* strings */
 static PSTR fstr[10] = {0};
+static BOOL bIconPainted = FALSE;
 static char szMonText[20];
 
 static STRLOADENTRY CODESEG strloadtab[] = {
@@ -37,25 +42,18 @@ static STRLOADENTRY CODESEG strloadtab[] = {
                        &fstr[8],  IDS_XDPMI08,
                        &fstr[9],  IDS_XDPMI09,
                        (PSTR *)(0)};
-////////////////////////////////////////////////////////
-// OutputIconic
-////////////////////////////////////////////////////////
-static void OutputIconic(HWND hWnd,HDC hDC,LPDPMIMEMORY lpdm)
+
+static DWORD GetVPData(LPDPMIMEMORY lpdm)
+/////////////////////////////////////////
 {
-    char str[80];
-    WORD wProz1,wProz2;
-    HBRUSH hBrush,oldBrush;
-    TEXTMETRIC tm;
-    RECT rect;
     DWORD xx;
-    BOOL fWin95;
+    WORD wProz1,wProz2;
 
-    xx = GetVersion();
-    fWin95 = FALSE;
-    if (LOBYTE(LOWORD(xx)) == 3)
-        if (HIBYTE(LOWORD(xx)) > 10)
-            fWin95 = TRUE;
+    /* return free virtual and physical memory in percent */
 
+    /* there's no "virtual total" field returned by DPMI host,
+     * so it has to be calculated:
+     */
     xx = lpdm->dwLinearSpace - lpdm->dwFreeLinearSpace + lpdm->dwFreePages;
     if (xx)
         wProz1 = (WORD)(lpdm->dwFreePages * 100 / xx);
@@ -66,35 +64,39 @@ static void OutputIconic(HWND hWnd,HDC hDC,LPDPMIMEMORY lpdm)
         wProz2 = (WORD)(lpdm->dwFreePhysPages * 100 / lpdm->dwPhysPages);
     else
         wProz2 = 0;
+    return MAKELONG(wProz1, wProz2);
 
-    if (fWin95) {
-        wsprintf(str,"%u%%/%u%%",wProz1,wProz2);
-        SetWindowText(hWnd,str);
-        //OutputDebugString(str);
-        //OutputDebugString("\r\n");
-    } else {
-        SetMapMode( hDC, MM_TEXT );
-        GetClientRect(hWnd,&rect);
-#if 0
-        wsprintf(str,"rect=%u,%u,%u,%u\r\n",rect.left,rect.top,rect.right,rect.bottom);
-        OutputDebugString(str);
-#endif
-        hBrush = (HBRUSH)GetStockObject(LTGRAY_BRUSH);
-        oldBrush = (HBRUSH)SelectObject(hDC,hBrush);
-        Rectangle(hDC,0,0,rect.right,rect.bottom);
-        SetBkMode(hDC,TRANSPARENT);
+}
+////////////////////////////////////////////////////////
+// OutputIconic
+////////////////////////////////////////////////////////
+static void OutputIconic(HWND hWnd,HDC hDC,LPDPMIMEMORY lpdm)
+{
+    char str[80];
+    HBRUSH hBrush,oldBrush;
+    TEXTMETRIC tm;
+    RECT rect;
+    DWORD xx;
 
-        GetTextMetrics(hDC,&tm);
-        tm.tmHeight--;
+    bIconPainted = TRUE;
+    xx = GetVPData(lpdm);
+    SetMapMode( hDC, MM_TEXT );
+    GetClientRect(hWnd,&rect);
+    hBrush = (HBRUSH)GetStockObject(LTGRAY_BRUSH);
+    oldBrush = (HBRUSH)SelectObject(hDC,hBrush);
+    Rectangle(hDC,0,0,rect.right,rect.bottom);
+    SetBkMode(hDC,TRANSPARENT);
 
-        wsprintf(str,"%u%%",wProz1);
-        TextOut(hDC,2,tm.tmHeight*0,str,strlen(str));
+    GetTextMetrics(hDC,&tm);
+    tm.tmHeight--;
 
-        wsprintf(str,"%u%%",wProz2);
-        TextOut(hDC,2,tm.tmHeight*1,str,strlen(str));
+    wsprintf(str,"%u%%",LOWORD(xx));
+    TextOut(hDC,2,tm.tmHeight*0,str,strlen(str));
 
-        SelectObject(hDC,oldBrush);
-    }
+    wsprintf(str,"%u%%",HIWORD(xx));
+    TextOut(hDC,2,tm.tmHeight*1,str,strlen(str));
+
+    SelectObject(hDC,oldBrush);
 }
 /*
 浜様様様様様様様様様様様様様様様様様様様様様様様様様様融
@@ -103,12 +105,11 @@ static void OutputIconic(HWND hWnd,HDC hDC,LPDPMIMEMORY lpdm)
 */
 void UpdateProc(HWND hDlg,int initf)
 {
-  static DPMIMEMORY dm1 = {0,0,0,0,0,0,0,0,0,0};
-  static WORD dosaltmem = 0xFFFF;
-  WORD dosmem;
-  char str[80];
-//  char str1[80];
-  int x;
+    static DPMIMEMORY dm1;
+    static WORD dosaltmem;
+    WORD dosmem;
+    int x;
+    char str[80];
 
     if (initf) {
         memset(&dm1,0xFF,sizeof(dm1));
@@ -120,66 +121,71 @@ void UpdateProc(HWND hDlg,int initf)
     else
         memset(&dm,0xFF,sizeof(dm));
 
-    x = 0;
     if (IsIconic(hDlg)) {
+        DWORD xx;
         InvalidateRect(hDlg,0,1);
+        if (bIconPainted == FALSE) {
+            xx = GetVPData(&dm);
+            wsprintf(str,"V/P=%u%%/%u%%",LOWORD(xx),HIWORD(xx));
+            SetWindowText(hDlg,str);
+        }
         return;
     }
-    //  freier linearer Adressraum
+    x = 0;  // 0 free address space (pages)
     if (dm.dwFreeLinearSpace != dm1.dwFreeLinearSpace) {
         wsprintf(str,fstr[x],dm.dwFreeLinearSpace<<2);
         SetDlgItemText(hDlg,x+ID_DPMISTAT1,str);
     }
 
-    x++;                        // freie lineare Pages
+    x++;   // 1 free virtual total (pages)
     if (dm.dwFreePages != dm1.dwFreePages) {
         wsprintf(str,fstr[x],dm.dwFreePages<<2);
         SetDlgItemText(hDlg,x+ID_DPMISTAT1,str);
     }
 
-    x++;                        // groesster freier Block in Bytes
+    x++;   // 2 max free virtual block (bytes)
     if (dm.maxFreeBytes != dm1.maxFreeBytes) {
         wsprintf(str,fstr[x],dm.maxFreeBytes>>10);
         SetDlgItemText(hDlg,x+ID_DPMISTAT1,str);
     }
 
-    x++;                        // linearer Adressraum
+    x++;   // 3 total address space (pages)
     if (dm.dwLinearSpace != dm1.dwLinearSpace) {
         wsprintf(str,fstr[x],dm.dwLinearSpace<<2);
         SetDlgItemText(hDlg,x+ID_DPMISTAT1,str);
     }
 
-    x++;                        // groesster freier + verriegelbarer Block
+    x++;   // 4 max virtual block, lockable (pages)
     if (dm.dwMaxAllocLockLinPages != dm1.dwMaxAllocLockLinPages) {
         wsprintf(str,fstr[x],dm.dwMaxAllocLockLinPages<<2);
         SetDlgItemText(hDlg,x+ID_DPMISTAT1,str);
     }
 
-    x++;                        // phys. Pages, die nicht fix zugeordnet sind
+    x++;   // 5 free physical, unlocked (pages)
     if (dm.dwUnlockedPhysPages != dm1.dwUnlockedPhysPages) {
         wsprintf(str,fstr[x],dm.dwUnlockedPhysPages<<2);
         SetDlgItemText(hDlg,x+ID_DPMISTAT1,str);
     }
 
-    x++;                        // phys. Pages im freien Pool
+    x++;   // 6 free physical (pages) in pool
     if (dm.dwFreePhysPages != dm1.dwFreePhysPages) {
         wsprintf(str,fstr[x],dm.dwFreePhysPages<<2);
         SetDlgItemText(hDlg,x+ID_DPMISTAT1,str);
     }
 
-    x++;                        // phys. Pages insgesamt
+    x++;   // 7 total physical (pages)
     if (dm.dwPhysPages != dm1.dwPhysPages) {
         wsprintf(str,fstr[x],dm.dwPhysPages<<2);
         SetDlgItemText(hDlg,x+ID_DPMISTAT1,str);
     }
 
-    x++;
-    if (dm.numSwapPages != dm1.numSwapPages) {
-        wsprintf(str,fstr[x],dm.numSwapPages<<2);
+    x++;   // 8
+    if (initf || dm.numSwapPages != dm1.numSwapPages) {
+        wsprintf(str,fstr[x],(dm.numSwapPages != 0xffffffff) ? dm.numSwapPages << 2 : dm.numSwapPages);
         SetDlgItemText(hDlg,x+ID_DPMISTAT1,str);
     }
 
-    x++;
+    x++;   // 9
     dosmem = HIWORD(DPMIAllocDosMemory(0xFFF0));
     if ( dosmem != dosaltmem) {
         dosaltmem = dosmem;
@@ -209,9 +215,13 @@ LRESULT EXPORTED CALLBACK DPMIStatWndProc(HWND hWnd,UINT message,WPARAM wParam,L
     case WM_SYSCOMMAND:
         if (wParam == SC_MINIMIZE)
             SetWindowText(hWnd,"Virt/Phys");
-        else if (wParam == SC_RESTORE || wParam == SC_MAXIMIZE)
-            SetWindowText(hWnd,szMonText);
+
         rc = CallWindowProc(fpDPMIStatWndProc,hWnd,message,wParam,lParam);
+        break;
+    case WM_ACTIVATE:
+        if (wParam != WA_INACTIVE)
+            if (HIWORD(lParam) == 0)
+                SetWindowText(hWnd,szMonText);
         break;
     case WM_PAINT:
         if (!IsIconic(hWnd)) {

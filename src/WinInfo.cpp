@@ -224,33 +224,29 @@ void WINAPI EnableItems(HWND hDlg,PINT pInt,WORD wMode)
 */
 HMENU MakePopupMenu(HWND hDlg,PINT pCmd)
 {
-  HMENU hPopupMenu;
-  char  szStr[80];
-  WORD  wCmd;
-  HWND  hWnd;
+    HMENU hPopupMenu;
+    char  szStr[80];
+    WORD  wCmd;
+    HWND  hWnd;
 
-  if (hPopupMenu = CreatePopupMenu())
-      for (;*pCmd;pCmd++)
-         {
-          if (*pCmd == -1)
-             ;
-          else
-          if (*pCmd & 0x8000)
-             {
-              wCmd = *pCmd & 0x7FFF;
-              pCmd++;
-              if (LoadString(hInst,*pCmd,szStr,sizeof(szStr)))
-                  AppendMenu(hPopupMenu,MF_STRING | MF_ENABLED,wCmd,szStr);
-             }
-          else
-          if (hWnd = GetDlgItem(hDlg,*pCmd))
-             if (IsWindowEnabled(hWnd))
-                {
-                 GetWindowText(hWnd,szStr,sizeof(szStr));
-                 AppendMenu(hPopupMenu,MF_STRING | MF_ENABLED,*pCmd,szStr);
-                }
-         }
-  return hPopupMenu;
+    if (hPopupMenu = CreatePopupMenu())
+        for (;*pCmd;pCmd++) {
+            if (*pCmd == -1)
+                ;
+            else
+                if (*pCmd & 0x8000) {
+                    wCmd = *pCmd & 0x7FFF;
+                    pCmd++;
+                    if (LoadString(hInst,*pCmd,szStr,sizeof(szStr)))
+                        AppendMenu(hPopupMenu,MF_STRING | MF_ENABLED,wCmd,szStr);
+                } else
+                    if (hWnd = GetDlgItem(hDlg,*pCmd))
+                        if (IsWindowEnabled(hWnd)) {
+                            GetWindowText(hWnd,szStr,sizeof(szStr));
+                            AppendMenu(hPopupMenu,MF_STRING | MF_ENABLED,*pCmd,szStr);
+                        }
+        }
+    return hPopupMenu;
 }
 /*
 ษออออออออออออออออออออออออออออออออออออออออออออออออออออออป
@@ -403,7 +399,7 @@ LRESULT CALLBACK WIDlgWndProc(HWND hDlg,UINT message,WPARAM wParam,LPARAM lParam
 บ GetHelpFileName - Name des Helpfiles ermitteln       บ
 ศออออออออออออออออออออออออออออออออออออออออออออออออออออออผ
 */
-int GetHelpFileName(HINSTANCE hInst,PSTR pstr,int strsize)
+static int GetHelpFileName(HINSTANCE hInst,PSTR pstr,int strsize)
 {
  int len;
                              /* aktuellen .EXE-Pointer laden */
@@ -419,13 +415,12 @@ int GetHelpFileName(HINSTANCE hInst,PSTR pstr,int strsize)
 */
 LRESULT EXPORTED CALLBACK SIWndProc(HWND hWnd,UINT message,WPARAM wParam,LPARAM lParam )
 {
- PPROFILEENTRY pprofstruc;
- const char * * ppStr;
- LRESULT rc = 0;
-// char  str[20];
+    PPROFILEENTRY pprofstruc;
+    const char * * ppStr;
+    LRESULT rc = 0;
+    // char  str[20];
 
- switch (message)
-   {
+    switch (message) {
     case WM_CREATE:
         break;
     case WM_DESTROY:
@@ -462,16 +457,16 @@ LRESULT EXPORTED CALLBACK SIWndProc(HWND hWnd,UINT message,WPARAM wParam,LPARAM 
     default:
         rc = DefWindowProc( hWnd, message, wParam, lParam );
         break;
-   }
+    }
 
- return rc;
+    return rc;
 }
 /*
 ษออออออออออออออออออออออออออออออออออออออออออออออออออออออป
 บ InitFirstInstance - Initialisierung beim 1. Aufruf   บ
 ศออออออออออออออออออออออออออออออออออออออออออออออออออออออผ
 */
-BOOL InitFirstInstance()
+static BOOL InitFirstInstance()
 {
     WNDCLASS tWndClass;
 //    HDC hDC;
@@ -529,7 +524,7 @@ BOOL InitFirstInstance()
     return TRUE;
 }
 /////////////////////////////////////////////////////////////////////
-void FreeMyObjects()
+static void FreeMyObjects()
 {
     if (hFont) {
         DeleteFont(hFont);
@@ -549,7 +544,7 @@ void FreeMyObjects()
 บ InitInstance - Instanz initialisieren                บ
 ศออออออออออออออออออออออออออออออออออออออออออออออออออออออผ
 */
-BOOL InitInstance(HINSTANCE hInstance, HINSTANCE hPrevInstance)
+static BOOL InitInstance(HINSTANCE hInstance, HINSTANCE hPrevInstance)
 {
   PPROFILEENTRY pprofstruc;
   const char  * *ppStr;
@@ -583,10 +578,10 @@ BOOL InitInstance(HINSTANCE hInstance, HINSTANCE hPrevInstance)
                               // ueberpruefen ob windowpositionen ok
              if (i < POSENTRIES)
                  if ((i & 1) && (*(pprofstruc->wert) >= ym))
-             		*(pprofstruc->wert) = 32;
+                    *(pprofstruc->wert) = 32;
                  else
                     if (*(pprofstruc->wert) >= xm)
-             		*(pprofstruc->wert) = 32;
+                    *(pprofstruc->wert) = 32;
          }                                           
 
                                                      /* resourcen laden */

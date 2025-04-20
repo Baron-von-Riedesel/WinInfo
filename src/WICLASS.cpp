@@ -174,8 +174,7 @@ BOOL EXPORTED CALLBACK ClassDlg(HWND hDlg,UINT message,WPARAM wParam,LPARAM lPar
  switch (message)
    {
     case WM_INITDIALOG:
-      LoadTabs(IDUS_15,str);
-      SendDlgItemMessage(hDlg,ID_LISTCLASS,LB_SETTABSTOPS,*(LPINT)str,(LONG)(LPINT)(str+2));
+      SendDlgItemMessage(hDlg,ID_LISTCLASS,LB_SETTABSTOPS,LoadTabs(IDUS_15,str),(LPARAM)(LPVOID)str);
       SendDlgItemMessage(hDlg,ID_LISTCLASS,XLB_SETEXTSTYLE,XLBES_RBUTTONTRACK,
                          (LPARAM)(LPVOID)hFontAlt);
       SendMessage(hDlg,WM_COMMAND,ID_NEWCLASS,0);

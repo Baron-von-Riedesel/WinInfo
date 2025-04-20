@@ -166,14 +166,12 @@ BOOL EXPORTED CALLBACK ObjectsDlg(HWND hDlg,UINT message,WPARAM wParam,LPARAM lP
          {
           hWnd = GetDlgItem(hDlg,ID_LISTBOX1);
           SendMessage(hWnd,LB_RESETCONTENT,0,0);
-          LoadTabs(IDUS_55,szStr);
-          SendMessage(hWnd,LB_SETTABSTOPS,*(LPINT)szStr,(LPARAM)(LPINT)(szStr+2));
+          SendMessage(hWnd,LB_SETTABSTOPS,LoadTabs(IDUS_55,szStr),(LPARAM)(LPVOID)szStr);
           EnumObjects(hdc,OBJ_BRUSH,EnumObjProc,MAKELONG(hWnd,0));
           i = (int)SendMessage(hWnd,LB_GETCOUNT,0,0);
           hWnd = GetDlgItem(hDlg,ID_SUBDLG1);
           SendMessage(hWnd,LB_RESETCONTENT,0,0);
-          LoadTabs(IDUS_55,szStr);
-          SendMessage(hWnd,LB_SETTABSTOPS,*(LPINT)szStr,(LPARAM)(LPINT)(szStr+2));
+          SendMessage(hWnd,LB_SETTABSTOPS,LoadTabs(IDUS_55,szStr),(LPARAM)(LPVOID)szStr);
           EnumObjects(hdc,OBJ_PEN,EnumObjProc,MAKELONG(hWnd,1));
           j = (int)SendMessage(hWnd,LB_GETCOUNT,0,0);
           DeleteDC(hdc);
@@ -181,8 +179,7 @@ BOOL EXPORTED CALLBACK ObjectsDlg(HWND hDlg,UINT message,WPARAM wParam,LPARAM lP
       GlobalUnlock(hDev);
 
       hWnd = GetDlgItem(hDlg,ID_STATUS1);
-      LoadTabs(IDUS_54,szStr);
-      SendMessage(hWnd,ST_SETTABSTOPS,*(LPINT)szStr,(LONG)(LPINT)(szStr+2));
+      SendMessage(hWnd,ST_SETTABSTOPS,LoadTabs(IDUS_54,szStr),(LPARAM)(LPVOID)szStr);
       wsprintf(szStr,"Brushes\t%u\tPens\t%u\t",i,j);
       SetDlgItemText(hDlg,ID_STATUS1,szStr);
 
@@ -334,7 +331,7 @@ BOOL EXPORTED CALLBACK DevCapDlg(HWND hDlg,UINT message,WPARAM wParam,LPARAM lPa
               SendMessage(hWnd,LB_RESETCONTENT,0,0);
               tabpos[0] = 90;
               tabpos[1] = 110 | 0x8000;
-              SendMessage(hWnd,LB_SETTABSTOPS,2,(LPARAM)(LPVOID)&tabpos);
+              SendMessage(hWnd,LB_SETTABSTOPS,2,(LPARAM)(LPVOID)tabpos);
               i = 0;
               while (1)
                  {
@@ -342,7 +339,7 @@ BOOL EXPORTED CALLBACK DevCapDlg(HWND hDlg,UINT message,WPARAM wParam,LPARAM lPa
                      break;
                   j = GetDeviceCaps(hdc,itab[i]);
                   wsprintf(str,"%s\t%u",(LPSTR)fstr[i],j);
-                  SendMessage(hWnd,LB_ADDSTRING,0,(LONG)(LPSTR)str);
+                  SendMessage(hWnd,LB_ADDSTRING,0,(LPARAM)(LPSTR)str);
                   i++;
                  }
               DeleteDC(hdc);

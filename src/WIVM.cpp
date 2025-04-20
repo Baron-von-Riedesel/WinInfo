@@ -77,12 +77,12 @@ BOOL EXPORTED CALLBACK VMDlg(HWND hDlg,UINT message,WPARAM wParam,LPARAM lParam)
   switch (message)
      {
       case WM_INITDIALOG:
-         LoadTabs(IDUS_48,str);
-         SendDlgItemMessage(hDlg,ID_STATUS1,ST_SETTABSTOPS,*(LPINT)str,(LONG)(LPINT)(str+2));
-         SendDlgItemMessage(hDlg,ID_STATUS2,ST_SETTABSTOPS,*(LPINT)str,(LONG)(LPINT)(str+2));
-         SendDlgItemMessage(hDlg,ID_STATUS3,ST_SETTABSTOPS,*(LPINT)str,(LONG)(LPINT)(str+2));
-         LoadTabs(IDUS_49,str);
-         SendDlgItemMessage(hDlg,ID_LISTBOX1,LB_SETTABSTOPS,*(LPINT)str,(LPARAM)(LPINT)(str+2));
+         ;
+         SendDlgItemMessage(hDlg,ID_STATUS1,ST_SETTABSTOPS,LoadTabs(IDUS_48,str),(LPARAM)(LPVOID)str);
+         SendDlgItemMessage(hDlg,ID_STATUS2,ST_SETTABSTOPS,LoadTabs(IDUS_48,str),(LPARAM)(LPVOID)str);
+         SendDlgItemMessage(hDlg,ID_STATUS3,ST_SETTABSTOPS,LoadTabs(IDUS_48,str),(LPARAM)(LPVOID)str);
+         ;
+         SendDlgItemMessage(hDlg,ID_LISTBOX1,LB_SETTABSTOPS,LoadTabs(IDUS_49,str),(LPARAM)(LPVOID)str);
          SendDlgItemMessage(hDlg,
                             ID_LISTBOX1,
                             XLB_SETEXTSTYLE,

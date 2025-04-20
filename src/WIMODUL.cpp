@@ -18,8 +18,8 @@
 
 extern HCURSOR hCursor;
 extern HCURSOR hCursorWait;
-extern HBRUSH hbrush;
-extern HPALETTE hpalette;
+extern HBRUSH hBrush;
+extern HPALETTE hPalette;
 extern int fUnloadwarning;                   /* warnungen bei kritischen aktionen ausgeben */
 extern GMEMFILTER gmf;
 extern HFONT hFontAlt;
@@ -80,7 +80,7 @@ BOOL static PASCAL CheckModul(HWND hDlg,HMODULE * phandle,MODULEENTRY * pmodstru
   SendDlgItemMessage(hDlg,ID_LISTSEGM,LB_RESETCONTENT,0,0);
   tabpos[0] = 10;
   tabpos[1] = -10;
-  SendDlgItemMessage(hDlg,ID_STATMODUL,ST_SETTABSTOPS,2,(LPARAM)(LPVOID)&tabpos);
+  SendDlgItemMessage(hDlg,ID_STATMODUL,ST_SETTABSTOPS,2,(LPARAM)(LPVOID)tabpos);
   SetDlgItemText(hDlg,ID_STATMODUL,szModNotLoaded);
   SetDlgItemText(hDlg,ID_STATSEGM,szAttrNull);
   fErr = TRUE;
@@ -121,12 +121,11 @@ BOOL EXPORTED CALLBACK ModulDlg(HWND hDlg,UINT message,WPARAM wParam,LPARAM lPar
  switch (message)
     {
     case WM_INITDIALOG:
-      LoadTabs(IDUS_5,tabpos);
-      SendDlgItemMessage(hDlg,ID_LISTBOX1,LB_SETTABSTOPS,tabpos[0],(LPARAM)(LPVOID)&tabpos[1]);
+      ;
+      SendDlgItemMessage(hDlg,ID_LISTBOX1,LB_SETTABSTOPS,LoadTabs(IDUS_5,tabpos),(LPARAM)(LPVOID)tabpos);
       SendDlgItemMessage(hDlg,ID_LISTBOX1,XLB_SETEXTSTYLE,XLBES_RBUTTONTRACK,
                          (LPARAM)(LPVOID)hFontAlt);
-      LoadTabs(IDUS_58,tabpos);
-      SendDlgItemMessage(hDlg,ID_STATALL,ST_SETTABSTOPS,tabpos[0],(LPARAM)(LPVOID)&tabpos[1]);
+      SendDlgItemMessage(hDlg,ID_STATALL,ST_SETTABSTOPS,LoadTabs(IDUS_58,tabpos),(LPARAM)(LPVOID)tabpos);
 
       SegmentDlg(hDlg,WM_INITDIALOG,0,0);
 
@@ -273,8 +272,8 @@ BOOL EXPORTED CALLBACK ModulDlg(HWND hDlg,UINT message,WPARAM wParam,LPARAM lPar
               openfileentry.fncap  = str1;
               openfileentry.dlgtmp = 0;
               openfileentry.hInst  = hInst;
-              openfileentry.hbrush = hbrush;
-              openfileentry.hpalette = hpalette;
+              openfileentry.hbrush = hBrush;
+              openfileentry.hpalette = hPalette;
               openfileentry.flags.nmodal = 1;
               openfileentry.flags.minimizebox = 1;
               openfileentry.flags.openicon = 1;
@@ -401,12 +400,10 @@ BOOL EXPORTED CALLBACK ModulDlg(HWND hDlg,UINT message,WPARAM wParam,LPARAM lPar
                      if (!CheckModul(hDlg,&hModule,&moduleentry))
                          break;
                                                             /* falls reset der statuszeile notw. */
-                     if (fErr)
-                        {
+                     if (fErr) {
                          fErr = FALSE;
-                         LoadTabs(IDUS_3,tabpos);
-                         SendDlgItemMessage(hDlg,ID_STATMODUL,ST_SETTABSTOPS,tabpos[0],(LPARAM)(LPVOID)&tabpos[1]);
-                        }
+                         SendDlgItemMessage(hDlg,ID_STATMODUL,ST_SETTABSTOPS,LoadTabs(IDUS_3,tabpos),(LPARAM)(LPVOID)tabpos);
+                     }
 
                      EnableDlgItem(hDlg,ID_EXPORTS,1);
                      EnableDlgItem(hDlg,ID_VIEWMODUL,1);

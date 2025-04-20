@@ -93,8 +93,7 @@ BOOL EXPORTED CALLBACK DevDlg(HWND hDlg,UINT message,WPARAM wParam,LPARAM lParam
       rc = TRUE;
       break;
     case WM_INITDIALOG:
-      LoadTabs(IDUS_22,szStr);
-      SendDlgItemMessage(hDlg,ID_LISTBOX1,LB_SETTABSTOPS,*(LPINT)szStr,(LONG)(LPINT)(szStr+2));
+      SendDlgItemMessage(hDlg,ID_LISTBOX1,LB_SETTABSTOPS,LoadTabs(IDUS_22,szStr),(LPARAM)(LPVOID)szStr);
       SendMessage(hDlg,WM_COMMAND,ID_REFRESH,0);
       SetWindowPos(hDlg,0,xDevpos,yDevpos,0,0,SWP_NOSIZE | SWP_NOZORDER);
       ShowWindow(hDlg,SW_SHOWNORMAL);

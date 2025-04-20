@@ -339,8 +339,8 @@ BOOL EXPORTED CALLBACK WindowDlg(HWND hDlg,UINT message,WPARAM wParam,LPARAM lPa
               );
       SetWindowText(hDlg,str);
 
-      LoadTabs(IDUS_16,str);
-      SendDlgItemMessage(hDlg,ID_WNDPARENT,ST_SETTABSTOPS,*(LPINT)str,(LONG)(LPINT)(str+2));
+      ;
+      SendDlgItemMessage(hDlg,ID_WNDPARENT,ST_SETTABSTOPS,LoadTabs(IDUS_16,str),(LPARAM)(LPVOID)str);
       GetWindowRect(hWnd,&rect);
       wsprintf(str,
                "Owner\t%X\t Koord.\t%d,%d,%d,%d\tInst\t%04X",
@@ -353,8 +353,8 @@ BOOL EXPORTED CALLBACK WindowDlg(HWND hDlg,UINT message,WPARAM wParam,LPARAM lPa
                );
       SetDlgItemText(hDlg,ID_WNDPARENT,str);
 
-      LoadTabs(IDUS_17,str);
-      SendDlgItemMessage(hDlg,ID_WNDSTAT1,ST_SETTABSTOPS,*(LPINT)str,(LONG)(LPINT)(str+2));
+      ;
+      SendDlgItemMessage(hDlg,ID_WNDSTAT1,ST_SETTABSTOPS,LoadTabs(IDUS_17,str),(LPARAM)(LPVOID)str);
       wsprintf(str,
                "WndProc\t%X:%X\t ExStyle\t%lX\tID\t%04X",
                HIWORD(GetWindowLong(hWnd,GWL_WNDPROC)),
@@ -368,8 +368,8 @@ BOOL EXPORTED CALLBACK WindowDlg(HWND hDlg,UINT message,WPARAM wParam,LPARAM lPa
       SendMessage(hWndChild,XLB_SETEXTSTYLE,XLBES_RBUTTONTRACK,(LPARAM)(LPVOID)hFontAlt);
       SendMessage(hWndChild,LB_RESETCONTENT,0,0);
       SendMessage(hWndChild,XLB_SETWINDOWDATA,0,(LPARAM)(LPVOID)hWnd);
-      LoadTabs(IDUS_46,str);
-      SendMessage(hWndChild,LB_SETTABSTOPS,*(LPINT)str,(LONG)(LPINT)(str+2));
+      ;
+      SendMessage(hWndChild,LB_SETTABSTOPS,LoadTabs(IDUS_46,str),(LPARAM)(LPVOID)str);
       EnumChildWindows(hWnd,WndChildCB,MAKELONG(hWndChild,hWnd));
       SendMessage(hWndChild,LB_SETCURSEL,0,0);
 
@@ -465,7 +465,7 @@ BOOL EXPORTED CALLBACK WindowDlg(HWND hDlg,UINT message,WPARAM wParam,LPARAM lPa
       tDlg = hDlg;
       SendDlgItemMessage(hDlg,ID_WNDPROP,CB_RESETCONTENT,0,0);
 //      tabpos[0] = 80;
-//      SendDlgItemMessage(hDlg,ID_WNDPROP,LB_SETTABSTOPS,1,(LONG)tabpos);
+//      SendDlgItemMessage(hDlg,ID_WNDPROP,LB_SETTABSTOPS,1,(LPARAM)(LPVOID)tabpos);
       if (EnumProps(hWnd,WndPropCB) == -1)
          {
           SendDlgItemMessage(hDlg,

@@ -22,7 +22,7 @@ extern HCURSOR hCursor;
 extern HCURSOR hCursorWait;
 extern HFONT hFontAlt;
 
-BOOL FAR PASCAL McbDlg (HWND, UINT, WPARAM, LPARAM);
+BOOL FAR PASCAL MCBDlg (HWND, UINT, WPARAM, LPARAM);
 BOOL FAR PASCAL DevDlg (HWND, UINT, WPARAM, LPARAM);
 BOOL FAR PASCAL CDSDlg (HWND, UINT, WPARAM, LPARAM);
 BOOL FAR PASCAL DPBDlg (HWND, UINT, WPARAM, LPARAM);
@@ -65,10 +65,8 @@ BOOL EXPORTED CALLBACK DosDlg(HWND hDlg,UINT message,WPARAM wParam,LPARAM lParam
  switch (message)
    {
     case WM_INITDIALOG:
-      LoadTabs(IDUS_45,str);
-      SendDlgItemMessage(hDlg,ID_STATUS1,ST_SETTABSTOPS,*(LPINT)str,(LONG)(LPINT)(str+2));
-      LoadTabs(IDUS_44,str);
-      SendDlgItemMessage(hDlg,ID_LISTBOX1,LB_SETTABSTOPS,*(LPINT)str,(LONG)(LPINT)(str+2));
+      SendDlgItemMessage(hDlg,ID_STATUS1,ST_SETTABSTOPS,LoadTabs(IDUS_45,str),(LPARAM)(LPVOID)str);
+      SendDlgItemMessage(hDlg,ID_LISTBOX1,LB_SETTABSTOPS,LoadTabs(IDUS_44,str),(LPARAM)(LPVOID)str);
       SendDlgItemMessage(hDlg,ID_LISTBOX1,XLB_SETEXTSTYLE,0,(LPARAM)(LPVOID)hFontAlt);
       SendMessage(hDlg,WM_COMMAND,ID_REFRESH,0);
       SetWindowPos(hDlg,0,xDOSpos,yDOSpos,0,0,SWP_NOSIZE | SWP_NOZORDER);
@@ -113,53 +111,44 @@ BOOL EXPORTED CALLBACK DosDlg(HWND hDlg,UINT message,WPARAM wParam,LPARAM lParam
               wKrnlPSP = (GetSelectorBase(GetKernelPDB())>>4);
               y = SFTFirst(&sftentry,1);
               x = 1;
-              while (y && (x < 256))
-                 {
+              while (y && (x < 256)) {
                   strncpy(str1,sftentry.name,8);
                   str1[8] = 0;
                   _fstrip(str1,' ');
-                  if (strncmp(sftentry.ext,"   ",3))
-                     {
+                  if (strncmp(sftentry.ext,"   ",3)) {
                       str[0] = '.';
                       strncpy(str+1,sftentry.ext,3);
                       str[4] = 0;
                       strcat(str1,str);
-                     }
+                  }
 
                   taskentry.dwSize = sizeof(taskentry);
-                  if (hTask = GethTaskFromPSP(sftentry.psp))
-                     {
+                  if ((sftentry.psp > 0x10) && (hTask = GethTaskFromPSP(sftentry.psp))) {
                       TaskFindHandle(&taskentry,hTask);
                       lpPSP = (LPWORD)MAKELONG(0,*(LPWORD)MAKELONG(0x60,hTask));
-                     }
-                  else
-                  if (sftentry.psp == wKrnlPSP)
-                     {
-                      strcpy(taskentry.szModule,"<kernel>");
-                      lpPSP = (LPWORD)MAKELONG(0,GetKernelPDB());
-                     }
-                  else
-                     {
-                      strcpy(taskentry.szModule,"<msdos>");
-                      strcpy(str3,"?");
-                      lpPSP = 0;
-                     }
-                  if (lpPSP)
-                     {
+                  } else
+                      if (sftentry.psp == wKrnlPSP) {
+                          strcpy(taskentry.szModule,"<kernel>");
+                          lpPSP = (LPWORD)MAKELONG(0,GetKernelPDB());
+                      } else {
+                          strcpy(taskentry.szModule,"<msdos>");
+                          strcpy(str3,"?");
+                          lpPSP = 0;
+                      }
+                  if (lpPSP) {
                       j = *(lpPSP+0x19);
                       SetSelectorBase(sel,(DWORD)*(lpPSP+0x1B)*0x10);
                       lpfindex = (LPBYTE)MAKELONG(*(lpPSP+0x1A),sel);
                       pstr = str3;
                       *pstr = 0;
                       for (i=0;i<j;i++)
-                          if (*(lpfindex+i) == LOBYTE(sftentry.index))
-                             {
+                          if (*(lpfindex+i) == LOBYTE(sftentry.index)) {
                               if (pstr != str3)
                                   *pstr++ = ',';
                               wsprintf(pstr,"%u",i);
                               pstr = pstr + strlen(pstr);
-                             }
-                     }
+                          }
+                  }
 
                   wsprintf(str,
                            "%u\t%04X\t%s\t%s\t%u\t%s\t%X",
@@ -175,7 +164,7 @@ BOOL EXPORTED CALLBACK DosDlg(HWND hDlg,UINT message,WPARAM wParam,LPARAM lParam
                   SendDlgItemMessage(hDlg,ID_LISTBOX1,LB_ADDSTRING,0,(LONG)(LPSTR)str);
                   x++;
                   y = SFTNext(&sftentry);
-                 }
+              }
               SFTClose(&sftentry);
 
               FreeSelector(sel);
@@ -197,7 +186,7 @@ BOOL EXPORTED CALLBACK DosDlg(HWND hDlg,UINT message,WPARAM wParam,LPARAM lParam
                   hWndMCB = CreateDialogParam(hInst,
                                               MAKEINTRESOURCE(IDD_MCB),
                                               hDlg,
-                                              McbDlg,
+                                              MCBDlg,
                                               (LONG)0
                                              );
               break;

@@ -24,7 +24,7 @@ typedef struct tagRESOBJECT {
   } RESOBJECT;
 
 
-int WINAPI interruptcallback(void);
+extern int WINAPI interruptcallback(void);
 extern CATCHBUF cb;
 
 /*

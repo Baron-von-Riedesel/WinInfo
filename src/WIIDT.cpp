@@ -99,7 +99,7 @@ BOOL EXPORTED CALLBACK IDTDlg(HWND hDlg,UINT message,WPARAM wParam,LPARAM lParam
                 y = IDTNext(&idtentry);
             }
 
-            wsprintf(str,"IDT Base\t%lX\tIDT Limit\t%X\t",
+            wsprintf(str,"IDTR\t%lX.%X",
                      idtentry.dwAddr,idtentry.wLimit);
 
             SetDlgItemText(hDlg,ID_STATUS1,str);
@@ -141,15 +141,15 @@ BOOL EXPORTED CALLBACK IDTDlg(HWND hDlg,UINT message,WPARAM wParam,LPARAM lParam
             wIDTLimit = lpvmentry->wIDTLimit;
         }
 
-        LoadTabs(IDUS_37,str);
-        SendDlgItemMessage(hDlg,ID_LISTBOX1,LB_SETTABSTOPS,*(LPINT)str,(LONG)(LPINT)(str+2));
+        ;
+        SendDlgItemMessage(hDlg,ID_LISTBOX1,LB_SETTABSTOPS,LoadTabs(IDUS_37,str),(LPARAM)(LPVOID)str);
         SendDlgItemMessage(hDlg,
                            ID_LISTBOX1,
                            XLB_SETEXTSTYLE,
                            XLBES_RBUTTONTRACK,
                            (LPARAM)(LPVOID)hFontAlt);
-        LoadTabs(IDUS_38,str);
-        SendDlgItemMessage(hDlg,ID_STATUS1,ST_SETTABSTOPS,*(LPINT)str,(LONG)(LPINT)(str+2));
+        ;
+        SendDlgItemMessage(hDlg,ID_STATUS1,ST_SETTABSTOPS,LoadTabs(IDUS_38,str),(LPARAM)(LPVOID)str);
         SendMessage(hDlg,WM_COMMAND,ID_REFRESH,0);
         SetWindowPos(hDlg,0,xIDTpos,yIDTpos,0,0,SWP_NOSIZE | SWP_NOZORDER);
         ShowWindow(hDlg,SW_NORMAL);

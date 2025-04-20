@@ -49,7 +49,7 @@ BOOL EXPORTED CALLBACK DPMIDlg(HWND hDlg,UINT message,WPARAM wParam,LPARAM lPara
 // PAINTSTRUCT ps;
  WORD dpmivers;
  DWORD dpmiex;
- HDC thDC;
+ //HDC thDC;
  int w,x,y,z;
  BOOL rc;
  HWND hWnd;
@@ -70,14 +70,11 @@ BOOL EXPORTED CALLBACK DPMIDlg(HWND hDlg,UINT message,WPARAM wParam,LPARAM lPara
         if (GetVersion() == 3)
             if (!(LOWORD(&_WINFLAGS) & WF_ENHANCED))
                 wFlag = 1;
-        LoadTabs(IDUS_28,str);
-        SendDlgItemMessage(hDlg,ID_LISTBOX1,LB_SETTABSTOPS,*(LPINT)str,(LPARAM)(LPINT)(str+2));
+        SendDlgItemMessage(hDlg,ID_LISTBOX1,LB_SETTABSTOPS,LoadTabs(IDUS_28,str),(LPARAM)(LPVOID)str);
         SendDlgItemMessage(hDlg,ID_LISTBOX1,XLB_SETEXTSTYLE,XLBES_RBUTTONTRACK,
                            (LPARAM)(LPVOID)hFontAlt);
-        LoadTabs(IDUS_29,str);
-        SendDlgItemMessage(hDlg,ID_STATUS2,ST_SETTABSTOPS,*(LPINT)str,(LPARAM)(LPINT)(str+2));
-        LoadTabs(IDUS_50,str);
-        SendDlgItemMessage(hDlg,ID_STATUS1,ST_SETTABSTOPS,*(LPINT)str,(LPARAM)(LPINT)(str+2));
+        SendDlgItemMessage(hDlg,ID_STATUS2,ST_SETTABSTOPS,LoadTabs(IDUS_29,str),(LPARAM)(LPVOID)str);
+        SendDlgItemMessage(hDlg,ID_STATUS1,ST_SETTABSTOPS,LoadTabs(IDUS_50,str),(LPARAM)(LPVOID)str);
 //        SendMessage(hDlg,WM_COMMAND,ID_REFRESH,0);
         PostMessage(hDlg,WM_COMMAND,ID_REFRESH,0);
         SetWindowPos(hDlg,0,xDPMIpos,yDPMIpos,0,0,SWP_NOSIZE | SWP_NOZORDER);

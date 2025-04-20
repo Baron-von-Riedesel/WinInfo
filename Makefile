@@ -16,7 +16,8 @@ MSVC=\msvc
 !if $(DEBUG)
 COPTD=-D "_DEBUG" -Zi -Od -G2
 AOPTD=-D_DEBUG -Zi
-LOPTD=/CO
+#LOPTD=/CO
+LOPTD=
 OUTDIR=DEBUG
 !else
 COPTD=-D "NDEBUG" -O1 -G3 
@@ -44,13 +45,13 @@ HC  =$(MSVC)\bin\hc31.exe
 
 AOPT = -c -nologo -Sg -Cp $(AOPTD)
 COPT = -c -nologo -Gs -GA -Zp1 -W3 -I$(MSVC)\include -IInclude -AM -D "STRICT" -D "WINVER=0x30a" $(COPTD)
-LOPTS= /NOLOGO/MAP:FULL/ONE:NOE/NOD/A:16/NOE/ST:8192
-LIBS = $(OUTDIR)\WinInfo.lib libw.lib toolhelp hexdump stattext winutil1 winutil2 winutil3 xlistbox mlibcew user386 userw user oldnames
+LOPTS= /NOLOGO/MAP:FULL/ONE:NOE/NOD/NOI/NOE/A:16/ST:8192
+LIBS = $(OUTDIR)\WinInfo.lib libw toolhelp hexdump stattext winutil1 winutil2 winutil3 xlistbox mlibcew user386 userw user
 LIBPATH= Lib;$(MSVC)\lib;
 
 .SUFFIXES: .asm .obj .cpp
 
-.asm{$(OUTDIR)}.obj:
+{src}.asm{$(OUTDIR)}.obj:
 	@$(ASM) $(AOPT) -Fl$* -Fo$* $<
 
 {src}.cpp{$(OUTDIR)}.obj:
@@ -72,17 +73,14 @@ $(NAME).def
 <<
 	@$(RC) /nologo /31 $*.res $*.exe 
  
-$(OUTDIR)\$(NAME).lib: $(OBJMODS) Makefile
+$(OUTDIR)\$(NAME).lib: $(OBJMODS) $(OUTDIR)\WItabpos.obj Makefile
 	@cd $(OUTDIR)
 	@if exist $(NAME).lib erase $(NAME).lib
-	@$(LIB) /nologo $(NAME).lib $(OBJNAMES:.\=+);
+	@$(LIB) /nologo $(NAME).lib $(OBJNAMES:.\=+) +WItabpos.obj;
 	@cd ..
 
-$(OUTDIR)\$(NAME).res: $(NAME).rc Res\Witabpos.bin
+$(OUTDIR)\$(NAME).res: $(NAME).rc
 	@$(RC) -r -iinclude;$(MSVC)\include -fo $*.res $(NAME).rc
-
-Res\WItabpos.bin: WItabpos.asm
-	@$(ASM) $(AOPT) -bin -Fl$* -Fo$*.bin WItabpos.asm
 
 $(OBJMODS): WinInfo.h Resource.h WinInfoX.h
 

@@ -7,8 +7,7 @@ LINK   = $(MSVC)\bin\link.exe
 RC     = $(MSVC)\bin\rc.exe
 IMPLIB = $(MSVC)\bin\implib.exe
 
-LIBPATH= ..\lib;Lib;$(MSVC)\lib;
-LOPTS  = /NOLOGO/FAR/MAP:FULL/A:16/NON/ONERROR:NOEXE
+LOPTS  = /NOLOGO/NOI/FAR/MAP:FULL/A:16/NON/ONERROR:NOEXE
 LIBS   = libw toolhelp user386 libc32vx suserw userw suser user
 
 ODIR = Build
@@ -16,11 +15,13 @@ ODIR = Build
 all: $(ODIR) $(ODIR)\$(name1).dll
 
 $(ODIR)\$(name1).dll: $*.obj $(ODIR)\unassem.obj $(name).def $*.res Makefile
-	@set LIB=$(LIBPATH)
 	@$(LINK) $(LOPTS) @<<
 $* Lib\disasm.obj $(ODIR)\unassem.obj,
 $*.dll,
 $*.map,
+..\lib\+
+Lib\+
+$(MSVC)\lib\+
 $(LIBS),
 $(name);
 <<

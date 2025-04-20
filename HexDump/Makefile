@@ -5,8 +5,7 @@ MSVC  = \msvc
 ODIR  = Build
 name  = HexDump
 model = S
-LOPT  = /NOLOGO/NOD/A:16/NON/NOE/FAR/MAP:FULL/ONERROR:NOEXE
-LIBPATH=..\lib;$(MSVC)\lib;
+LOPT  = /NOLOGO/NOD/NOI/A:16/NON/NOE/FAR/MAP:FULL/ONERROR:NOEXE
 LIBS  = libw toolhelp commdlg sdllcew user386 userw suser user
 
 all: $(ODIR) $(ODIR)\$(name).dll
@@ -15,11 +14,12 @@ $(ODIR):
 	@mkdir $(ODIR)
 
 $(ODIR)\$(name).dll: $*.obj $(name).def $*.res Makefile
-	@set LIB=$(LIBPATH)
 	@$(MSVC)\bin\link @<<
-$* + nocidll1 + dataseg $(LOPT),
+$* + ..\lib\nocidll1 + ..\lib\dataseg $(LOPT),
 $*.dll,
 $*.map,
+..\lib\+
+$(MSVC)\lib\+
 $(LIBS)
 $(name).def
 <<

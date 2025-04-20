@@ -150,7 +150,7 @@ BOOL STATUSTEXT::PaintProc(HWND hWnd,HDC hDC,LPPAINTSTRUCT lpps)
     char   * pstr;
     char   * apstr;
     WORD   i;
-    int    pos,npos,ypos;
+    int    pos,ypos;
     WORD   wTabOfs;
     RECT   rect;
     LOGFONT logfont;
@@ -622,11 +622,11 @@ STATUSTEXT::~STATUSTEXT()
 บ WndProc - Window Methode                             บ
 ศออออออออออออออออออออออออออออออออออออออออออออออออออออออผ
 */
-long __export WINAPI StatusTextWndFn(HWND hWnd,unsigned message,WORD wParam,LONG lParam )
+LRESULT __export WINAPI StatusTextWndFn(HWND hWnd,unsigned message,WORD wParam,LONG lParam )
 {
     PAINTSTRUCT ps;
     PSTATUSTEXT hObj;
-    long rc;
+    LRESULT rc;
 
     rc = FALSE;
 
@@ -635,7 +635,7 @@ long __export WINAPI StatusTextWndFn(HWND hWnd,unsigned message,WORD wParam,LONG
     switch (message)
     {
     case WM_NCCREATE:
-        rc = (LONG)new STATUSTEXT(hWnd,(LPCREATESTRUCT)lParam);
+        rc = (LRESULT)new STATUSTEXT(hWnd,(LPCREATESTRUCT)lParam);
         break;
     case WM_DESTROY:
         if (hObj)

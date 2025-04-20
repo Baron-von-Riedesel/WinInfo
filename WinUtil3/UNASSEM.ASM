@@ -10,7 +10,7 @@ _FTEXT segment dword use32 public 'CODE'
 
 ;--- Unassemble(near32 pData, far32 pCode, dword accbits, far16 readproc )
 
-extern _Unassemble@20:near32
+extern _UnAssemble@20:near32
 
 ;--- returns a WORD
 GetSymbolicNameEx proto far16 pascal pCode:far16 ptr, pData:far16 ptr
@@ -56,7 +56,7 @@ _unass:
     push eax       ;pCode
     movzx ecx,cx
     push ecx       ;pData
-    call _Unassemble@20
+    call _UnAssemble@20
 
     mov sp,si
     pop esi

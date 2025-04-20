@@ -145,7 +145,7 @@ BOOL CheckTask(HWND hDlg,HTASK * phandle,TASKENTRY * ptaskentry)
   SendDlgItemMessage(hDlg,ID_LISTWINDOWS,LB_RESETCONTENT,0,0);
   tabpos[0] = 8;
   tabpos[1] = -8;
-  SendDlgItemMessage(hDlg,ID_STATTASK,ST_SETTABSTOPS,2,(LPARAM)(LPVOID)&tabpos);
+  SendDlgItemMessage(hDlg,ID_STATTASK,ST_SETTABSTOPS,2,(LPARAM)(LPVOID)tabpos);
   SetDlgItemText(hDlg,ID_STATTASK,"\tTask ist inzwischen beendet!\t");
   fErr = TRUE;
   return FALSE;
@@ -230,8 +230,7 @@ BOOL TaskOnCommand(HWND hDlg, WPARAM wParam, LPARAM lParam)
                      ListBox_ResetContent(hWnd);
                      EnumTaskWindows(hTask,WindowCB,(LPARAM)(LPVOID)hWnd);
                                                          /* statuszeile setzen */
-                     if (fErr)
-                        {
+                     if (fErr) {
                          fErr = FALSE;
                          tabpos[0] = 18;
                          tabpos[1] = 40;
@@ -243,8 +242,8 @@ BOOL TaskOnCommand(HWND hDlg, WPARAM wParam, LPARAM lParam)
                          tabpos[7] = 208;
                          tabpos[8] = 228;
                          tabpos[9] = 250;
-                         SendDlgItemMessage(hDlg,ID_STATTASK,ST_SETTABSTOPS,10,(LPARAM)(LPVOID)&tabpos);
-                        }
+                         SendDlgItemMessage(hDlg,ID_STATTASK,ST_SETTABSTOPS,10,(LPARAM)(LPVOID)tabpos);
+                     }
                      if (hTask == GetCurrentTask())
                          GetCSIP(&dw[0]);
                      else
@@ -514,14 +513,14 @@ BOOL EXPORTED CALLBACK TaskDlg(HWND hDlg,UINT message,WPARAM wParam,LPARAM lPara
         tabpos[2] = 96;
         tabpos[3] = 120;
         tabpos[4] = 144;
-        SendDlgItemMessage(hDlg,ID_LISTBOX1,LB_SETTABSTOPS,5,(LPARAM)(LPINT)&tabpos);
+        SendDlgItemMessage(hDlg,ID_LISTBOX1,LB_SETTABSTOPS,5,(LPARAM)(LPVOID)tabpos);
         SendDlgItemMessage(hDlg,ID_LISTBOX1,XLB_SETEXTSTYLE,XLBES_RBUTTONTRACK,
                          (LPARAM)(LPVOID)hFontAlt);
         tabpos[0] = 22;
         tabpos[1] = 44;
         tabpos[2] = 84;
         tabpos[3] = 134;
-        SendDlgItemMessage(hDlg,ID_LISTWINDOWS,LB_SETTABSTOPS,4,(LPARAM)(LPVOID)&tabpos);
+        SendDlgItemMessage(hDlg,ID_LISTWINDOWS,LB_SETTABSTOPS,4,(LPARAM)(LPVOID)tabpos);
         SendDlgItemMessage(hDlg,ID_LISTWINDOWS,XLB_SETEXTSTYLE,XLBES_RBUTTONTRACK,
                          (LPARAM)(LPVOID)hFontAlt);
         SendMessage(hDlg,WM_COMMAND,ID_REFRESH,0);

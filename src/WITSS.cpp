@@ -100,12 +100,12 @@ BOOL EXPORTED CALLBACK TSSDlg(HWND hDlg,UINT message,WPARAM wParam,LPARAM lParam
          break;
       case WM_INITDIALOG:
          SetWindowLong(hDlg,DLGWINDOWEXTRA,lParam);
-         LoadTabs(IDUS_34,str);
-         SendDlgItemMessage(hDlg,ID_LISTBOX1,LB_SETTABSTOPS,*(LPINT)str,(LONG)(LPINT)(str+2));
-         LoadTabs(IDUS_35,str);
-         SendDlgItemMessage(hDlg,ID_STATUS1,ST_SETTABSTOPS,*(LPINT)str,(LONG)(LPINT)(str+2));
-         LoadTabs(IDUS_39,str);
-         SendDlgItemMessage(hDlg,ID_STATUS2,ST_SETTABSTOPS,*(LPINT)str,(LONG)(LPINT)(str+2));
+         ;
+         SendDlgItemMessage(hDlg,ID_LISTBOX1,LB_SETTABSTOPS,LoadTabs(IDUS_34,str),(LPARAM)(LPVOID)str);
+         ;
+         SendDlgItemMessage(hDlg,ID_STATUS1,ST_SETTABSTOPS,LoadTabs(IDUS_35,str),(LPARAM)(LPVOID)str);
+         ;
+         SendDlgItemMessage(hDlg,ID_STATUS2,ST_SETTABSTOPS,LoadTabs(IDUS_39,str),(LPARAM)(LPVOID)str);
 
          LoadString(hInst,IDS_TSS,szStr1,sizeof(szStr1));
          wsprintf(str, "%s %X", (LPSTR)szStr1, LOWORD(lParam) );

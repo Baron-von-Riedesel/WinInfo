@@ -56,14 +56,14 @@ typedef RMCSTRUCT FAR * LPRMCSTRUCT;
 
 typedef struct tagDPMIMEMORY
   {
-    DWORD       maxFreeBytes;
-    DWORD       dwFreePages;             /* freie pages */
-    DWORD       dwMaxAllocLockLinPages;
-    DWORD       dwLinearSpace;           /* linearer adressraum */
+    DWORD       maxFreeBytes;            /* max free virtual block in bytes */
+    DWORD       dwFreePages;             /* free virtual memory in pages */
+    DWORD       dwMaxAllocLockLinPages;  /* max virt. memory block, lockable in pages */
+    DWORD       dwLinearSpace;           /* address space in pages */
     DWORD       dwUnlockedPhysPages;
-    DWORD       dwFreePhysPages;
-    DWORD       dwPhysPages;
-    DWORD       dwFreeLinearSpace;       /* freier linearer adressraum */
+    DWORD       dwFreePhysPages;         /* free phys pages */
+    DWORD       dwPhysPages;             /* total phys pages */
+    DWORD       dwFreeLinearSpace;       /* free address space in pages */
     DWORD       numSwapPages;
     DWORD       reserved1;
     DWORD       reserved2;
@@ -76,13 +76,13 @@ typedef struct tagDPMIMEMORY
 extern "C" {
 #endif
 
-WORD    FAR PASCAL  DPMIExist(void);
+//WORD    FAR PASCAL  DPMIExist(void);
 DWORD   FAR PASCAL  DPMIGetVersion(void);               /* AX: version, DX: Interruptvektoren */
 DWORD   FAR PASCAL  DPMIGetVersionEx(void);             /* AX: flags, DX: Prozessor */
-void    FAR PASCAL  DPMIGetRawModeSwitchAddress(LPSTR); /* NPSTR -> 8 Bytes */
+//void    FAR PASCAL  DPMIGetRawModeSwitchAddress(LPSTR); /* NPSTR -> 8 Bytes */
 DWORD   FAR PASCAL  DPMIGetPageSize(void);              /* */
                                                         /* bei fehler: AX < 0x40,DX=maxsize  */
-void    FAR PASCAL  DPMIGetMemoryInfo(LPDPMIMEMORY);    /* LPSTR -> 48 Bytes */
+void    FAR PASCAL  DPMIGetMemoryInfo(LPDPMIMEMORY);    /* */
 DWORD   FAR PASCAL  DPMIAllocDosMemory(WORD);           /* RC: AX=Segmentadresse,DX=Selektor */
 WORD    FAR PASCAL  DPMIFreeDosMemory(SELECTOR);        /* RC: BOOL */
 WORD    FAR PASCAL  DPMIAllocMemory(DWORD,DWORD FAR *); /* RC: 1=OK */
@@ -105,7 +105,7 @@ void    FAR PASCAL  DPMISetPMIntVector(WORD,LPSTR);     /*    */
 DWORD   FAR PASCAL  DPMIGetExcVector(WORD);             /* RC: SSSS:OOOO */
 void    FAR PASCAL  DPMISetExcVector(WORD,FARPROC);     /* */
 void    FAR PASCAL  DPMISimRMInterrupt(WORD,WORD,LPRMCSTRUCT);/* */
-void    FAR PASCAL  DPMICallRMFarProc(DWORD,LPRMCSTRUCT,WORD,LPWORD);/* */
+void    FAR PASCAL  DPMICallRMFarProc(DWORD,LPRMCSTRUCT,WORD,LPWORD);/* handles stack params */
 
 BOOL    FAR PASCAL  DPMILockRegion(DWORD,DWORD);         /* RC: 1=ok parm1: LinAddr Parm2: Laenge */
 BOOL    FAR PASCAL  DPMIUnlockRegion(DWORD,DWORD);       /* RC: 1=ok parm1: LinAddr Parm2: Laenge */

@@ -33,8 +33,6 @@ int GetExePath(HINSTANCE hInst,PSTR pstr,int strsize)
 BOOL EXPORTED CALLBACK AboutDlg(HWND hDlg,UINT message,WPARAM wParam,LPARAM lParam )
 {
  char str1[256];
- HGLOBAL hObj;
- WORD wString;
  BOOL rc = FALSE;
 
  switch (message) {
@@ -58,14 +56,8 @@ BOOL EXPORTED CALLBACK AboutDlg(HWND hDlg,UINT message,WPARAM wParam,LPARAM lPar
      break;
  case WM_INITDIALOG:
      EnableWindow(hWndMenu,0);
-     wString = IDU_ABOUT3;
-     hObj = LoadUserResource(hInst,
-                             MAKEINTRESOURCE(wString),
-                             MAKEINTRESOURCE(RTI_USER),
-                             (LPBYTE)0,
-                             0
-                            );
-     SetDlgItemText(hDlg,ID_ABOUTTEXT,(LPSTR)MAKELONG( 0, hObj ));
+     LoadString(hInst,IDS_ABOUT3, str1, sizeof(str1));
+     SetDlgItemText(hDlg,ID_ABOUTTEXT,(LPSTR)str1);
      LoadString(hInst,IDS_INFOSTR,str1,sizeof(str1));
      SetWindowText(hDlg,str1);
      ShowWindow(hDlg,SW_SHOWNORMAL);

@@ -1,0 +1,5 @@
+xdbg=2 format win f Release\wininfo.obj
+n Release\wininfo.exe
+libpath Lib;\msvc\lib;
+lib { Release\WinInfo libw toolhelp hexdump stattext winutil1 winutil2 winutil3 xlistbox mlibcew user386 userw user}
+op m=Release\wininfo.map

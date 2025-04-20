@@ -1475,50 +1475,42 @@ void XLISTBOX::SetScrollBarRange(WORD type,WORD wParam)
 */
 void XLISTBOX::ShowVScrollBar(int mode)
 {
- RECT rect;
- HWND hWndX;
- HINSTANCE hInstance;
- int i;
+    RECT rect;
+    HWND hWndX;
+    HINSTANCE hInstance;
+    int i;
 
- if (wNumItems <= wNumRows)
-    {
-     if (flags.vscrollvisible)
-        {
-         ShowWindow(GetDlgItem(hWnd,1),SW_HIDE);
-         flags.vscrollvisible = 0;
+    if (wNumItems <= wNumRows) {
+        if (flags.vscrollvisible) {
+            ShowWindow(GetDlgItem(hWnd,1),SW_HIDE);
+            flags.vscrollvisible = 0;
         }
-    }
- else
-    {
-     if (!flags.vscroll)
-        {
-         flags.vscroll = 1;
-         GetClientRect(hWnd,&rect);
-         i = GetSystemMetrics(SM_CXVSCROLL);
-         hInstance = GetWindowInstance(hWnd);
-         hWndX = CreateWindow("scrollbar",0,WS_CHILD | SBS_VERT,
+    } else {
+        if (!flags.vscroll) {
+            flags.vscroll = 1;
+            GetClientRect(hWnd,&rect);
+            i = GetSystemMetrics(SM_CXVSCROLL);
+            hInstance = GetWindowInstance(hWnd);
+            hWndX = CreateWindow("scrollbar",0,WS_CHILD | SBS_VERT,
                              rect.right-i,rect.top,i,rect.bottom,
                              hWnd,(HMENU)1,hInstance,(LPSTR)0L);
-         flags.vscrollvisible = 0;
-         flags.vscrollrange   = 1;
-         flags.vscrollpaint   = 1;
-         SetScrollBarPos(SB_VERT,wVPos,mode);
+            flags.vscrollvisible = 0;
+            flags.vscrollrange   = 1;
+            flags.vscrollpaint   = 1;
+            SetScrollBarPos(SB_VERT,wVPos,mode);
+        } else
+            hWndX = GetDlgItem(hWnd,1);
+        if (!flags.vscrollvisible) {
+            flags.vscrollvisible = 1;
+            ShowWindow(hWndX,SW_SHOWNOACTIVATE);
         }
-     else
-         hWndX = GetDlgItem(hWnd,1);
-     if (!flags.vscrollvisible)
-        {
-         flags.vscrollvisible = 1;
-         ShowWindow(hWndX,SW_SHOWNOACTIVATE);
+        if (flags.vscrollrange) {
+            flags.vscrollrange = 0;
+            SendMessage(hWndX,SB_SETRANGE,0,MAKELONG(0,wNumItems - wNumRows));
+            //PrintfAsciiz("Items: %X, Zeilen: %X",wNumItems,wNumRows);
         }
-     if (flags.vscrollrange)
-        {
-         flags.vscrollrange = 0;
-         SendMessage(hWndX,SB_SETRANGE,0,MAKELONG(0,wNumItems - wNumRows));
-//         PrintfAsciiz("Items: %X, Zeilen: %X",wNumItems,wNumRows);
-        }
-     if (flags.vscrollpaint)
-         SetScrollBarPos(SB_VERT,wVPos,mode);
+        if (flags.vscrollpaint)
+            SetScrollBarPos(SB_VERT,wVPos,mode);
     }
 }
 /*
@@ -2200,7 +2192,7 @@ LRESULT XLISTBOX::Dispatch(UINT message,WPARAM wParam,LPARAM lParam)
   PSTR  pszText;
   WORD  i,j,offset;
   HDC   hdc;
-  long  rc;
+  LRESULT rc;
   LPSTR lpstr;
   LPINT lpint;
   DWORD style;
@@ -2256,7 +2248,6 @@ LRESULT XLISTBOX::Dispatch(UINT message,WPARAM wParam,LPARAM lParam)
                if (style & LBS_SORT)
                    SortStrings();
               }
-            ShowVScrollBar(1);
             hdc = BeginPaint(hWnd,(LPPAINTSTRUCT)&ps);
             PaintClient(ps.hdc,&ps.rcPaint);
             EndPaint(hWnd,(LPPAINTSTRUCT)&ps);
@@ -2268,7 +2259,7 @@ LRESULT XLISTBOX::Dispatch(UINT message,WPARAM wParam,LPARAM lParam)
         case WM_SETREDRAW:          /* zur kompatibilitaet mit "listbox" */
             break;
         case WM_GETFONT:
-            rc = (LONG)hFont;
+            rc = (LRESULT)(WORD)hFont;
             break;
         case WM_SETFONT:
             TRACEOUT("WM_SETFONT received");
@@ -2609,7 +2600,7 @@ LRESULT __export WINAPI XListBoxWndFn(HWND hWnd,UINT message,WPARAM wParam,LPARA
 //  OutputMonoString("XlistboxWndFn\r\n");
 
   if (message == WM_NCCREATE)
-      return (LONG)new XLISTBOX(hWnd,(LPCREATESTRUCT)lParam);
+      return (LRESULT)new XLISTBOX(hWnd,(LPCREATESTRUCT)lParam);
   else
   if (hObj = (PXLISTBOX)GetWindowWord(hWnd,0))
      {

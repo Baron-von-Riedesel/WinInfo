@@ -122,12 +122,12 @@ BOOL EXPORTED CALLBACK LocalDlg(HWND hDlg,UINT message,WPARAM wParam,LPARAM lPar
     case WM_INITDIALOG:
         TRACEOUT("LocalDlg: WM_INITDIALOG received");
         SetWindowWord(hDlg,DLGWINDOWEXTRA,LOWORD(lParam));
-        LoadTabs(IDUS_21,str);
-        SendDlgItemMessage(hDlg,ID_LISTBOX1,LB_SETTABSTOPS,*(LPINT)str,(LPARAM)(LPINT)(str+2));
+        ;
+        SendDlgItemMessage(hDlg,ID_LISTBOX1,LB_SETTABSTOPS,LoadTabs(IDUS_21,str),(LPARAM)(LPVOID)str);
         SendDlgItemMessage(hDlg,ID_LISTBOX1,XLB_SETEXTSTYLE,XLBES_RBUTTONTRACK,
                            (LPARAM)(LPVOID)hFontAlt);
-        LoadTabs(IDUS_20,str);
-        SendDlgItemMessage(hDlg,ID_STATLOCAL,ST_SETTABSTOPS,*(LPINT)str,(LPARAM)(LPINT)(str+2));
+        ;
+        SendDlgItemMessage(hDlg,ID_STATLOCAL,ST_SETTABSTOPS,LoadTabs(IDUS_20,str),(LPARAM)(LPVOID)str);
         SendMessage(hDlg,WM_COMMAND,ID_REFRESH,0);
         if (fShow)
            {

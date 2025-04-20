@@ -57,12 +57,12 @@ BOOL EXPORTED CALLBACK GDIDlg(HWND hDlg,UINT message,WPARAM wParam,LPARAM lParam
  switch (message)
     {
     case WM_INITDIALOG:
-      LoadTabs(IDUS_51,szStr);
+      ;
       SendDlgItemMessage(hDlg,
                          ID_LISTBOX1,
                          LB_SETTABSTOPS,
-                         *(LPINT)szStr,
-                         (LONG)(LPINT)(szStr+2));
+                         LoadTabs(IDUS_51,szStr),
+                         (LPARAM)(LPVOID)szStr);
       SendDlgItemMessage(hDlg,ID_LISTBOX1,XLB_SETEXTSTYLE,XLBES_RBUTTONTRACK,
                          (LPARAM)(LPVOID)hFontAlt);
       SendMessage(hDlg,WM_COMMAND,ID_REFRESH,0);
