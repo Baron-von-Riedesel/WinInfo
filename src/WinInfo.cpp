@@ -1,4 +1,8 @@
 
+#ifdef _DEBUG
+#define _TRACE_
+#endif
+
 #include "stdlib.h"
 #include "stdio.h"
 #include "string.h"
@@ -526,6 +530,7 @@ static BOOL InitFirstInstance()
 /////////////////////////////////////////////////////////////////////
 static void FreeMyObjects()
 {
+    TRACEOUT("WinInfo: FreeMyObjects");
     if (hFont) {
         DeleteFont(hFont);
         hFont = 0;
@@ -637,11 +642,7 @@ int PASCAL WinMain(HINSTANCE hInstance,HINSTANCE hPrevInstance,LPSTR lpszCmdLine
 {
     MSG   msg;
     HWND  hWnd;
-#if 0
-    char szStr[80];
-    wsprintf(szStr,"WinInfo: WinVer=%X\r\n",WINVER);
-    OutputDebugString(szStr);
-#endif
+
     /* instance global verfuegbar machen */
     if (InitInstance(hInstance,hPrevInstance)) {
         while (GetMessage((LPMSG)&msg, 0, 0, 0)) {

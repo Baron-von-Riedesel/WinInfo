@@ -33,7 +33,6 @@
 .\WIsegm.cpp    \
 .\WIshow.cpp    \
 .\WIstack.cpp   \
-.\WIstatus.cpp  \
 .\WIsys.cpp     \
 .\WItask.cpp    \
 .\WItaskx.cpp   \
@@ -45,5 +44,6 @@
 .\WIvm.cpp      \
 .\WIvxd.cpp     \
 .\WIwindow.cpp  \
+.\WIwinst.cpp   \
 .\WIxmodul.cpp  \
 .\WIxms.cpp

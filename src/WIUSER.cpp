@@ -9,7 +9,7 @@
 #include "wininfo.h"
 #include "wininfox.h"
 
-BOOL CALLBACK StatusDlg     (HWND, UINT, WPARAM, LPARAM);
+BOOL CALLBACK WinStatusDlg  (HWND, UINT, WPARAM, LPARAM);
 BOOL CALLBACK WindowDlg     (HWND, UINT, WPARAM, LPARAM);
 BOOL CALLBACK ClassDlg      (HWND, UINT, WPARAM, LPARAM);
 BOOL CALLBACK LocalDlg      (HWND, UINT, WPARAM, LPARAM);
@@ -17,7 +17,7 @@ BOOL CALLBACK GlobalDlg     (HWND, UINT, WPARAM, LPARAM);
 BOOL CALLBACK ViewClassDlg  (HWND, UINT, WPARAM, LPARAM);
 
 extern HFONT hFontAlt;
-extern HWND hWndMon;
+extern HWND hWndWinStat;
 
 int xUserpos  = 100;
 int yUserpos  = 100;
@@ -423,13 +423,13 @@ BOOL EXPORTED CALLBACK UserDlg(HWND hDlg,UINT message,WPARAM wParam,LPARAM lPara
                  }
               break;
          case ID_WINMON:
-              if (hWndMon)
-                  ShowWindow(hWndMon,SW_NORMAL);
+              if (hWndWinStat)
+                  ShowWindow(hWndWinStat,SW_NORMAL);
               else
-                  hWndMon = CreateDialog(hInst,
+                  hWndWinStat = CreateDialog(hInst,
                                          MAKEINTRESOURCE(IDD_WINSTATUS),
                                          0,
-                                         StatusDlg);
+                                         WinStatusDlg);
               break;
          case ID_DESTROY:
               if ((HWND)LOWORD(lParam) == hWndUserGlobal)

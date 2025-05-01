@@ -80,23 +80,23 @@ static void OutputIconic(HWND hWnd,HDC hDC,LPDPMIMEMORY lpdm)
 
     bIconPainted = TRUE;
     xx = GetVPData(lpdm);
-    SetMapMode( hDC, MM_TEXT );
     GetClientRect(hWnd,&rect);
-    hBrush = (HBRUSH)GetStockObject(LTGRAY_BRUSH);
+    hBrush = CreateSolidBrush(GetSysColor(COLOR_BACKGROUND));
     oldBrush = (HBRUSH)SelectObject(hDC,hBrush);
     Rectangle(hDC,0,0,rect.right,rect.bottom);
     SetBkMode(hDC,TRANSPARENT);
+    //SetMapMode( hDC, MM_TEXT );
 
     GetTextMetrics(hDC,&tm);
-    tm.tmHeight--;
 
     wsprintf(str,"%u%%",LOWORD(xx));
-    TextOut(hDC,2,tm.tmHeight*0,str,strlen(str));
+    TextOut(hDC,2,0,str,strlen(str));
 
     wsprintf(str,"%u%%",HIWORD(xx));
-    TextOut(hDC,2,tm.tmHeight*1,str,strlen(str));
+    TextOut(hDC,2,tm.tmHeight-2,str,strlen(str));
 
     SelectObject(hDC,oldBrush);
+    DeleteObject(hBrush);
 }
 /*
 浜様様様様様様様様様様様様様様様様様様様様様様様様様様融
@@ -208,20 +208,19 @@ LRESULT EXPORTED CALLBACK DPMIStatWndProc(HWND hWnd,UINT message,WPARAM wParam,L
 
     rc = 0;
 
-    switch (message)
-    {
-    case WM_ICONERASEBKGND:
+    switch (message) {
+    //case WM_ICONERASEBKGND:
+    //    break;
+    case WM_ERASEBKGND:
+        rc = 1;
         break;
     case WM_SYSCOMMAND:
         if (wParam == SC_MINIMIZE)
             SetWindowText(hWnd,"Virt/Phys");
+        else if (wParam == SC_RESTORE)
+            SetWindowText(hWnd,szMonText);
 
         rc = CallWindowProc(fpDPMIStatWndProc,hWnd,message,wParam,lParam);
-        break;
-    case WM_ACTIVATE:
-        if (wParam != WA_INACTIVE)
-            if (HIWORD(lParam) == 0)
-                SetWindowText(hWnd,szMonText);
         break;
     case WM_PAINT:
         if (!IsIconic(hWnd)) {

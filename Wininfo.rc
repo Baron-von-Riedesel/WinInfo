@@ -693,7 +693,7 @@ END
 IDD_WINSTATUS DIALOG DISCARDABLE  20, 20, 112, 132
 STYLE WS_MINIMIZEBOX | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Windows Status"
-CLASS "WIDlg"
+//CLASS "WIDlg"
 FONT 8, "Helv"
 BEGIN
     CONTROL         "",ID_STATS,"statustext",0x0,0,0,112,12
@@ -1256,7 +1256,7 @@ BEGIN
     IDS_ERRENV1             "Zugriff auf Environment nicht möglich"
     IDS_ERRPAG1             "CR3 kann nicht gelesen werden"
     IDS_ERRPAG2             "CR3 kann nicht in lineare Adresse umgesetzt werden"
-    IDS_ABOUT3              "\r\nWinInfo Version 1.8\r\n\r\nCopyright (C) japheth 1991-1999\r\n\r\nFreeware"
+    IDS_ABOUT3              "\r\nWinInfo Version 1.8a\r\n\r\nCopyright (C) japheth 1991-1999\r\n\r\nFreeware"
 END
 
 /* 160-175 */
